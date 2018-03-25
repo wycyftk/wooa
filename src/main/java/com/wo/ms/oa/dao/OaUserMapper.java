@@ -9,11 +9,7 @@ public interface OaUserMapper {
 
     int insert(OaUser record);
 
-    int insertSelective(OaUser record);
-
     OaUser selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(OaUser record);
-
-    int updateByPrimaryKey(OaUser record);
 }

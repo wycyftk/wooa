@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wo.ms.oa.dao.OaMenuMapper">
+  <resultMap id="BaseResultMap" type="com.wo.ms.oa.entity.OaMenu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="INTEGER" property="updateId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_flg" jdbcType="INTEGER" property="delFlg" />
+    <result column="descrition" jdbcType="VARCHAR" property="descrition" />
+    <result column="left_node" jdbcType="INTEGER" property="leftNode" />
+    <result column="menu_level" jdbcType="INTEGER" property="menuLevel" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="right_node" jdbcType="INTEGER" property="rightNode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_id, create_time, update_id, update_time, del_flg, descrition, left_node, 
+    menu_level, menu_name, menu_url, right_node
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oa_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oa_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wo.ms.oa.entity.OaMenu">
+    insert into oa_menu (id, create_id, create_time, 
+      update_id, update_time, del_flg, 
+      descrition, left_node, menu_level, 
+      menu_name, menu_url, right_node
+      )
+    values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlg,jdbcType=INTEGER}, 
+      #{descrition,jdbcType=VARCHAR}, #{leftNode,jdbcType=INTEGER}, #{menuLevel,jdbcType=INTEGER}, 
+      #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{rightNode,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaMenu">
+    update oa_menu
+    <set>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlg != null">
+        del_flg = #{delFlg,jdbcType=INTEGER},
+      </if>
+      <if test="descrition != null">
+        descrition = #{descrition,jdbcType=VARCHAR},
+      </if>
+      <if test="leftNode != null">
+        left_node = #{leftNode,jdbcType=INTEGER},
+      </if>
+      <if test="menuLevel != null">
+        menu_level = #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null">
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="rightNode != null">
+        right_node = #{rightNode,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

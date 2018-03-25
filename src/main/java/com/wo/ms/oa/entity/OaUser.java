@@ -1,33 +1,29 @@
 package com.wo.ms.oa.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity(name = "oa_user")
-public class OaUser {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class OaUser extends BaseEntity{
+    @Column(length = 20)
     private String name;
+
+    @Column(length = 20)
     private String username;
+
+    @Column(length = 200)
     private String password;
+
+    @Column(length = 20)
     private String mobile;
+
+    @Column(length = 50)
     private String email;
+
     private Integer del_flg;
-    private Date createTime;
-    private Integer createId;
-    private Date updateTime;
-    private Integer updateId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -75,37 +71,5 @@ public class OaUser {
 
     public void setDel_flg(Integer del_flg) {
         this.del_flg = del_flg;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Integer createId) {
-        this.createId = createId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
     }
 }

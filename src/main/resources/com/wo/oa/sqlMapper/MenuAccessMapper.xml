@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wo.ms.oa.dao.MenuAccessMapper">
+  <resultMap id="BaseResultMap" type="com.wo.ms.oa.entity.MenuAccess">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <id column="org_id" jdbcType="INTEGER" property="orgId" />
+    <id column="menu_id" jdbcType="INTEGER" property="menuId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.wo.ms.oa.entity.MenuAccess">
+    delete from menu_access
+    where user_id = #{userId,jdbcType=INTEGER}
+      and role_id = #{roleId,jdbcType=INTEGER}
+      and org_id = #{orgId,jdbcType=INTEGER}
+      and menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wo.ms.oa.entity.MenuAccess">
+    insert into menu_access (user_id, role_id, org_id, 
+      menu_id)
+    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{orgId,jdbcType=INTEGER}, 
+      #{menuId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wo.ms.oa.entity.MenuAccess">
+    insert into menu_access
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -16,4 +16,42 @@ public class OaUserServiceImpl implements OaUserService{
     public OaUser selectOaUser() {
         return oaUserMapper.selectByPrimaryKey(1);
     }
+
+    @Override
+    public Integer addOaUser(OaUser oaUser) {
+        try{
+            int insertNum = oaUserMapper.insert(oaUser);
+            if(insertNum > 0){
+                return oaUser.getId();
+            }
+            return 0;
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public Integer updateOaUser(OaUser oaUser) {
+        try{
+            int updateNum = oaUserMapper.updateByPrimaryKeySelective(oaUser);
+            if(updateNum > 0){
+                return oaUser.getId();
+            }
+            return 0;
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public Integer deleteOaUser(Integer userId) {
+        try{
+            return oaUserMapper.deleteByPrimaryKey(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
