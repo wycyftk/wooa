@@ -4,7 +4,7 @@ import com.wo.ms.oa.entity.OaUser;
 import org.hibernate.validator.internal.engine.messageinterpolation.InterpolationTerm;
 
 public interface OaUserService {
-    OaUser selectOaUser();
+    OaUser selectOaUser(Integer userId);
 
     Integer addOaUser(OaUser oaUser);
 

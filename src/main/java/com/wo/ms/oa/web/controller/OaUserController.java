@@ -15,7 +15,7 @@ public class OaUserController {
 
     @RequestMapping("/user")
     public String oaUserPage(){
-        OaUser oaUser = oaUserService.selectOaUser();
+        OaUser oaUser = oaUserService.selectOaUser(1);
         System.out.print(oaUser.getName());
         return "wo/oa/index";
     }

@@ -13,8 +13,8 @@ public class OaUserServiceImpl implements OaUserService{
     private OaUserMapper oaUserMapper;
 
     @Override
-    public OaUser selectOaUser() {
-        return oaUserMapper.selectByPrimaryKey(1);
+    public OaUser selectOaUser(Integer userId) {
+        return oaUserMapper.selectByPrimaryKey(userId);
     }
 
     @Override
