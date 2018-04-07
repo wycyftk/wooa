@@ -2,12 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>人员列表</title>
+    <title>会议管理</title>
     <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
-<div class="head">
-
+<div class="meetingForm">
+    <h4 class="form-title">会议管理</h4>
+    <form>
+        <div class="form-group row">
+            <label for="meetingName" class="col-sm-1 col-form-label">会议名称</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" id="meetingName" placeholder="会议名称">
+            </div>
+            <label for="startTime" class="offset-sm-1 col-sm-1 col-form-label">开始时间</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" id="startTime" placeholder="开始时间">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="endTime" class="col-sm-1 col-form-label">结束时间</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="endTime" placeholder="结束时间">
+            </div>
+        </div>
+        <div class="form-group form-btns">
+            <button type="submit" class="col-sm-1 offset-sm-9 btn btn-primary">保存</button>
+            <button type="submit" class="col-sm-1 btn btn-default">取消</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

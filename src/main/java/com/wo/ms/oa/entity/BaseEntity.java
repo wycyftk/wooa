@@ -6,18 +6,36 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+/**
+ * 基础实体，大部分实体会集成这个
+ */
 @MappedSuperclass
 public class BaseEntity {
+    /**
+     * 唯一标识
+     */
     @Id
     @GeneratedValue
     private Integer id;
 
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
+    /**
+     * 创建人Id
+     */
     private Integer createId;
 
+    /**
+     * 修改时间
+     */
     private Date updateTime;
 
+    /**
+     * 修改人Id
+     */
     private Integer updateId;
 
     public Integer getId() {

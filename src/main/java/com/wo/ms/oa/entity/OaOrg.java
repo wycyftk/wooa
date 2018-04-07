@@ -3,21 +3,42 @@ package com.wo.ms.oa.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * 组织
+ */
 @Entity(name = "oa_org")
 public class OaOrg extends BaseEntity{
+    /**
+     * 组织名称
+     */
     private String orgName;
 
+    /**
+     * 描述
+     */
     @Column(length = 20)
     private String descrition;
 
+    /**
+     * 左节点值
+     */
     @Column(length = 20)
     private Integer leftNode;
 
+    /**
+     * 右节点值
+     */
     @Column(length = 20)
     private Integer rightNode;
 
+    /**
+     * 组织等级
+     */
     private Integer orgLevel;
 
+    /**
+     * 删除标记
+     */
     private Integer delFlg;
 
     public String getOrgName() {

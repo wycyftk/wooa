@@ -4,12 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Date;
 
+/**
+ * 会议
+ */
 @Entity(name = "oa_meeting")
 public class OaMeeting extends BaseEntity {
+    /**
+     * 会议名称
+     */
     @Column(length = 50)
     private String meetingName;
+
+    /**
+     * 开始时间
+     */
     private Date startTime;
+
+    /**
+     * 结束时间
+     */
     private Date endTime;
+
+    /**
+     * 会议状态
+     */
     private Integer status;
 
     public String getMeetingName() {

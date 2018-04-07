@@ -6,8 +6,29 @@
     <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
-<div class="head">
-
+<div th:fragment="header">
+    <div class="head">
+        <div class="logo">
+            <img src="/asset/imgs/logo.png" title="惟沃科技办公自动化平台">
+            <h1 class="home-title">惟沃科技办公自动化平台</h1>
+        </div>
+        <div class="user">
+            <div class="info">
+                <a href="#">
+                    <i class="fa fa-envelope-o"></i>
+                </a>
+                <span class="info-num">1</span>
+            </div>
+            <div class="user-block">
+                <a href="#" class="username">张三</a>
+                <ul class="user-operation">
+                    <li><a href="#">修改密码</a></li>
+                    <li><a href="#">个人信息</a></li>
+                    <li class="logout"><a href="#">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

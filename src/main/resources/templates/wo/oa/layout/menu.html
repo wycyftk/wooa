@@ -6,8 +6,33 @@
     <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
-<div class="head">
+<div th:fragment="menu">
+    <div class="menu">
+        <ul class="menu-nav">
+            <li>
+                <a href="javascript:;"><i class="fa fa-cogs"></i>系统管理</a>
+                <ul class="sub-menu-nav">
+                    <li><a href="#">组织管理</a></li>
+                    <li><a href="#">菜单管理</a></li>
+                    <li><a href="#">角色管理</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-comments"></i>会议管理</a></li>
+            <li><a href="#"><i class="fa fa-institution"></i>会议室管理</a></li>
+            <li><a href="#"><i class="fa fa-info-circle"></i>信息管理</a></li>
+            <li><a href="#"><i class="fa fa-car"></i>车辆管理</a></li>
+        </ul>
+    </div>
+</div>
 
+<div th:fragment="breadNav">
+    <div class="bread-nav">
+        <ul class="bread-ul">
+            <li><a href="#">主页</a></li>
+            <li><i class="fa fa-angle-right"></i><a href="#">系统管理</a></li>
+            <li><i class="fa fa-angle-right"></i><a href="#">会议管理</a></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

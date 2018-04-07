@@ -3,24 +3,48 @@ package com.wo.ms.oa.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * 菜单
+ */
 @Entity(name = "oa_menu")
 public class OaMenu extends BaseEntity{
+    /**
+     * 菜单名
+     */
     private String menuName;
 
+    /**
+     * 描述
+     */
     @Column(length = 50)
     private String descrition;
 
+    /**
+     * 菜单URL
+     */
     @Column(length = 500)
     private String menuUrl;
 
+    /**
+     * 左节点值
+     */
     @Column(length = 20)
     private Integer leftNode;
 
+    /**
+     * 右节点值
+     */
     @Column(length = 20)
     private Integer rightNode;
 
+    /**
+     * 菜单等级
+     */
     private Integer menuLevel;
 
+    /**
+     * 删除标记
+     */
     private Integer delFlg;
 
     public String getMenuName() {

@@ -4,17 +4,29 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+/**
+ * 菜单访问权限
+ */
 @Entity(name = "menu_access")
 public class MenuAccess implements Serializable {
     @Id
     private Integer userId;
 
+    /**
+     * 角色id
+     */
     @Id
     private Integer roleId;
 
+    /**
+     * 组织Id
+     */
     @Id
     private Integer orgId;
 
+    /**
+     * 菜单Id
+     */
     @Id
     private Integer menuId;
 

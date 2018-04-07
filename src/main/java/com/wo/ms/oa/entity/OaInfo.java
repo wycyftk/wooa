@@ -3,22 +3,46 @@ package com.wo.ms.oa.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * 信息、公告
+ */
 @Entity(name = "oa_info")
 public class OaInfo extends BaseEntity {
+    /**
+     * 标题
+     */
     @Column(length = 50)
     private String infoTitle;
 
+    /**
+     * 发布人Id
+     */
     private Integer publishId;
 
+    /**
+     * 组织Id
+     */
     private Integer orgId;
 
+    /**
+     * 是否重要
+     */
     private Integer important;
 
+    /**
+     * 内容
+     */
     @Column(length = 8000)
     private String content;
 
+    /**
+     * 状态
+     */
     private Integer status;
 
+    /**
+     * 是否删除
+     */
     private Integer delFlg;
 
     public String getInfoTitle() {

@@ -4,12 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Date;
 
+/**
+ * 车辆实体
+ */
 @Entity(name = "oa_car")
 public class OaCar extends BaseEntity {
+    /**
+     * 车辆名称
+     */
     @Column(length = 20)
     private String carName;
+
+    /**
+     * 开始时间
+     */
     private Date startTime;
+
+    /**
+     * 结束时间
+     */
     private Date endTime;
+
+    /**
+     * 状态
+     */
     private Integer status;
 
     public String getCarName() {
