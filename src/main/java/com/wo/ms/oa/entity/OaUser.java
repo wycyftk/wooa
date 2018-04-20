@@ -55,7 +55,7 @@ public class OaUser extends BaseEntity{
     /**
      * 删除标记，0未删除，1已删除
      */
-    private Integer del_flg;
+    private Integer delFlg;
 
     public String getName() {
         return name;
@@ -97,12 +97,12 @@ public class OaUser extends BaseEntity{
         this.email = email;
     }
 
-    public Integer getDel_flg() {
-        return del_flg;
+    public Integer getDelFlg() {
+        return delFlg;
     }
 
-    public void setDel_flg(Integer del_flg) {
-        this.del_flg = del_flg;
+    public void setDelFlg(Integer delFlg) {
+        this.delFlg = delFlg;
     }
 
     public Integer getSex() {

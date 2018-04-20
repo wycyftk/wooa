@@ -6,6 +6,7 @@ import com.wo.ms.oa.services.OaOrgService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OaOrgServiceImpl implements OaOrgService {
@@ -25,6 +26,16 @@ public class OaOrgServiceImpl implements OaOrgService {
     @Override
     public OaOrg selectByPrimaryKey(Integer id) {
         return oaOrgMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<OaOrg> selectOrgByLevel(Integer level, Integer parentId) {
+        return oaOrgMapper.selectOrgByLevel(level, parentId);
+    }
+
+    @Override
+    public List<OaOrg> selectAllOrg() {
+        return oaOrgMapper.selectAllOrg();
     }
 
     @Override

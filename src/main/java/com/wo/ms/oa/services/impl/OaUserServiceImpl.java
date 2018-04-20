@@ -6,6 +6,7 @@ import com.wo.ms.oa.services.OaUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OaUserServiceImpl implements OaUserService{
@@ -15,6 +16,11 @@ public class OaUserServiceImpl implements OaUserService{
     @Override
     public OaUser selectOaUser(Integer userId) {
         return oaUserMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public List<OaUser> selectOaUserByKey(String key) {
+        return oaUserMapper.selectOaUserByKey(key);
     }
 
     @Override

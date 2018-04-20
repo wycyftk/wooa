@@ -2,6 +2,9 @@ package com.wo.ms.oa.dao;
 
 import com.wo.ms.oa.entity.OaOrg;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface OaOrgMapper {
@@ -10,6 +13,10 @@ public interface OaOrgMapper {
     int insert(OaOrg record);
 
     OaOrg selectByPrimaryKey(Integer id);
+
+    List<OaOrg> selectOrgByLevel(@Param("level") Integer level,@Param("parentId") Integer parentId);
+
+    List<OaOrg> selectAllOrg();
 
     int updateByPrimaryKeySelective(OaOrg record);
 }

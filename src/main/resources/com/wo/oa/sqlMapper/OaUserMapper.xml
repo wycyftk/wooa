@@ -10,46 +10,48 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="update_id" jdbcType="INTEGER" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, del_flg, email, mobile, name, password, update_id, update_time, 
+    id, create_id, create_time, del_flg, email, mobile, name, password, birthday, sex, update_id, update_time,
     username
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from oa_user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND del_flg = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oa_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.wo.ms.oa.entity.OaUser">
-    insert into oa_user (id, create_id, create_time, 
+  <select id="selectOaUserByKey" resultMap="BaseResultMap">
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM oa_user
+    WHERE del_flg = 0
+    <if test="key != null">
+      AND  concat(',', NAME , username, email, mobile) LIKE '%'#{key, jdbcType=VARCHAR}'%'
+    </if>
+    ORDER BY create_time DESC
+  </select>
+  <update id="deleteByPrimaryKey">
+    UPDATE oa_user SET del_flg = 1 WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0
+  </update>
+  <insert id="insert" parameterType="com.wo.ms.oa.entity.OaUser" useGeneratedKeys="true" keyProperty="id">
+    insert into oa_user (create_id, create_time,
       del_flg, email, mobile, 
-      name, password, update_id, 
+      name, password, birthday, sex, update_id,
       update_time, username)
-    values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
       #{delFlg,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{updateId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{sex,jdbcType=INTEGER}, #{updateId,jdbcType=INTEGER},
       #{updateTime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaUser">
     update oa_user
     <set>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlg != null">
-        del_flg = #{delFlg,jdbcType=INTEGER},
-      </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
@@ -62,6 +64,12 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
       <if test="updateId != null">
         update_id = #{updateId,jdbcType=INTEGER},
       </if>
@@ -72,6 +80,6 @@
         username = #{username,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND del_flg = 0
   </update>
 </mapper>

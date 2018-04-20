@@ -25,6 +25,12 @@
     from oa_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAllInfos" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_info
+    WHERE del_flg = 0 ORDER BY create_time DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_info
     where id = #{id,jdbcType=INTEGER}

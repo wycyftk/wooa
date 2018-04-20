@@ -25,6 +25,12 @@
     from oa_menu
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAllMenus" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_menu
+    WHERE del_flg = 0 ORDER BY left_node DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_menu
     where id = #{id,jdbcType=INTEGER}

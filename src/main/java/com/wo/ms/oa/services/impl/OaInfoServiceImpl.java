@@ -6,6 +6,7 @@ import com.wo.ms.oa.services.OaInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OaInfoServiceImpl implements OaInfoService {
@@ -25,6 +26,11 @@ public class OaInfoServiceImpl implements OaInfoService {
     @Override
     public OaInfo selectByPrimaryKey(Integer id) {
         return oaInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<OaInfo> selectAllInfos() {
+        return oaInfoMapper.selectAllInfos();
     }
 
     @Override

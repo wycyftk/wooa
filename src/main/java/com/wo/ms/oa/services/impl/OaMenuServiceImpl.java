@@ -6,6 +6,7 @@ import com.wo.ms.oa.services.OaMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class OaMenuServiceImpl implements OaMenuService {
@@ -25,6 +26,11 @@ public class OaMenuServiceImpl implements OaMenuService {
     @Override
     public OaMenu selectByPrimaryKey(Integer id) {
         return oaMenuMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<OaMenu> selectAllMenus() {
+        return oaMenuMapper.selectAllMenus();
     }
 
     @Override
