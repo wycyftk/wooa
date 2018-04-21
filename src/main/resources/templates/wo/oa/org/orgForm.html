@@ -17,7 +17,7 @@
             <div class="col-sm-4">
                 <input type="email" class="form-control" id="descrition" th:value="${org != null} ? ${org.descrition} : ''" placeholder="描述">
             </div>
-            <input type="text" id="id" th:value="${org != null} ? ${org.id} : ''">
+            <input type="text" id="id" th:value="${org != null} ? ${org.id} : ''" style="display: none">
         </div>
         <div class="form-group form-btns">
             <button type="submit" class="col-sm-1 offset-sm-9 btn btn-primary" id="submitOrg">保存</button>

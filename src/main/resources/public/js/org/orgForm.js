@@ -17,7 +17,7 @@
             });
         }else {
             $.ajax({
-                url: '/oa/api/org/addRole',
+                url: '/oa/api/org/add',
                 data: JSON.stringify(org),
                 dataType: 'json',
                 type: 'post',

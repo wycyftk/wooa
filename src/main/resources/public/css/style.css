@@ -1,7 +1,11 @@
-body, div, h1, a, h2, h3, p, input, ul, li, a{
+body, div, h1, a, h2, h3, p, input, ul, li, a, label{
     padding: 0;
     margin: 0;
     font-family: "Microsoft YaHei UI";
+}
+
+label{
+    font-size: 15px;
 }
 
 ul li{
@@ -52,6 +56,11 @@ ul li{
 /* login */
 
 /* head */
+.page-top{
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
 
 .head{
     height: 50px;
@@ -148,6 +157,8 @@ ul li{
     height: 100%;
     position: fixed;
     background: #424a5d;
+    padding-top: 30px;
+    overflow-y: auto;
 }
 
 .menu-nav{
@@ -227,6 +238,7 @@ ul li{
     height: 100%;
     margin-left: 210px;
     background: #f0f0f0;
+    padding-top: 50px;
 }
 
 .main-page{
@@ -274,4 +286,5 @@ ul li{
     right: 0;
     bottom: 0;
 }
+
 /* content */
