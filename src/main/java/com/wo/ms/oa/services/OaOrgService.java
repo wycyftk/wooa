@@ -15,5 +15,7 @@ public interface OaOrgService {
 
     List<OaOrg> selectAllOrg();
 
+    List<OaOrg> selectSubOrg(Integer id);
+
     int updateByPrimaryKeySelective(OaOrg record);
 }

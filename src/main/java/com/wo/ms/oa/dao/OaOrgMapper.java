@@ -18,5 +18,7 @@ public interface OaOrgMapper {
 
     List<OaOrg> selectAllOrg();
 
+    List<OaOrg> selectSubOrg(Integer id);
+
     int updateByPrimaryKeySelective(OaOrg record);
 }

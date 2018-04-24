@@ -27,9 +27,17 @@ public class OaUserApi {
         oaUser.setUpdateId(1);
         oaUser.setUpdateTime(now);
         oaUser.setDelFlg(0);
-        oaUserService.addOaUser(oaUser);
-        result.put("status", true);
-        result.put("message", "添加成功");
+        int addNum = oaUserService.addOaUser(oaUser);
+        if(addNum > 0){
+            result.put("status", true);
+            result.put("message", "添加成功");
+        }else if(addNum == -1){
+            result.put("status", false);
+            result.put("message", "用户名重复");
+        }else{
+            result.put("status", false);
+            result.put("message", "添加失败");
+        }
         return result;
     }
 

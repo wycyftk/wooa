@@ -10,6 +10,8 @@ public interface OaUserService {
 
     List<OaUser> selectOaUserByKey(String key);
 
+    Integer checkUser(String username, String password);
+
     Integer addOaUser(OaUser oaUser);
 
     Integer updateOaUser(OaUser oaUser);

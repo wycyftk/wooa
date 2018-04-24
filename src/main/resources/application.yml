@@ -23,6 +23,8 @@ spring:
     suffix: .html
     template-resolver-order:
     mode: HTML
+  mvc:
+    static-path-pattern: /**
 mybatis:
   mapper-locations:
     - classpath*:/com/wo/oa/sqlMapper/**/*.xml

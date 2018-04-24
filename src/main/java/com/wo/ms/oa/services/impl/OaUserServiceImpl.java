@@ -24,11 +24,26 @@ public class OaUserServiceImpl implements OaUserService{
     }
 
     @Override
+    public Integer checkUser(String username, String password) {
+        OaUser user = oaUserMapper.selectUserByUsername(username);
+        if(password.equals(user.getPassword())){
+            return user.getId();
+        }else {
+            return -1;
+        }
+    }
+
+    @Override
     public Integer addOaUser(OaUser oaUser) {
         try{
-            int insertNum = oaUserMapper.insert(oaUser);
-            if(insertNum > 0){
-                return oaUser.getId();
+            OaUser user = oaUserMapper.selectUserByUsername(oaUser.getUsername());
+            if(user == null){
+                int insertNum = oaUserMapper.insert(oaUser);
+                if(insertNum > 0){
+                    return oaUser.getId();
+                }
+            }else{
+                return -1;
             }
             return 0;
         }catch (Exception e){

@@ -39,6 +39,11 @@ public class OaOrgServiceImpl implements OaOrgService {
     }
 
     @Override
+    public List<OaOrg> selectSubOrg(Integer id) {
+        return oaOrgMapper.selectSubOrg(id);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(OaOrg record) {
         return oaOrgMapper.updateByPrimaryKeySelective(record);
     }

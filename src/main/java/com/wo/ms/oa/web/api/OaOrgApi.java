@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,6 +52,16 @@ public class OaOrgApi {
         oaOrgService.deleteByPrimaryKey(id);
         result.put("status", true);
         result.put("message", "删除组织成功");
+        return result;
+    }
+
+    @GetMapping("/subOrg")
+    public Map<String, Object> selectSubOrg(Integer id){
+        Map<String, Object> result = new HashMap<>();
+        List<OaOrg> orgList = oaOrgService.selectSubOrg(id);
+        result.put("status", true);
+        result.put("message", "查找子组织成功");
+        result.put("data", orgList);
         return result;
     }
 }

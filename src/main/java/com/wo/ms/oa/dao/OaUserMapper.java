@@ -13,6 +13,8 @@ public interface OaUserMapper {
 
     OaUser selectByPrimaryKey(Integer id);
 
+    OaUser selectUserByUsername(String username);
+
     List<OaUser> selectOaUserByKey(String key);
 
     int updateByPrimaryKeySelective(OaUser record);

@@ -36,6 +36,11 @@
     </if>
     ORDER BY create_time DESC
   </select>
+  <select id="selectUserByUsername" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    FROM oa_user WHERE username = #{username, jdbcType=VARCHAR} AND del_flg = 0
+  </select>
   <update id="deleteByPrimaryKey">
     UPDATE oa_user SET del_flg = 1 WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0
   </update>

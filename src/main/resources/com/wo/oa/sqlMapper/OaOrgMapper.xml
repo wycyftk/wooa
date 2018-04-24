@@ -36,6 +36,13 @@
     WHERE oa_org.left_node > p.ln AND <![CDATA[oa_org.right_node < p.rn and]]> oa_org.org_level = #{level, jdbcType=INTEGER} + 1 AND del_flg = 0
     ORDER BY left_node
   </select>
+  <select id="selectSubOrg" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oa_org, (SELECT rn, ln, lev FROM oa_org WHERE id = #{parentId, jdbcType=INTEGER} AND del_flg = 0) AS p
+    WHERE oa_org.left_node > p.ln AND <![CDATA[oa_org.right_node < p.rn and]]> oa_org.org_level = p.lev + 1 AND del_flg = 0
+    ORDER BY oa_org.left_node
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_org
     where id = #{id,jdbcType=INTEGER}
