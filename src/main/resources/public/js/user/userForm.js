@@ -9,7 +9,8 @@
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    console.log(data);
+                    alert("修改成功");
+                    loadHtml('/oa/user/list');
                 },
                 error: function (data) {
 
@@ -23,7 +24,14 @@
                 type: 'post',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    console.log(data);
+                    if(data.status){
+                        alert("新增成功");
+                        $("#name").val('');
+                        $('#username').val('');
+                        $('#email').val('');
+                        $('#birthday').val('');
+                        $('#mobile').val('');
+                    }
                 },
                 error: function (data) {
 

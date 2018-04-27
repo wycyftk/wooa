@@ -1,6 +1,7 @@
 package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.OaOrgMapper;
+import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.entity.OaOrg;
 import com.wo.ms.oa.services.OaOrgService;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,18 @@ public class OaOrgServiceImpl implements OaOrgService {
     }
 
     @Override
-    public int insert(OaOrg record) {
+    public int insert(OaOrgDto record) {
         return oaOrgMapper.insert(record);
     }
 
     @Override
     public OaOrg selectByPrimaryKey(Integer id) {
         return oaOrgMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public OaOrg selectRootOrg() {
+        return oaOrgMapper.selectRootOrg();
     }
 
     @Override
@@ -41,6 +47,11 @@ public class OaOrgServiceImpl implements OaOrgService {
     @Override
     public List<OaOrg> selectSubOrg(Integer id) {
         return oaOrgMapper.selectSubOrg(id);
+    }
+
+    @Override
+    public List<OaOrg> selectOrgsByLevel(Integer level) {
+        return oaOrgMapper.selectOrgsByLevel(level);
     }
 
     @Override

@@ -27,12 +27,15 @@ public class OaOrgController {
     public ModelAndView updateOrg(Integer id){
         ModelAndView view = new ModelAndView("wo/oa/org/orgForm");
         OaOrg oaOrg = oaOrgService.selectByPrimaryKey(id);
-        view.addObject("role", oaOrg);
+        view.addObject("org", oaOrg);
         return view;
     }
 
     @RequestMapping("/add")
-    public String addOrg(){
-        return "wo/oa/org/orgForm";
+    public ModelAndView addOrg(){
+        ModelAndView view = new ModelAndView("wo/oa/org/orgForm");
+        List<OaOrg> firstLevelOrgs = oaOrgService.selectOrgsByLevel(1);
+        view.addObject("orgList", firstLevelOrgs);
+        return view;
     }
 }

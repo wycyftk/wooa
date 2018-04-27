@@ -4,6 +4,7 @@ import com.wo.ms.oa.entity.OaMenu;
 import com.wo.ms.oa.entity.OaOrg;
 import com.wo.ms.oa.services.OaMenuService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +35,10 @@ public class OaMenuController {
     }
 
     @RequestMapping("/add")
-    public String addMenu(){
-        return "wo/oa/menu/menuForm";
+    public ModelAndView addMenu(){
+        ModelAndView view = new ModelAndView("wo/oa/menu/menuForm");
+        List<OaMenu> firstLevelMenus = oaMenuService.selectMenusByLevel(1);
+        view.addObject("menuList", firstLevelMenus);
+        return view;
     }
 }

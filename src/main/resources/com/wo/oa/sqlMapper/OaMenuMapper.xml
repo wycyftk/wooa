@@ -31,6 +31,11 @@
     FROM oa_menu
     WHERE del_flg = 0 ORDER BY left_node DESC
   </select>
+  <select id="selectMenusByLevel" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_menu WHERE del_flg = 0 AND menu_level = #{level, jdbcType=INTEGER} ORDER BY left_node
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_menu
     where id = #{id,jdbcType=INTEGER}

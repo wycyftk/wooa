@@ -2,6 +2,7 @@ package com.wo.ms.oa.web.api;
 
 import com.wo.ms.oa.entity.OaRole;
 import com.wo.ms.oa.services.OaRoleService;
+import com.wo.ms.oa.util.WebUtil;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +17,17 @@ public class OaRoleApi {
     @Resource
     private OaRoleService oaRoleService;
 
+    @Resource
+    private WebUtil webUtil;
+
     @PostMapping("/add")
     public Map<String, Object> addRole(@RequestBody OaRole role){
         Date now = new Date();
         Map<String, Object> result = new HashMap<>();
 
-        role.setCreateId(1);
+        role.setCreateId(webUtil.getLoginId());
         role.setCreateTime(now);
-        role.setUpdateId(1);
+        role.setUpdateId(webUtil.getLoginId());
         role.setUpdateTime(now);
         oaRoleService.insert(role);
         result.put("status", true);
@@ -34,7 +38,7 @@ public class OaRoleApi {
     @PutMapping("/update")
     public Map<String, Object> updateRole(@RequestBody OaRole role){
         Map<String, Object> result = new HashMap<>();
-        role.setUpdateId(1);
+        role.setUpdateId(webUtil.getLoginId());
         role.setUpdateTime(new Date());
         oaRoleService.updateByPrimaryKeySelective(role);
         result.put("status", true);

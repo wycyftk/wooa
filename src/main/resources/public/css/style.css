@@ -284,6 +284,10 @@ ul li{
     bottom: 0;
 }
 
+.form-btns{
+    float: right;
+}
+
 /* content */
 
 /* org */
@@ -298,6 +302,11 @@ ul li{
 .org-structure span{
     color: #4a4a4a;
     font-size: 14px;
+    cursor: pointer;
+}
+
+.org-structure span:hover{
+    text-decoration: underline;
 }
 
 .org-structure ul li{
@@ -306,9 +315,12 @@ ul li{
 
 .sub-structure{
     font-size: 12px;
+    position: relative;
+    left: 18px;
 }
 
 .sub-hide{
     display: none;
 }
+
 /* org */

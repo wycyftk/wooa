@@ -10,22 +10,13 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="org-structure">
-                <ul>
-                    <li><span>总经理办公室</span></li>
-                    <li><span>市场部</span></li>
-                    <li><i class="fa fa-plus-square-o" data-suborg="3"></i><span>项目部</span>
-                        <ul class="sub-structure sub-hide">
-                            <li><span>机电测控</span></li>
-                            <li><span>机器人应用</span></li>
-                            <li><span>机械设计及加工制造</span></li>
-                        </ul>
+                <ul th:if="${orgList != null}">
+                    <li th:each="orgItem : ${orgList}">
+                        <i th:if="${orgItem.rightNode - orgItem.leftNode > 1}" class="fa fa-plus-square-o" th:data-suborg="${orgItem.getId()}"></i>
+                        <span th:text="${orgItem.getOrgName()}" th:data-orgId="${orgItem.getId()}"></span>
                     </li>
-                    <li><span>研发部</span></li>
-                    <li><span>工程部</span></li>
-                    <li><span>人力资源部</span></li>
-                    <li><span>财务部</span></li>
-                    <li><span>售后服务部</span></li>
                 </ul>
+                <a href="javascript:void (0);" th:if="orgList == null">尚未添加任何组织节点</a>
             </div>
         </div>
         <div class="col-sm-8">
@@ -35,12 +26,19 @@
                     <input type="text" class="form-control" id="orgName" th:value="${org != null} ? ${org.orgName} : ''" placeholder="组织名称">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="orgName" class="col-sm-3 col-form-label">与所选节点关系</label>
+            <div class="form-group row" th:if="${org == null}">
+                <label for="orgName" class="col-sm-3 col-form-label">选中节点</label>
                 <div class="col-sm-9">
-                    <label><input type="radio" value="1">节点之前</label>
-                    <label><input type="radio" value="2">节点之后</label>
-                    <label><input type="radio" value="3">子节点</label>
+                    <input type="text" class="form-control" id="chooseOrgName" placeholder="选中节点">
+                    <input type="text" id="chooseOrgId" style="display: none;">
+                </div>
+            </div>
+            <div class="form-group row" th:if="${org == null}">
+                <label class="col-sm-3 col-form-label">与所选节点关系</label>
+                <div class="col-sm-9">
+                    <label><input type="radio" value="1" name="relation">节点之前</label>
+                    <label><input type="radio" value="2" name="relation">节点之后</label>
+                    <label><input type="radio" value="3" name="relation">子节点</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -51,8 +49,8 @@
                 <input type="text" id="id" th:value="${org != null} ? ${org.id} : ''" style="display: none">
             </div>
             <div class="form-group form-btns">
-                <button type="submit" class="col-sm-1 offset-sm-9 btn btn-primary" id="submitOrg">保存</button>
-                <button type="submit" class="col-sm-1 btn btn-default"  onclick="loadHtml('/oa/org/list')">取消</button>
+                <button type="submit" class="btn btn-primary" id="submitOrg">保存</button>
+                <button type="submit" class="btn btn-default"  onclick="loadHtml('/oa/org/list')">取消</button>
             </div>
         </div>
     </div>

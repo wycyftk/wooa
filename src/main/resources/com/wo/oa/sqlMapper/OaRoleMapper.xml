@@ -26,8 +26,8 @@
     <if test="key != null">
       WHERE concat(",", role_name, role_code) LIKE '%'#{key, jdbcType=VARCHAR}'%'
     </if>
-    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
     ORDER BY create_time DESC
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectByKey" resultMap="BaseResultMap">
     SELECT

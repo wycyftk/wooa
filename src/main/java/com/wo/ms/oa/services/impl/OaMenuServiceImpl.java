@@ -34,6 +34,11 @@ public class OaMenuServiceImpl implements OaMenuService {
     }
 
     @Override
+    public List<OaMenu> selectMenusByLevel(Integer level) {
+        return oaMenuMapper.selectMenusByLevel(level);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(OaMenu record) {
         return oaMenuMapper.updateByPrimaryKeySelective(record);
     }

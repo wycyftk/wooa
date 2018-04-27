@@ -1,9 +1,11 @@
 package com.wo.ms.oa.web.api;
 
+import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.entity.OaOrg;
 import com.wo.ms.oa.entity.OaRole;
 import com.wo.ms.oa.services.OaOrgService;
 import com.wo.ms.oa.services.OaRoleService;
+import com.wo.ms.oa.util.WebUtil;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,26 +21,38 @@ public class OaOrgApi {
     @Resource
     private OaOrgService oaOrgService;
 
+    @Resource
+    private WebUtil webUtil;
+
     @PostMapping("/add")
-    public Map<String, Object> addOrg(@RequestBody OaOrg oaOrg){
+    public Map<String, Object> addOrg(@RequestBody OaOrgDto oaOrg){
         Date now = new Date();
         Map<String, Object> result = new HashMap<>();
 
-        oaOrg.setCreateId(1);
+        if(oaOrg.getChooseOrgId() == null){
+            oaOrg.setChooseOrgId(oaOrgService.selectRootOrg().getId());
+            oaOrg.setRelation(3);
+        }
+        oaOrg.setCreateId(webUtil.getLoginId());
         oaOrg.setCreateTime(now);
-        oaOrg.setUpdateId(1);
+        oaOrg.setUpdateId(webUtil.getLoginId());
         oaOrg.setUpdateTime(now);
         oaOrg.setDelFlg(0);
-        oaOrgService.insert(oaOrg);
-        result.put("status", true);
-        result.put("message", "新增组织成功");
+        try{
+            oaOrgService.insert(oaOrg);
+            result.put("status", true);
+            result.put("message", "新增组织成功");
+        }catch (Exception e){
+            result.put("status", false);
+            result.put("message", "新增组织失败");
+        }
         return result;
     }
 
     @PutMapping("/update")
     public Map<String, Object> updateRole(@RequestBody OaOrg org){
         Map<String, Object> result = new HashMap<>();
-        org.setUpdateId(1);
+        org.setUpdateId(webUtil.getLoginId());
         org.setUpdateTime(new Date());
         oaOrgService.updateByPrimaryKeySelective(org);
         result.put("status", true);

@@ -9,7 +9,8 @@
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    console.log(data);
+                    alert("修改成功");
+                    loadHtml('/oa/role/list');
                 },
                 error: function (data) {
 
@@ -17,13 +18,15 @@
             });
         }else {
             $.ajax({
-                url: '/oa/api/role/addRole',
+                url: '/oa/api/role/add',
                 data: JSON.stringify(role),
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    console.log(data);
+                    alert("新增成功");
+                    $('#roleCode').val('');
+                    $("#roleName").val('');
                 },
                 error: function (data) {
 

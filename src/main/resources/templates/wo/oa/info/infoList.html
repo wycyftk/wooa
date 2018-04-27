@@ -10,7 +10,7 @@
         <div class="search-block">
             <input type="text" name="condition">
             <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/menu/add')">新增</button>
+            <button class="btn btn-primary" onclick="loadHtml('/oa/info/add')">新增</button>
             <button class="btn btn-primary">删除</button>
         </div>
         <div class="table-block">
@@ -20,16 +20,16 @@
                     <th>序号</th>
                     <th>标题</th>
                     <th>发布人</th>
-                    <th>URL</th>
+                    <th>重要程度</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${menuList.size() > 0}" th:each="menu, menuSata : ${menuList}">
-                        <td th:text="${menuSata.index} + 1"></td>
-                        <td th:text="${menu.menuName}"></td>
-                        <td th:text="${menu.descrition}"></td>
-                        <td th:text="${menu.menuUrl}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/menu/edit\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delMenu(' + ${menu.id} + ')'">删除</span><span>查看</span></td>
+                    <tr th:if="${infoList.size() > 0}" th:each="info, infoSata : ${infoList}">
+                        <td th:text="${infoSata.index} + 1"></td>
+                        <td th:text="${info.infoTitle}"></td>
+                        <td th:text="${info.publishId}"></td>
+                        <td th:text="${info.important == 1} ? '重要' : '一般'"></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span><span th:onclick="'delInfo(' + ${info.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
                     </tbody>
                 </table>

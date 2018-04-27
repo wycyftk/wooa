@@ -38,12 +38,16 @@
     $("#login").click(function () {
         var username = $("#username").val();
         var password = $("#password").val();
+        var user = {};
+        user.username = username;
+        user.password = password;
         if(isUsernameRight && isPasswordRight){
             $.ajax({
                 url: '/oa/api/login/in',
                 type: 'post',
                 dataType: 'json',
-                data: JSON.stringify({username: username, password: password}),
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(user),
                 success: function (data) {
                     if(data.status){
                         window.location.href = "/oa/home"

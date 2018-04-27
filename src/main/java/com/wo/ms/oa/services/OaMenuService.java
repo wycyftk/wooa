@@ -13,5 +13,7 @@ public interface OaMenuService {
 
     List<OaMenu> selectAllMenus();
 
+    List<OaMenu> selectMenusByLevel(Integer level);
+
     int updateByPrimaryKeySelective(OaMenu record);
 }

@@ -1,9 +1,7 @@
 package com.wo.ms.oa.services;
 
 import com.wo.ms.oa.entity.OaRole;
-import com.wo.ms.oa.vo.OaRoleVo;
-
-import java.util.List;
+import com.wo.ms.oa.dto.OaRolePagtionDto;
 
 public interface OaRoleService {
     int deleteByPrimaryKey(Integer id);
@@ -12,7 +10,7 @@ public interface OaRoleService {
 
     OaRole selectByPrimaryKey(Integer id);
 
-    OaRoleVo selectByKeyPaging(String key, Integer pageSize, Integer currentPage);
+    OaRolePagtionDto selectByKeyPaging(String key, Integer pageSize, Integer currentPage);
 
     int updateByPrimaryKeySelective(OaRole record);
 }

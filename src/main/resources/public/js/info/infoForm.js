@@ -1,10 +1,10 @@
 (function ($) {
     $('#submitOrg').click(function () {
-        var org = getOrg();
-        if(org.id){
+        var info = getOrg();
+        if(info.id){
             $.ajax({
-                url: '/oa/api/org/update',
-                data: JSON.stringify(org),
+                url: '/oa/api/info/update',
+                data: JSON.stringify(info),
                 dataType: 'json',
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
@@ -17,8 +17,8 @@
             });
         }else {
             $.ajax({
-                url: '/oa/api/org/addRole',
-                data: JSON.stringify(org),
+                url: '/oa/api/info/add',
+                data: JSON.stringify(info),
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json;charset=utf-8',
@@ -32,11 +32,23 @@
         }
     });
     
-    function getOrg() {
-        var org = {};
-        org.id = $("#id").val();
-        org.orgName = $("#roleName").val();
-        org.descrition = $('#roleCode').val();
-        return org;
+    function getInfo() {
+        var info = {};
+        info.id = $("#id").val();
+        info.infoTitle = $("#infoTitle").val();
+        $("input[name=important]").each(function () {
+           var _this = this;
+           if(_this.checked){
+               info.important = $(_this).val();
+           }
+        });
+        $("input[name=orgId]").each(function () {
+            var _this = this;
+            if(_this.checked){
+                info.orgId = $(_this).val();
+            }
+        });
+        info.content = $("#content").val();
+        return info;
     }
 })(jQuery);

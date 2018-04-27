@@ -17,9 +17,9 @@ public class LoginApi {
     private OaUserService oaUserService;
 
     @PostMapping("/in")
-    public Map<String, Object> login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
+    public Map<String, Object> login(@RequestBody OaUser oaUser, HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
-        Integer userId = oaUserService.checkUser(username, password);
+        Integer userId = oaUserService.checkUser(oaUser.getUsername(), oaUser.getPassword());
         if(userId > 0){
             request.getSession().setAttribute("loginId", userId);
             result.put("status", true);

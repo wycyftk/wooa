@@ -1,10 +1,10 @@
-package com.wo.ms.oa.vo;
+package com.wo.ms.oa.dto;
 
 import com.wo.ms.oa.entity.OaRole;
 
 import java.util.List;
 
-public class OaRoleVo {
+public class OaRolePagtionDto {
     private List<OaRole> roleList;
     private Integer pageSize;
     private Integer currentPage;

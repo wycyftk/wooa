@@ -3,11 +3,10 @@ package com.wo.ms.oa.services.impl;
 import com.wo.ms.oa.dao.OaRoleMapper;
 import com.wo.ms.oa.entity.OaRole;
 import com.wo.ms.oa.services.OaRoleService;
-import com.wo.ms.oa.vo.OaRoleVo;
+import com.wo.ms.oa.dto.OaRolePagtionDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class OaRoleServiceImpl implements OaRoleService {
@@ -30,8 +29,8 @@ public class OaRoleServiceImpl implements OaRoleService {
     }
 
     @Override
-    public OaRoleVo selectByKeyPaging(String key, Integer pageSize, Integer currentPage) {
-        OaRoleVo oaRoleVo = new OaRoleVo();
+    public OaRolePagtionDto selectByKeyPaging(String key, Integer pageSize, Integer currentPage) {
+        OaRolePagtionDto oaRoleVo = new OaRolePagtionDto();
         oaRoleVo.setCurrentPage(currentPage);
         oaRoleVo.setPageSize(pageSize);
         oaRoleVo.setRoleList(oaRoleMapper.selectByKeyPaging(key, pageSize, (currentPage - 1) * pageSize));
