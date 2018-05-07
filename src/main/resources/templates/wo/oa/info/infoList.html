@@ -22,7 +22,6 @@
                     <thead>
                     <th>序号</th>
                     <th>标题</th>
-                    <th>发布人</th>
                     <th>信息类型</th>
                     <th>重要程度</th>
                     <th>操作</th>
@@ -31,10 +30,9 @@
                     <tr th:if="${infoPagtion.getInfoList().size() > 0}" th:each="info, infoSata : ${infoPagtion.getInfoList()}">
                         <td th:text="${infoSata.index} + 1"></td>
                         <td th:text="${info.infoTitle}"></td>
-                        <td th:text="${info.publishId}"></td>
                         <td th:text="${info.orgId != null} ? '部门公告' : '全体消息'"></td>
                         <td th:text="${info.important == 1} ? '重要' : '一般'"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span><span th:onclick="'delInfo(' + ${info.id} + ')'">删除</span><span>查看</span></td>
+                        <td><span th:if="${info.publishId} == ${loginId}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span><span th:if="${info.publishId} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
                     </tbody>
                 </table>

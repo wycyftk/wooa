@@ -1,4 +1,4 @@
-var delOrg = function (id) {
+var delInfo = function (id) {
 
     $.ajax({
        url: '/oa/api/info/del?id=' + id,

@@ -5,6 +5,7 @@ import com.wo.ms.oa.entity.OaInfo;
 import com.wo.ms.oa.entity.OaMenu;
 import com.wo.ms.oa.services.OaInfoService;
 import com.wo.ms.oa.services.OaMenuService;
+import com.wo.ms.oa.util.WebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +20,17 @@ public class OaInfoController {
     @Resource
     private OaInfoService oaInfoService;
 
+    @Resource
+    private WebUtil webUtil;
+
     @RequestMapping("/list")
     public ModelAndView infoList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
         ModelAndView view = new ModelAndView("wo/oa/info/infoList");
         OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage);
-        key = key != null ? "" : key;
+        key = key == null ? "" : key;
         view.addObject("infoPagtion", infoPagtion);
         view.addObject("key", key);
+        view.addObject("loginId", webUtil.getLoginId());
         return view;
     }
 
