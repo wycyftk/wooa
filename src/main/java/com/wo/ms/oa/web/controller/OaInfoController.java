@@ -1,11 +1,13 @@
 package com.wo.ms.oa.web.controller;
 
+import com.wo.ms.oa.dto.OaInfoPagtionDto;
 import com.wo.ms.oa.entity.OaInfo;
 import com.wo.ms.oa.entity.OaMenu;
 import com.wo.ms.oa.services.OaInfoService;
 import com.wo.ms.oa.services.OaMenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -18,10 +20,12 @@ public class OaInfoController {
     private OaInfoService oaInfoService;
 
     @RequestMapping("/list")
-    public ModelAndView infoList(){
+    public ModelAndView infoList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
         ModelAndView view = new ModelAndView("wo/oa/info/infoList");
-        List<OaInfo> infoList = oaInfoService.selectAllInfos();
-        view.addObject("infoList", infoList);
+        OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage);
+        key = key != null ? "" : key;
+        view.addObject("infoPagtion", infoPagtion);
+        view.addObject("key", key);
         return view;
     }
 

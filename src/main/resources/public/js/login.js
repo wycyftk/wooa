@@ -4,6 +4,7 @@
 
     var loginPrompt = function (info) {
         $(".login-prompt").text(info);
+        $(".login-prompt").show();
     }
 
     $("#username").on("input propertychange", function () {
@@ -16,6 +17,7 @@
             loginPrompt("用户名只能为大小写字母与数字");
             isUsernameRight = false;
         }else {
+            loginPrompt("");
             isUsernameRight = true;
         }
     });
@@ -31,6 +33,7 @@
             loginPrompt("密码只能为大小写字母、数字和标点符号");
             isPasswordRight = false;
         }else{
+            loginPrompt("");
             isPasswordRight = true;
         }
     });
@@ -42,6 +45,7 @@
         user.username = username;
         user.password = password;
         if(isUsernameRight && isPasswordRight){
+            loginPrompt("");
             $.ajax({
                 url: '/oa/api/login/in',
                 type: 'post',
@@ -53,6 +57,7 @@
                         window.location.href = "/oa/home"
                     }else {
                         loginPrompt("用户名或密码错误");
+                        $("#password").val("");
                         isUsernameRight = false;
                         isPasswordRight = false;
                     }

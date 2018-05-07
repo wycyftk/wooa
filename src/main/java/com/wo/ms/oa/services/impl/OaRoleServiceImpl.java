@@ -34,7 +34,7 @@ public class OaRoleServiceImpl implements OaRoleService {
         oaRoleVo.setCurrentPage(currentPage);
         oaRoleVo.setPageSize(pageSize);
         oaRoleVo.setRoleList(oaRoleMapper.selectByKeyPaging(key, pageSize, (currentPage - 1) * pageSize));
-        oaRoleVo.setTotalPage((oaRoleMapper.selectByKey(key).size() - 1 / pageSize ) + 1);
+        oaRoleVo.setTotalPage(((oaRoleMapper.selectByKey(key).size() - 1 )/ pageSize ) + 1);
         return oaRoleVo;
     }
 

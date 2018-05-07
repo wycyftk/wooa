@@ -19,11 +19,11 @@
                 <span class="info-num">1</span>
             </div>
             <div class="user-block">
-                <a href="#" class="username">张三</a>
+                <a href="#" class="username" th:text="${user.name}"></a>
                 <ul class="user-operation">
-                    <li><a href="#">修改密码</a></li>
-                    <li><a href="#">个人信息</a></li>
-                    <li class="logout"><a href="#">退出</a></li>
+                    <li><a href="#" th:onclick="'updatePassword(' + ${user.getId()} + ')'">修改密码</a></li>
+                    <li><a href="#" th:onclick="'personalInfo(' + ${user.getId()} + ')'">个人信息</a></li>
+                    <li class="logout" onclick="logout()"><a href="#">退出</a></li>
                 </ul>
             </div>
         </div>

@@ -12,3 +12,8 @@ var delUser = function (id) {
         }
     });
 }
+
+$("#search").click(function () {
+    var key = $("#key").val();
+    loadHtml('/oa/user/list', {key: key, pageSize: 10, currentPage: 1});
+});

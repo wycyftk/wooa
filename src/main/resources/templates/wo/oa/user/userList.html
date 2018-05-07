@@ -7,11 +7,14 @@
 <body>
 <div th:fragment="userList">
     <div class="list-content">
-        <div class="search-block">
-            <input type="text" name="condition">
-            <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/user/addUser')">新增</button>
-            <button class="btn btn-primary">删除</button>
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="用户名/姓名/邮箱/手机号" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/user/add')">新增</button>
+            </div>
         </div>
         <div class="table-block">
             <div class="table-content">
@@ -26,25 +29,27 @@
                         <th>操作</th>
                     </thead>
                     <tbody>
-                        <tr th:if="${userList.size() > 0}" th:each="user, userStat : ${userList}">
+                        <tr th:if="${oaUserPagtion.getUserList().size() > 0}" th:each="user, userStat : ${oaUserPagtion.getUserList()}">
                             <td th:text="${userStat.index} + 1"></td>
                             <td th:text="${user.name}"></td>
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.sex} == 1 ? '男' : '女'"></td>
                             <td th:text="${user.mobile}"></td>
                             <td th:text="${user.email}"></td>
-                            <td><span th:onclick="'loadHtml(\'/oa/user/editUser\',{id:' +  ${user.id} + '})'">编辑</span><span th:onclick="'delRole(' + ${user.id} + ')'">删除</span><span>查看</span></td>
+                            <td><span th:onclick="'loadHtml(\'/oa/user/editUser\',{id:' +  ${user.id} + '})'">编辑</span><span th:onclick="'deluser(' + ${user.id} + ')'">删除</span><span>查看</span></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="pagination-block">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                            <li th:class="${oaUserPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${oaUserPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaUserPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${oaUserPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaUserPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li th:if="${oaUserPagtion.getCurrentPage() > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${oaUserPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${oaUserPagtion.getCurrentPage() + 1 <= oaUserPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaUserPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${oaUserPagtion.getCurrentPage() + 2 <= oaUserPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaUserPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${oaUserPagtion.getCurrentPage() < oaUserPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/user/list\',{pageSize:10,currentPage:' + ${oaUserPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -17,7 +17,7 @@ public class OaOrg extends BaseEntity{
      * 描述
      */
     @Column(length = 20)
-    private String descrition;
+    private String description;
 
     /**
      * 左节点值
@@ -49,12 +49,12 @@ public class OaOrg extends BaseEntity{
         this.orgName = orgName;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrition(String descrition) {
-        this.descrition = descrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getLeftNode() {

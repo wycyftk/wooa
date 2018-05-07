@@ -24,7 +24,7 @@
     <include refid="Base_Column_List" />
     FROM oa_role
     <if test="key != null">
-      WHERE concat(",", role_name, role_code) LIKE '%'#{key, jdbcType=VARCHAR}'%'
+      WHERE concat_ws(",", role_name, role_code) LIKE '%'#{key, jdbcType=VARCHAR}'%'
     </if>
     ORDER BY create_time DESC
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
@@ -34,7 +34,7 @@
     <include refid="Base_Column_List" />
     FROM oa_role
     <if test="key != null">
-      WHERE concat(",", role_name, role_code) LIKE '%'#{key, jdbcType=VARCHAR}'%'
+      WHERE concat_ws(",", role_name, role_code) LIKE '%'#{key, jdbcType=VARCHAR}'%'
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -7,11 +7,14 @@
 <body>
 <div th:fragment="infoList">
     <div class="list-content">
-        <div class="search-block">
-            <input type="text" name="condition">
-            <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/info/add')">新增</button>
-            <button class="btn btn-primary">删除</button>
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="信息标题/内容" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/info/add')">新增</button>
+            </div>
         </div>
         <div class="table-block">
             <div class="table-content">
@@ -20,14 +23,16 @@
                     <th>序号</th>
                     <th>标题</th>
                     <th>发布人</th>
+                    <th>信息类型</th>
                     <th>重要程度</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${infoList.size() > 0}" th:each="info, infoSata : ${infoList}">
+                    <tr th:if="${infoPagtion.getInfoList().size() > 0}" th:each="info, infoSata : ${infoPagtion.getInfoList()}">
                         <td th:text="${infoSata.index} + 1"></td>
                         <td th:text="${info.infoTitle}"></td>
                         <td th:text="${info.publishId}"></td>
+                        <td th:text="${info.orgId != null} ? '部门公告' : '全体消息'"></td>
                         <td th:text="${info.important == 1} ? '重要' : '一般'"></td>
                         <td><span th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span><span th:onclick="'delInfo(' + ${info.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
@@ -36,11 +41,13 @@
                 <div class="pagination-block">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                            <li th:class="${infoPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${infoPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${infoPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${infoPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${infoPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${infoPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${infoPagtion.getCurrentPage() + 1 <= infoPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${infoPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${infoPagtion.getCurrentPage() + 2 <= infoPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${infoPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${infoPagtion.getCurrentPage() < infoPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/info/list\',{pageSize:10,currentPage:' + ${infoPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
                         </ul>
                     </nav>
                 </div>

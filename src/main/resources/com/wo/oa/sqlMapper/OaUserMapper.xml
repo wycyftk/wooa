@@ -32,14 +32,27 @@
     FROM oa_user
     WHERE del_flg = 0
     <if test="key != null">
-      AND  concat(',', NAME , username, email, mobile) LIKE '%'#{key, jdbcType=VARCHAR}'%'
+      AND concat_ws(',', NAME , username, email, mobile) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+  </select>
+  <select id="selectOaUserByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_user
+    WHERE del_flg = 0
+    <if test="key != null">
+      AND concat_ws(',', NAME , username, email, mobile) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
     ORDER BY create_time DESC
+    limit #{start, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectUserByUsername" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     FROM oa_user WHERE username = #{username, jdbcType=VARCHAR} AND del_flg = 0
+  </select>
+  <select id="selectOrgIdByUserId" resultType="java.lang.Integer">
+    SELECT org_id FROM user_org WHERE user_id = #{userId, jdbcType=INTEGER}
   </select>
   <update id="deleteByPrimaryKey">
     UPDATE oa_user SET del_flg = 1 WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0
@@ -70,7 +83,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="birthday != null">
-        birthday = #{birthday,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=DATE},
       </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=VARCHAR},

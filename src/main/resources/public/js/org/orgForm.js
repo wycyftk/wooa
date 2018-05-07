@@ -47,7 +47,7 @@
             if(subOrg.length){
                 subOrg.toggleClass("sub-hide");
             }else{
-                adSsubOrg($(_this).parent(), $(_this).data('suborg'));
+                addSubOrg($(_this).parent(), $(_this).data('suborg'));
             }
         });
     });
@@ -59,12 +59,12 @@
                 $("#chooseOrgName").val($(_this).text());
                 $("#chooseOrgId").val($(_this).data('orgid'));
             }
-            $(_this).unbind("click", chooseOrg);
-            $(_this).click(chooseOrg);
+            $(".fa-plus-square-o").unbind("click", chooseOrg);
+            $(".fa-plus-square-o").click(chooseOrg);
         });
     }
 
-    function adSsubOrg(el, orgId) {
+    function addSubOrg(el, orgId) {
         $.ajax({
             url: '/oa/api/org/subOrg?id=' + orgId,
             dataType: 'json',

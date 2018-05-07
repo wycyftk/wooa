@@ -8,7 +8,7 @@
     <result column="update_id" jdbcType="INTEGER" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="del_flg" jdbcType="INTEGER" property="delFlg" />
-    <result column="descrition" jdbcType="VARCHAR" property="descrition" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="left_node" jdbcType="INTEGER" property="leftNode" />
     <result column="menu_level" jdbcType="INTEGER" property="menuLevel" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
@@ -16,7 +16,7 @@
     <result column="right_node" jdbcType="INTEGER" property="rightNode" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, update_id, update_time, del_flg, descrition, left_node, 
+    id, create_id, create_time, update_id, update_time, del_flg, description, left_node, 
     menu_level, menu_name, menu_url, right_node
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,6 +36,35 @@
     <include refid="Base_Column_List" />
     FROM oa_menu WHERE del_flg = 0 AND menu_level = #{level, jdbcType=INTEGER} ORDER BY left_node
   </select>
+  <select id="selectMenusByKey" resultType="java.lang.Integer">
+    SELECT count(*) FROM oa_menu
+    WHERE del_flg = 0 AND left_node > 1
+    <if test="key != null">
+      AND concat_ws(",", menu_name, description) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+  </select>
+  <select id="selectMenusByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_menu WHERE
+    <if test="key != null">
+      concat_ws(",", menu_name, description) LIKE #{key, jdbcType=VARCHAR} '%' AND
+    </if>
+    del_flg = 0 AND left_node > 1 ORDER BY left_node
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectRootMenu" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_menu WHERE left_node = 1 AND del_flg = 0
+  </select>
+  <select id="selectSubMenu" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_menu, (SELECT right_node AS rn, left_node AS ln, menu_level AS lev FROM oa_menu WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0) AS p
+    WHERE oa_menu.left_node > p.ln AND <![CDATA[oa_menu.right_node < p.rn and]]> oa_menu.menu_level = p.lev + 1 AND del_flg = 0
+    ORDER BY oa_menu.left_node
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_menu
     where id = #{id,jdbcType=INTEGER}
@@ -43,13 +72,41 @@
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaMenu">
     insert into oa_menu (id, create_id, create_time, 
       update_id, update_time, del_flg, 
-      descrition, left_node, menu_level, 
+      description, left_node, menu_level, 
       menu_name, menu_url, right_node
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlg,jdbcType=INTEGER}, 
-      #{descrition,jdbcType=VARCHAR}, #{leftNode,jdbcType=INTEGER}, #{menuLevel,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{leftNode,jdbcType=INTEGER}, #{menuLevel,jdbcType=INTEGER}, 
       #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{rightNode,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertMenu" parameterType="com.wo.ms.oa.dto.OaMenuDto">
+    SELECT @left_node := left_node, @right_node := right_node, @level := menu_level
+      FROM oa_menu WHERE id = #{chooseMenuId, jdbcType=INTEGER} AND del_flg = 0;
+    UPDATE oa_menu SET left_node = left_node + 2 WHERE left_node
+    <if test="relation == 1"> >= </if>
+    <if test="relation >= 2"> > </if> @left_node AND del_flg = 0;
+    UPDATE oa_menu SET right_node = right_node + 2 WHERE right_node
+    <if test="relation != 2"> >= </if>
+    <if test="relation == 2"> > </if> @right_node AND del_flg = 0;
+    insert into oa_menu (id, create_id, create_time,
+      update_id, update_time, del_flg,
+      description, left_node, menu_level,
+      menu_name, menu_url, right_node
+      )
+      values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlg,jdbcType=INTEGER},
+      #{description,jdbcType=VARCHAR},
+      <if test="relation == 1">@left_node</if>
+      <if test="relation == 2">@right_node + 1</if>
+      <if test="relation == 3">@right_node</if>,
+      <if test="relation != 3">@level</if>
+      <if test="relation == 3">@level + 1</if>,
+      #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR},
+      <if test="relation == 1">@left_node + 1</if>
+      <if test="relation == 2">@right_node + 2</if>
+      <if test="relation == 3">@right_node + 1</if>
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaMenu">
@@ -70,8 +127,8 @@
       <if test="delFlg != null">
         del_flg = #{delFlg,jdbcType=INTEGER},
       </if>
-      <if test="descrition != null">
-        descrition = #{descrition,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="leftNode != null">
         left_node = #{leftNode,jdbcType=INTEGER},

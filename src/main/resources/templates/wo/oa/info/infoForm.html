@@ -10,16 +10,16 @@
     <div class="form-group row">
         <label for="infoTitle" class="col-sm-1 col-form-label">标题</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="infoTitle" placeholder="标题">
+            <input type="text" class="form-control" id="infoTitle" th:value="${info != null} ? ${info.infoTitle} : ''" placeholder="标题">
         </div>
         <label class="offset-sm-1 col-sm-1 col-form-label">是否重要</label>
         <div class="col-sm-4 form-check form-check-inline">
             <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="important" value="1" id="important1">
+                <input type="radio" class="form-check-input" name="important" th:checked="${info != null} and ${info.important == 1} ?  true : false" value="1" id="important1">
                 <label class="form-check-label" for="important1">是</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="important" value="0" id="important2">
+                <input type="radio" class="form-check-input" name="important" th:checked="${info != null} and ${info.important == 1} ?  false : true" value="0" id="important2">
                 <label class="form-check-label" for="important2">否</label>
             </div>
         </div>
@@ -28,11 +28,11 @@
         <label class="col-sm-1 col-form-label">部门通知</label>
         <div class="col-sm-4">
             <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="orgId" value="1" id="orgId1">
+                <input type="radio" class="form-check-input" name="orgId" th:checked="${info != null} and ${info.orgId != null} ?  true : false" value="1" id="orgId1">
                 <label class="form-check-label" for="orgId1">是</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="orgId" value="0" id="orgId2">
+                <input type="radio" class="form-check-input" name="orgId" th:checked="${info != null} and ${info.orgId != null} ?  false : true" value="0" id="orgId2">
                 <label class="form-check-label" for="orgId2">否</label>
             </div>
         </div>
@@ -40,13 +40,13 @@
     <div class="form-group row">
         <label for="content" class="col-sm-1 col-form-label">内容</label>
         <div class="col-sm-10">
-            <textarea class="form-control" id="content" rows="15"></textarea>
+            <textarea class="form-control" id="content" rows="15" th:value="${info != null} ? ${info.content} : ''"></textarea>
         </div>
         <input type="text" id="id" style="display: none;" th:value="${info != null} ? ${info.id} : ''">
     </div>
     <div class="form-group form-btns">
-        <button type="submit" class="btn btn-primary">保存</button>
-        <button type="submit" class="btn btn-default">取消</button>
+        <button type="submit" class="btn btn-primary" id="submitInfo">保存</button>
+        <button type="submit" class="btn btn-default" onclick="loadHtml('/oa/info/list')">取消</button>
     </div>
 </div>
 <script src="/public/js/info/infoForm.js" type="text/javascript"></script>

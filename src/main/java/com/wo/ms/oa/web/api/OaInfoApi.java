@@ -2,6 +2,7 @@ package com.wo.ms.oa.web.api;
 
 import com.wo.ms.oa.entity.OaInfo;
 import com.wo.ms.oa.services.OaInfoService;
+import com.wo.ms.oa.services.OaUserService;
 import com.wo.ms.oa.util.WebUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,9 @@ public class OaInfoApi {
     private OaInfoService oaInfoService;
 
     @Resource
+    private OaUserService oaUserService;
+
+    @Resource
     private WebUtil webUtil;
 
     @PostMapping("/add")
@@ -32,6 +36,12 @@ public class OaInfoApi {
         oaInfo.setCreateTime(now);
         oaInfo.setDelFlg(0);
         //todo 查询当前登录人的部门
+        if(oaInfo.getOrgId() == 1){
+            Integer orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
+            oaInfo.setOrgId(orgId);
+        }
+        oaInfo.setPublishId(webUtil.getLoginId());
+        oaInfo.setStatus(1);
         oaInfoService.insert(oaInfo);
         result.put("status", true);
         result.put("message", "信息发布成功");

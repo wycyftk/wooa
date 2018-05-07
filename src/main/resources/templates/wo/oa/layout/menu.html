@@ -12,18 +12,14 @@
             <li>
                 <a href="javascript:;"><i class="fa fa-cogs"></i>系统管理</a>
                 <ul class="sub-menu-nav">
-                    <li><a href="javascript:;" onclick="loadHtml('/oa/org/list')">组织管理</a></li>
-                    <li><a href="javascript:;" onclick="loadHtml('/oa/menu/list')">菜单管理</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/org/list', {pageSize:10, currentPage:1})">组织管理</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/menu/list', {pageSize:10, currentPage:1})">菜单管理</a></li>
                     <li><a href="javascript:;" onclick="loadHtml('/oa/role/list', {pageSize:10, currentPage:1})">角色管理</a></li>
-                    <li><a href="javascript:;" onclick="loadHtml('/oa/user/list')">人员管理</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/user/list', {pageSize:10, currentPage:1})">人员管理</a></li>
                 </ul>
             </li>
             <li>
-                <a href="javascript:;"><i class="fa fa-info-circle"></i>新闻发布</a>
-                <ul class="sub-menu-nav">
-                    <li><a href="javascript:;" onclick="loadHtml('/oa/info/list')">全体消息</a></li>
-                    <li><a href="javascript:;">部门通告</a></li>
-                </ul>
+                <a href="javascript:;" onclick="loadHtml('/oa/info/list', {pageSize:10, currentPage:1})"><i class="fa fa-info-circle"></i>公告消息</a>
             </li>
             <li>
                 <a href="javascript:;"><i class="fa fa-stack-overflow"></i>流程管理</a>
@@ -35,17 +31,10 @@
                 </ul>
             </li>
             <li>
-                <a href="javascript:;"><i class="fa fa-comments"></i>会议室管理</a>
+                <a href="javascript:;"><i class="fa fa-bookmark"></i>辅助办公</a>
                 <ul class="sub-menu-nav">
                     <li><a href="javascript:;">会议室管理</a></li>
-                    <li><a href="javascript:;">会议记录</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;"><i class="fa fa-car"></i>车辆管理</a>
-                <ul class="sub-menu-nav">
                     <li><a href="javascript:;">车辆管理</a></li>
-                    <li><a href="javascript:;">车辆使用记录</a></li>
                 </ul>
             </li>
         </ul>

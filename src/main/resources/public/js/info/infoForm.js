@@ -1,6 +1,6 @@
 (function ($) {
-    $('#submitOrg').click(function () {
-        var info = getOrg();
+    $('#submitInfo').click(function () {
+        var info = getInfo();
         if(info.id){
             $.ajax({
                 url: '/oa/api/info/update',

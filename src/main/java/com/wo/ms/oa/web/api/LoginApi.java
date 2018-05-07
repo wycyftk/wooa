@@ -19,12 +19,13 @@ public class LoginApi {
     @PostMapping("/in")
     public Map<String, Object> login(@RequestBody OaUser oaUser, HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
-        Integer userId = oaUserService.checkUser(oaUser.getUsername(), oaUser.getPassword());
-        if(userId > 0){
+        try{
+            Integer userId = oaUserService.checkUser(oaUser.getUsername(), oaUser.getPassword());
             request.getSession().setAttribute("loginId", userId);
             result.put("status", true);
             result.put("message", "登录成功");
-        }else {
+        }catch (Exception e){
+            e.printStackTrace();
             result.put("status", false);
             result.put("message", "帐号或密码错误");
         }

@@ -37,6 +37,7 @@ public class OaInfo extends BaseEntity {
 
     /**
      * 状态
+     * 0.草稿 1.已发布
      */
     private Integer status;
 

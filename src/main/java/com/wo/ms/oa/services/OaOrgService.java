@@ -1,6 +1,7 @@
 package com.wo.ms.oa.services;
 
 import com.wo.ms.oa.dto.OaOrgDto;
+import com.wo.ms.oa.dto.OaOrgPagtionDto;
 import com.wo.ms.oa.entity.OaOrg;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,7 +18,7 @@ public interface OaOrgService {
 
     List<OaOrg> selectOrgByLevel(Integer level, Integer parentId);
 
-    List<OaOrg> selectAllOrg();
+    OaOrgPagtionDto selectAllOrg(String key, Integer pageSize, Integer currentSize);
 
     List<OaOrg> selectSubOrg(Integer id);
 

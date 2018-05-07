@@ -1,5 +1,6 @@
 package com.wo.ms.oa.services;
 
+import com.wo.ms.oa.dto.OaInfoPagtionDto;
 import com.wo.ms.oa.entity.OaInfo;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface OaInfoService {
     List<OaInfo> selectAllInfos();
 
     int updateByPrimaryKeySelective(OaInfo record);
+
+    OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage);
 }

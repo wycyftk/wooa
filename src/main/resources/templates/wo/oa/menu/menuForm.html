@@ -7,29 +7,59 @@
 <body>
 <div class="menuForm">
     <h4 class="form-title">菜单管理</h4>
-    <form>
-        <div class="form-group row">
-            <label for="menuName" class="col-sm-1 col-form-label">菜单名</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuName" th:value="${menu != null} ? ${menu.menuName} : ''" placeholder="菜单名">
-            </div>
-            <label for="descrition" class="offset-sm-1 col-sm-1 col-form-label">描述</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="descrition" th:value="${menu != null} ? ${menu.descrition} : ''" placeholder="描述">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="menu-structure">
+                <ul th:if="${menuList != null}">
+                    <li th:each="menuItem : ${menuList}">
+                        <i th:if="${menuItem.rightNode - menuItem.leftNode > 1}" class="fa fa-plus-square-o" th:data-submenu="${menuItem.getId()}"></i>
+                        <span th:text="${menuItem.getMenuName()}" th:data-menuId="${menuItem.getId()}"></span>
+                    </li>
+                </ul>
+                <a href="javascript:void (0);" th:if="menuList == null">尚未添加任何菜单节点</a>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="menuUrl" class="col-sm-1 col-form-label">菜单URL</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuUrl" th:value="${menu != null} ? ${menu.menuUrl} : ''" placeholder="菜单URL">
+        <div class="col-sm-8">
+            <div class="form-group row">
+                <label for="menuName" class="col-sm-3 col-form-label">菜单名</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="menuName" th:value="${menu != null} ? ${menu.menuName} : ''" placeholder="菜单名">
+                </div>
             </div>
-            <input type="text" id="id" th:value="${menu != null} ? ${menu.id} : ''" style="display: none;">
+            <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">描述</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="description" th:value="${menu != null} ? ${menu.description} : ''" placeholder="描述">
+                </div>
+            </div>
+            <div class="form-group row" th:if="${menu == null}">
+                <label for="menuName" class="col-sm-3 col-form-label">选中节点</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="chooseMenuName" placeholder="选中节点">
+                    <input type="text" id="chooseMenuId" style="display: none;">
+                </div>
+            </div>
+            <div class="form-group row" th:if="${menu == null}">
+                <label class="col-sm-3 col-form-label">与所选节点关系</label>
+                <div class="col-sm-9">
+                    <label><input type="radio" value="1" name="relation">节点之前</label>
+                    <label><input type="radio" value="2" name="relation">节点之后</label>
+                    <label><input type="radio" value="3" name="relation">子节点</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="menuUrl" class="col-sm-3 col-form-label">菜单URL</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="menuUrl" th:value="${menu != null} ? ${menu.menuUrl} : ''" placeholder="菜单URL">
+                </div>
+                <input type="text" id="id" th:value="${menu != null} ? ${menu.id} : ''" style="display: none;">
+            </div>
+            <div class="form-group form-btns">
+                <button type="submit" class="btn btn-primary" id="submitMenu">保存</button>
+                <button type="submit" class="btn btn-default" onclick="loadHtml('/oa/menu/list', {pageSize: 10, currentPage: 1, key: ''})">取消</button>
+            </div>
         </div>
-        <div class="form-group form-btns">
-            <button type="submit" class="btn btn-primary">保存</button>
-            <button type="submit" class="btn btn-default">取消</button>
-        </div>
-    </form>
+    </div>
 </div>
 <script src="/public/js/menu/menuForm.js" type="text/javascript"></script>
 </body>

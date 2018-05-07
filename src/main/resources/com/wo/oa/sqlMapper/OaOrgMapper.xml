@@ -8,14 +8,14 @@
     <result column="update_id" jdbcType="INTEGER" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="del_flg" jdbcType="INTEGER" property="delFlg" />
-    <result column="descrition" jdbcType="VARCHAR" property="descrition" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="left_node" jdbcType="INTEGER" property="leftNode" />
     <result column="org_level" jdbcType="INTEGER" property="orgLevel" />
     <result column="org_name" jdbcType="VARCHAR" property="orgName" />
     <result column="right_node" jdbcType="INTEGER" property="rightNode" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, update_id, update_time, del_flg, descrition, left_node, 
+    id, create_id, create_time, update_id, update_time, del_flg, description, left_node,
     org_level, org_name, right_node
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -27,7 +27,22 @@
   <select id="selectAllOrg" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"></include>
-    FROM oa_org WHERE del_flg = 0 AND left_node > 1 ORDER BY left_node
+    FROM oa_org
+    WHERE
+    <if test="key != null">
+      CONCAT_WS(",", org_name, description) LIKE '%' #{key, jdbcType=VARCHAR} '%' AND
+    </if>
+    del_flg = 0 AND left_node > 1
+    ORDER BY left_node
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="getAllOrgCount" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM oa_org
+    WHERE
+    <if test="key != null">
+      concat_ws(",", org_name, description) LIKE '%' #{key, jdbcType=VARCHAR} '%' AND
+    </if>
+    del_flg = 0 AND left_node > 1
   </select>
   <select id="selectOrgByLevel" resultMap="BaseResultMap">
     select
@@ -68,11 +83,11 @@
     <if test="relation == 2"> > </if> @right_node AND del_flg = 0;
     insert into oa_org (id, create_id, create_time, 
       update_id, update_time, del_flg, 
-      descrition, left_node, org_level, 
+      description, left_node, org_level,
       org_name, right_node)
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlg,jdbcType=INTEGER}, 
-      #{descrition,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
       <if test="relation == 1">@left_node</if>
       <if test="relation == 2">@right_node + 1</if>
       <if test="relation == 3">@right_node</if>,
@@ -102,8 +117,8 @@
       <if test="delFlg != null">
         del_flg = #{delFlg,jdbcType=INTEGER},
       </if>
-      <if test="descrition != null">
-        descrition = #{descrition,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="leftNode != null">
         left_node = #{leftNode,jdbcType=INTEGER},

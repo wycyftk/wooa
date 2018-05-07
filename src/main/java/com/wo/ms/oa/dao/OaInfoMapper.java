@@ -2,6 +2,7 @@ package com.wo.ms.oa.dao;
 
 import com.wo.ms.oa.entity.OaInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface OaInfoMapper {
     List<OaInfo> selectAllInfos();
 
     int updateByPrimaryKeySelective(OaInfo record);
+
+    List<OaInfo> selectInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start);
+
+    Integer selectInfoByKey(@Param("key") String key);
 }

@@ -2,6 +2,7 @@ package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.OaOrgMapper;
 import com.wo.ms.oa.dto.OaOrgDto;
+import com.wo.ms.oa.dto.OaOrgPagtionDto;
 import com.wo.ms.oa.entity.OaOrg;
 import com.wo.ms.oa.services.OaOrgService;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,14 @@ public class OaOrgServiceImpl implements OaOrgService {
     }
 
     @Override
-    public List<OaOrg> selectAllOrg() {
-        return oaOrgMapper.selectAllOrg();
+    public OaOrgPagtionDto selectAllOrg(String key, Integer pageSize, Integer currentPage) {
+        List<OaOrg> orgList = oaOrgMapper.selectAllOrg(key, (currentPage - 1) * pageSize, pageSize);
+        OaOrgPagtionDto oaOrgPagtionDto = new OaOrgPagtionDto();
+        oaOrgPagtionDto.setCurrentPage(currentPage);
+        oaOrgPagtionDto.setPageSize(pageSize);
+        oaOrgPagtionDto.setOrgList(orgList);
+        oaOrgPagtionDto.setTotalPage((oaOrgMapper.getAllOrgCount(key) - 1) / pageSize + 1);
+        return oaOrgPagtionDto;
     }
 
     @Override

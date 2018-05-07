@@ -1,7 +1,9 @@
 package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.OaUserMapper;
+import com.wo.ms.oa.dto.OaUserPagtionDto;
 import com.wo.ms.oa.entity.OaUser;
+import com.wo.ms.oa.entity.UserOrg;
 import com.wo.ms.oa.services.OaUserService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,16 @@ public class OaUserServiceImpl implements OaUserService{
     @Override
     public List<OaUser> selectOaUserByKey(String key) {
         return oaUserMapper.selectOaUserByKey(key);
+    }
+
+    @Override
+    public OaUserPagtionDto selectOaUserPagtion(String key, Integer pageSize, Integer currentPage) {
+        OaUserPagtionDto oaUserPagtionDto = new OaUserPagtionDto();
+        oaUserPagtionDto.setCurrentPage(currentPage);
+        oaUserPagtionDto.setPageSize(pageSize);
+        oaUserPagtionDto.setUserList(oaUserMapper.selectOaUserByKeyLimit(key, pageSize, (currentPage - 1) * pageSize));
+        oaUserPagtionDto.setTotalPage((oaUserMapper.selectOaUserByKey(key).size() - 1) / pageSize + 1);
+        return oaUserPagtionDto;
     }
 
     @Override
@@ -74,5 +86,10 @@ public class OaUserServiceImpl implements OaUserService{
             e.printStackTrace();
             return -1;
         }
+    }
+
+    @Override
+    public Integer selectOrgIdByUserId(Integer userId) {
+        return oaUserMapper.selectOrgIdByUserId(userId);
     }
 }

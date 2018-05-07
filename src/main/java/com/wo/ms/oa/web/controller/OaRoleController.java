@@ -20,6 +20,8 @@ public class OaRoleController {
     public ModelAndView roleListPage(@RequestParam(name = "key", required = false) String key,@RequestParam("pageSize") Integer pageSize,@RequestParam("currentPage") Integer currentPage){
         ModelAndView view = new ModelAndView("wo/oa/role/roleList");
         OaRolePagtionDto oaRoleVo = oaRoleService.selectByKeyPaging(key, pageSize, currentPage);
+        key = key != null ? "" : key;
+        view.addObject("key", key);
         view.addObject("rolePaging", oaRoleVo);
         return view;
     }

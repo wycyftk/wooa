@@ -1,7 +1,7 @@
 var delOrg = function (id) {
 
     $.ajax({
-       url: '/oa/api/org/del?id=' + id,
+       url: '/oa/api/info/del?id=' + id,
        type: 'delete',
        dataType: 'json',
        success: function (data) {
@@ -12,3 +12,8 @@ var delOrg = function (id) {
         }
     });
 }
+
+$("#search").click(function () {
+    var key = $("#key").val();
+    loadHtml('/oa/info/list', {key: key, pageSize: 10, currentPage: 1});
+});

@@ -12,3 +12,8 @@ var delRole = function (id) {
         }
     });
 }
+
+$("#search").click(function () {
+    var key = $("#key").val();
+    loadHtml('/oa/role/list', {key: key, pageSize: 10, currentPage: 1});
+});

@@ -43,6 +43,24 @@ ul li{
     margin-top: 20px;
 }
 
+.login-prompt{
+    float: left;
+    color: #fc4343;
+    font-size: 14px;
+    display: none;
+}
+
+.forget-password{
+    float: right;
+    color: #fff;
+    font-size: 14px;
+}
+
+.forget-password:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .input-group{
     margin-bottom: 20px;
 }
@@ -279,9 +297,7 @@ ul li{
 }
 
 .pagination-block{
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    float: right;
 }
 
 .form-btns{
@@ -291,7 +307,7 @@ ul li{
 /* content */
 
 /* org */
-.org-structure{
+.org-structure, .menu-structure{
     padding: 10px;
     border: 1px solid #ddd;
     height: 430px;
@@ -299,17 +315,17 @@ ul li{
     overflow: auto;
 }
 
-.org-structure span{
+.org-structure span, .menu-structure span{
     color: #4a4a4a;
     font-size: 14px;
     cursor: pointer;
 }
 
-.org-structure span:hover{
+.org-structure span:hover, .menu-structure span:hover{
     text-decoration: underline;
 }
 
-.org-structure ul li{
+.org-structure ul li, .menu-structure ul li{
     padding-right: 16px;
 }
 

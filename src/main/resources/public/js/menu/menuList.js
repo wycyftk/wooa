@@ -12,3 +12,8 @@ var delMenu = function (id) {
         }
     });
 }
+
+$("#search").click(function () {
+    var key = $("#key").val();
+    loadHtml('/oa/menu/list', {key: key, pageSize: 10, currentPage: 1});
+});

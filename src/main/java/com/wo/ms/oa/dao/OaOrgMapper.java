@@ -19,7 +19,9 @@ public interface OaOrgMapper {
 
     List<OaOrg> selectOrgByLevel(@Param("level") Integer level,@Param("parentId") Integer parentId);
 
-    List<OaOrg> selectAllOrg();
+    List<OaOrg> selectAllOrg(@Param("key") String key, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
+
+    Integer getAllOrgCount(@Param("key") String key);
 
     List<OaOrg> selectSubOrg(Integer id);
 

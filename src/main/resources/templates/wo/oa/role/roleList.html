@@ -7,11 +7,14 @@
 <body>
 <div th:fragment="roleList">
     <div class="list-content">
-        <div class="search-block">
-            <input type="text" name="condition">
-            <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/role/add')">新增</button>
-            <button class="btn btn-primary">删除</button>
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="角色名称/编码" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/role/add')">新增</button>
+            </div>
         </div>
         <div class="table-block">
             <div class="table-content">
@@ -24,7 +27,7 @@
                     </thead>
                     <tbody>
                     <tr th:if="${rolePaging.getRoleList().size() > 0}" th:each="role, roleSata : ${rolePaging.getRoleList()}">
-                        <td th:text="${roleSata.index} + 1"></td>
+                        <td th:text="${roleSata.index + (rolePaging.currentPage - 1)  * rolePaging.pageSize} + 1"></td>
                         <td th:text="${role.roleName}"></td>
                         <td th:text="${role.roleCode}"></td>
                         <td><span th:onclick="'loadHtml(\'/oa/role/update\',{id:' +  ${role.id} + '})'">编辑</span><span th:onclick="'delUser(' + ${role.id} + ')'">删除</span><span>查看</span></td>
@@ -34,11 +37,13 @@
                 <div class="pagination-block">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li th:class="${rolePaging.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() - 1} + '})'">上一页</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li th:class="${rolePaging.getCurrentPage() < rolePaging.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() + 1} + '})'">下一页</a></li>
+                            <li th:class="${rolePaging.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${rolePaging.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${rolePaging.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${rolePaging.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${rolePaging.getCurrentPage() - 1}">2</a></li>
+                            <li th:if="${rolePaging.getCurrentPage() > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${rolePaging.getCurrentPage()}">3</a></li>
+                            <li th:if="${rolePaging.getCurrentPage() + 1 <= rolePaging.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${rolePaging.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${rolePaging.getCurrentPage() + 2 <= rolePaging.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${rolePaging.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${rolePaging.getCurrentPage() < rolePaging.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/role/list\',{pageSize:10,currentPage:' + ${rolePaging.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
                         </ul>
                     </nav>
                 </div>

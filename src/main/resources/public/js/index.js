@@ -21,3 +21,21 @@ var messageAlert = function (type) {
     }
     alert(message);
 }
+
+var logout = function () {
+    $({
+        url: '/oa/api/login/out',
+        dataType: 'json',
+        type: 'get',
+        success: function (data) {
+          alert(data.message);
+        },
+        error:function (data) {
+
+        }
+    });
+}
+
+$(".username").click(function () {
+    $(".user-operation").toggleClass()
+});

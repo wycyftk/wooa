@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.menu">
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
 <div th:fragment="menuList">
     <div class="list-content">
-        <div class="search-block">
-            <input type="text" name="condition">
-            <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/menu/add')">新增</button>
-            <button class="btn btn-primary">删除</button>
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="菜单名称/菜单描述" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/menu/add')">新增</button>
+            </div>
         </div>
         <div class="table-block">
             <div class="table-content">
@@ -23,23 +26,25 @@
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${menuList.size() > 0}" th:each="menu, menuSata : ${menuList}">
+                    <tr th:if="${oaMenuPagtion.getMenuList().size() > 0}" th:each="menu, menuSata : ${oaMenuPagtion.getMenuList()}">
                         <td th:text="${menuSata.index} + 1"></td>
                         <td th:text="${menu.menuName}"></td>
-                        <td th:text="${menu.descrition}"></td>
+                        <td th:text="${menu.description}"></td>
                         <td th:text="${menu.menuUrl}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/menu/edit\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delMenu(' + ${menu.id} + ')'">删除</span><span>查看</span></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/menu/edit\',{id:' +  ${menu.id} + '})'">编辑</span><span th:onclick="'delMenu(' + ${menu.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="pagination-block">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                            <li th:class="${oaMenuPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${oaMenuPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaMenuPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${oaMenuPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaMenuPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${oaMenuPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${oaMenuPagtion.getCurrentPage() + 1 <= oaMenuPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaMenuPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${oaMenuPagtion.getCurrentPage() + 2 <= oaMenuPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaMenuPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${oaMenuPagtion.getCurrentPage() < oaMenuPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/menu/list\',{pageSize:10,currentPage:' + ${oaMenuPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
                         </ul>
                     </nav>
                 </div>

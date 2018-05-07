@@ -7,11 +7,14 @@
 <body>
 <div th:fragment="orgList">
     <div class="list-content">
-        <div class="search-block">
-            <input type="text" name="condition">
-            <button class="btn btn-primary">搜索</button>
-            <button class="btn btn-primary" onclick="loadHtml('/oa/org/add')">新增</button>
-            <button class="btn btn-primary">删除</button>
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="组织名称/组织描述" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/org/add')">新增</button>
+            </div>
         </div>
         <div class="table-block">
             <div class="table-content">
@@ -23,22 +26,24 @@
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${orgList.size() > 0}" th:each="org, orgSata : ${orgList}">
-                        <td th:text="${orgSata.index} + 1"></td>
+                    <tr th:if="${oaOrgPagtion.getCurrentPage() > 0}" th:each="org, orgSata : ${oaOrgPagtion.getOrgList()}">
+                        <td th:text="${orgSata.index + (oaOrgPagtion.currentPage - 1)  * oaOrgPagtion.pageSize} + 1"></td>
                         <td th:text="${org.orgName}"></td>
-                        <td th:text="${org.descrition}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/org/edit\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delOrg(' + ${org.id} + ')'">删除</span><span>查看</span></td>
+                        <td th:text="${org.description}"></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/org/updata\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delOrg(' + ${org.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
                     </tbody>
                 </table>
                 <div class="pagination-block">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                            <li th:class="${oaOrgPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${oaOrgPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaOrgPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${oaOrgPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaOrgPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${oaOrgPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${oaOrgPagtion.getCurrentPage() + 1 <= oaOrgPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaOrgPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${oaOrgPagtion.getCurrentPage() + 2 <= oaOrgPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaOrgPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${oaOrgPagtion.getCurrentPage() < oaOrgPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/org/list\',{pageSize:10,currentPage:' + ${oaOrgPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
                         </ul>
                     </nav>
                 </div>

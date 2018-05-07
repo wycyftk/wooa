@@ -17,7 +17,7 @@ public class OaMenu extends BaseEntity{
      * 描述
      */
     @Column(length = 50)
-    private String descrition;
+    private String description;
 
     /**
      * 菜单URL
@@ -55,12 +55,12 @@ public class OaMenu extends BaseEntity{
         this.menuName = menuName;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrition(String descrition) {
-        this.descrition = descrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getMenuUrl() {

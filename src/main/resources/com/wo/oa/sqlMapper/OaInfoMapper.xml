@@ -31,6 +31,23 @@
     FROM oa_info
     WHERE del_flg = 0 ORDER BY create_time DESC
   </select>
+  <select id="selectInfoByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_info
+    WHERE del_flg = 0
+    <if test="key != null">
+      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    ORDER BY create_time DESC
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectInfoByKey" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM oa_info WHERE del_flg = 0
+    <if test="key != null">
+      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_info
     where id = #{id,jdbcType=INTEGER}
