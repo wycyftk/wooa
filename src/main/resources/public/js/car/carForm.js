@@ -25,7 +25,7 @@
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     alert("新增成功");
-
+                    loadHtml('/oa/car/list', {pageSize: 10, currentPage: 1});
                 },
                 error: function (data) {
 
@@ -39,8 +39,8 @@
         var car = {};
         car.id = $("#id").val();
         car.carName = $("#carName").val();
-        car.startTime = $('#startTime').val();
-        car.endTime = $('#endTime').val();
+        car.carBrand = $('#carBrand').val();
+        car.carNum = $('#carNum').val();
         return car;
     }
 })(jQuery);

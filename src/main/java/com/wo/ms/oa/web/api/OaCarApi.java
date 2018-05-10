@@ -26,6 +26,7 @@ public class OaCarApi {
         Date now = new Date();
         oaCar.setCreateId(webUtil.getLoginId());
         oaCar.setUpdateId(webUtil.getLoginId());
+        oaCar.setStatus(0);
         oaCar.setCreateTime(now);
         oaCar.setUpdateTime(now);
         try{

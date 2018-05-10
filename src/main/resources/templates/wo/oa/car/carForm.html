@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>车辆管理</title>
-    <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
 <div th:fragment="carForm">
@@ -14,15 +13,15 @@
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="carName" th:value="${car != null} ? ${car.carName} : ''" placeholder="车辆名称">
             </div>
-            <label for="startTime" class="offset-sm-1 col-sm-1 col-form-label">开始时间</label>
+            <label for="carBrand" class="offset-sm-1 col-sm-1 col-form-label">品牌</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="startTime" th:value="${car != null} ? ${car.startTime} : ''" placeholder="开始时间">
+                <input type="text" class="form-control" id="carBrand" th:value="${car != null} ? ${car.carBrand} : ''" placeholder="品牌">
             </div>
         </div>
         <div class="form-group row">
-            <label for="endTime" class="col-sm-1 col-form-label">结束时间</label>
+            <label for="carNum" class="col-sm-1 col-form-label">车牌号</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="endTime" th:value="${car != null} ? ${car.endTime} : ''" placeholder="结束时间">
+                <input type="text" class="form-control" id="carNum" th:value="${car != null} ? ${car.carNum} : ''" placeholder="车牌号">
             </div>
         </div>
         <div class="form-group form-btns">

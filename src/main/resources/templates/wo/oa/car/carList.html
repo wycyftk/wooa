@@ -22,16 +22,18 @@
                     <thead>
                     <th>序号</th>
                     <th>车名</th>
-                    <th>开始时间</th>
-                    <th>结束时间</th>
+                    <th>品牌</th>
+                    <th>车牌号</th>
+                    <th>状态</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
                     <tr th:if="${oaCarPagtion.getCarList().size() > 0}" th:each="car, carStat : ${oaCarPagtion.getCarList()}">
                         <td th:text="${carStat.index} + 1"></td>
                         <td th:text="${car.carName}"></td>
-                        <td th:text="${car.startTime}"></td>
-                        <td th:text="${car.endTime}"></td>
+                        <td th:text="${car.carBrand}"></td>
+                        <td th:text="${car.carNum}"></td>
+                        <td th:text="${car.status == 0} ? '可用' : '不可用'"></td>
                         <td><span th:onclick="'loadHtml(\'/oa/car/update\',{id:' +  ${car.id} + '})'">编辑</span><span th:onclick="'delcar(' + ${car.id} + ')'">删除</span><span>查看</span></td>
                     </tr>
                     </tbody>
