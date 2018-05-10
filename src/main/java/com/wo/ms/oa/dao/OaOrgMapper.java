@@ -2,6 +2,7 @@ package com.wo.ms.oa.dao;
 
 import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.entity.OaOrg;
+import com.wo.ms.oa.entity.UserOrg;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,8 @@ public interface OaOrgMapper {
     List<OaOrg> selectOrgsByLevel(Integer level);
 
     int updateByPrimaryKeySelective(OaOrg record);
+
+    int insertUserOrg(UserOrg userOrg);
+
+    int delUserOrg(UserOrg userOrg);
 }

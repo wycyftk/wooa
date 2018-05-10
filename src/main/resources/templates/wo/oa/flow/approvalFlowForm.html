@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>流程审批</title>
+</head>
+<body>
+<div th:fragment="approvalFlowForm">
+    <h4 class="form-title">流程审批</h4>
+    <div class="form-group row">
+        <label for="flowName" class="col-sm-1 col-form-label">流程名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="flowName" th:value="${flow} != null ? ${flow.flowName} : ''" placeholder="流程名称">
+        </div>
+        <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
+        <div class="col-sm-4">
+            <input disabled type="text" class="form-control" id="flowType" th:value="${flow} != null ? ${flow.flowType} : ''" placeholder="流程类型">
+        </div>
+    </div>
+    <div class="form-group row" th:if="${flowType == 'meeting'}" id="meeting">
+        <label for="meetingName" class="col-sm-1 col-form-label">会议名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="meetingName" th:value="${meeting} != null ? ${meeting.meetingName} : ''" placeholder="会议名称">
+        </div>
+        <label for="meetingRoom" class="offset-sm-1 col-sm-1 col-form-label">会议室</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="meetingRoom" th:value="${meeting} != null ? ${meeting.meetingRoom} : ''" placeholder="会议室">
+        </div>
+    </div>
+    <div class="form-group row flow-car" th:if="${flowType == 'car'}" id="car">
+        <label for="reason" class="col-sm-1 col-form-label">用车原因</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="reason" th:value="${car} != null ? ${car.reason} : ''" placeholder="用车原因">
+        </div>
+        <label for="carName" class="col-sm-1 offset-sm-1 col-form-label">车</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="carName"  th:value="${car} != null ? ${car.carName} : ''">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="startTime" class="col-sm-1 col-form-label">开始时间</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="startTime" placeholder="开始时间">
+        </div>
+        <label for="endTime" class="offset-sm-1 col-sm-1 col-form-label">结束时间</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="endTime" placeholder="结束时间">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">审批意见</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="status">
+                <option selected value="0">同意</option>
+                <option value="1">驳回</option>
+            </select>
+        </div>
+        <label for="approvalIdea" class="offset-sm-1 col-sm-1 col-form-label">意见</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="approvalIdea" placeholder="意见">
+        </div>
+        <input type="text" th:value="${flow.id}" id="flowId" style="display: none;">
+    </div>
+    <div class="form-group form-btns">
+        <button class="btn btn-primary" id="submitFlow">提交</button>
+        <button class="btn btn-default" onclick="loadHtml('/oa/flow/list')">取消</button>
+    </div>
+</div>
+<script src="/public/js/flow/approvalForm.js" type="text/javascript"></script>
+</body>
+</html>

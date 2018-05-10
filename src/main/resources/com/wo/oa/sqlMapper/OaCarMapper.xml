@@ -8,19 +8,44 @@
     <result column="update_id" jdbcType="INTEGER" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="car_name" jdbcType="VARCHAR" property="carName" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="car_brand" jdbcType="VARCHAR" property="carBrand" />
+    <result column="car_num" jdbcType="VARCHAR" property="carNum" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, update_id, update_time, car_name, end_time, start_time, 
-    status
+    id, create_id, create_time, update_id, update_time, car_name, car_brand, car_num, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from oa_car
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectCanUseCar" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_car
+    WHERE status = 0 ORDER BY create_time DESC
+  </select>
+  <select id="selectCarByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oa_car
+    WHERE 1 = 1
+    <if test="key != null">
+      and concat_ws(',', car_name, car_brand, car_num) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    ORDER BY create_time
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectCarByKey" resultType="java.lang.Integer">
+    SELECT
+     COUNT(*)
+    FROM oa_car
+    WHERE 1 = 1
+    <if test="key != null">
+      AND concat_ws(',', car_name, car_brand, car_num) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_car
@@ -29,11 +54,11 @@
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaCar">
     insert into oa_car (id, create_id, create_time, 
       update_id, update_time, car_name, 
-      end_time, start_time, status
+      car_brand, car_num, status
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{carName,jdbcType=VARCHAR}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      #{car_brand,jdbcType=VARCHAR}, #{car_num,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaCar">

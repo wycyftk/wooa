@@ -24,7 +24,7 @@ public class OaMenuController {
     public ModelAndView menuList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
         ModelAndView view = new ModelAndView("wo/oa/menu/menuList");
         OaMenuPagtionDto oaMenuPagtion = oaMenuService.selectMenuByKeyPaging(key, pageSize, currentPage);
-        key = key != null ? "" : key;
+        key = key == null ? "" : key;
 
         view.addObject("oaMenuPagtion", oaMenuPagtion);
         view.addObject("key" ,key);
@@ -32,7 +32,7 @@ public class OaMenuController {
     }
 
     @RequestMapping("/update")
-    public ModelAndView updateMenu(Integer id){
+    public ModelAndView updateMenu(@RequestParam("id") Integer id){
         ModelAndView view = new ModelAndView("wo/oa/menu/menuForm");
         OaMenu oaMenu= oaMenuService.selectByPrimaryKey(id);
         view.addObject("menu", oaMenu);

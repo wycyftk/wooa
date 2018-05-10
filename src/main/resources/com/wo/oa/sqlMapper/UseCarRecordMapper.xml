@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wo.ms.oa.dao.UseCarRecordMapper">
+  <resultMap id="BaseResultMap" type="com.wo.ms.oa.entity.UseCarRecord">
+    <id column="flow_id" jdbcType="INTEGER" property="flowId" />
+    <id column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="flow_status" jdbcType="INTEGER" property="flowStatus" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="car_name" jdbcType="VARCHAR" property="carName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    flow_id, car_id, end_time, flow_status, start_time, reason, car_name
+  </sql>
+  <select id="selectUserCarRecordByFlowId" resultType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM use_car_record
+    WHERE flow_id = #{flowId, jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.wo.ms.oa.entity.UseCarRecord">
+    insert into use_car_record (flow_id, car_id, end_time, 
+      flow_status, start_time, reason, car_name)
+    values (#{flowId,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{flowStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{reason, jdbcType=VARCHAR}, #{carName, jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.UseCarRecord">
+    update use_car_record
+    <set>
+      <if test="car.endTime != null">
+        end_time = #{car.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="car.flowStatus != null">
+        flow_status = #{car.flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="car.startTime != null">
+        start_time = #{car.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="car.reason != null">
+        reason = #{car.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="car.carName != null">
+        car_name = #{car.carName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where flow_id = #{flowId,jdbcType=INTEGER}
+      and car_id = #{car.carId,jdbcType=INTEGER}
+  </update>
+</mapper>

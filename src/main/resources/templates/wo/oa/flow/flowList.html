@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>流程列表</title>
+</head>
+<body>
+<div th:fragment="flowList">
+    <div class="list-content">
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="流程名称/发起人" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/flow/add')">新增</button>
+            </div>
+        </div>
+        <div class="table-block">
+            <div class="table-content">
+                <table class="table">
+                    <thead>
+                    <th>序号</th>
+                    <th>发起人</th>
+                    <th>处理人</th>
+                    <th>流程名称</th>
+                    <th>最近操作时间</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${oaFlowPagtion.getFlowList().size() > 0}" th:each="flow, flowStat : ${oaFlowPagtion.getFlowList()}">
+                        <td th:text="${flowStat.index} + 1"></td>
+                        <td th:text="${flow.launchName}"></td>
+                        <td th:text="${flow.approvalName}"></td>
+                        <td th:text="${flow.flowName}"></td>
+                        <td th:text="${#calendars.format(flow.updateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/flow/flow\',{id:' +  ${flow.id} + '})'">编辑</span><span th:onclick="'delflow(' + ${flow.id} + ')'">删除</span><span>查看</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pagination-block">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:class="${oaFlowPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${oaFlowPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaFlowPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${oaFlowPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaFlowPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li th:if="${oaFlowPagtion.getCurrentPage() > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${oaFlowPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${oaFlowPagtion.getCurrentPage() + 1 <= oaFlowPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaFlowPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${oaFlowPagtion.getCurrentPage() + 2 <= oaFlowPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaFlowPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${oaFlowPagtion.getCurrentPage() < oaFlowPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/flow/list\',{pageSize:10,currentPage:' + ${oaFlowPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/public/js/flow/flowList.js" type="text/javascript"></script>
+</body>
+</html>

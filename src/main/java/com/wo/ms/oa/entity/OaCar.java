@@ -16,17 +16,18 @@ public class OaCar extends BaseEntity {
     private String carName;
 
     /**
-     * 开始时间
+     * 车的品牌
      */
-    private Date startTime;
+    private String carBrand;
 
     /**
-     * 结束时间
+     * 车牌号
      */
-    private Date endTime;
+    private String carNum;
 
     /**
-     * 状态
+     * 车的状态
+     * 0.可用 1.不可用
      */
     private Integer status;
 
@@ -38,24 +39,24 @@ public class OaCar extends BaseEntity {
         this.carName = carName;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
     public Integer getStatus() {
         return status;
+    }
+
+    public String getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public String getCarNum() {
+        return carNum;
+    }
+
+    public void setCarNum(String carNum) {
+        this.carNum = carNum;
     }
 
     public void setStatus(Integer status) {

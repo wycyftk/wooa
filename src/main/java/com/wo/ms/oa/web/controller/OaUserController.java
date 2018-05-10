@@ -40,7 +40,7 @@ public class OaUserController {
      * 新增用户页面
      * @return
      */
-    @RequestMapping("/addUser")
+    @RequestMapping("/add")
     public String addUserPage(){
         return "wo/oa/user/userForm";
     }
@@ -50,7 +50,7 @@ public class OaUserController {
      * @param id
      * @return
      */
-    @RequestMapping("/editUser")
+    @RequestMapping("/update")
     public ModelAndView editUserPage(Integer id){
         OaUser oaUser = oaUserService.selectOaUser(id);
         ModelAndView view = new ModelAndView("wo/oa/user/userForm");

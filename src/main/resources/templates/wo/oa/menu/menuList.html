@@ -31,7 +31,7 @@
                         <td th:text="${menu.menuName}"></td>
                         <td th:text="${menu.description}"></td>
                         <td th:text="${menu.menuUrl}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/menu/edit\',{id:' +  ${menu.id} + '})'">编辑</span><span th:onclick="'delMenu(' + ${menu.id} + ')'">删除</span><span>查看</span></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/menu/update\',{id:' +  ${menu.id} + '})'">编辑</span><span th:onclick="'delMenu(' + ${menu.id} + ')'">删除</span></td>
                     </tr>
                     </tbody>
                 </table>

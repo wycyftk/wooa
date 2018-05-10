@@ -340,3 +340,13 @@ ul li{
 }
 
 /* org */
+
+/* flow */
+.flow-car{
+    display: none;
+}
+
+.flow-meeting{
+    display: none;
+}
+/* flow */

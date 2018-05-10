@@ -6,30 +6,31 @@
     <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
-<div class="head">
+<div th:fragment="carForm">
     <h4 class="form-title">车辆管理</h4>
     <form>
         <div class="form-group row">
             <label for="carName" class="col-sm-1 col-form-label">车辆名称</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="carName" placeholder="车辆名称">
+                <input type="text" class="form-control" id="carName" th:value="${car != null} ? ${car.carName} : ''" placeholder="车辆名称">
             </div>
             <label for="startTime" class="offset-sm-1 col-sm-1 col-form-label">开始时间</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="startTime" placeholder="开始时间">
+                <input type="text" class="form-control" id="startTime" th:value="${car != null} ? ${car.startTime} : ''" placeholder="开始时间">
             </div>
         </div>
         <div class="form-group row">
             <label for="endTime" class="col-sm-1 col-form-label">结束时间</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="endTime" placeholder="结束时间">
+                <input type="text" class="form-control" id="endTime" th:value="${car != null} ? ${car.endTime} : ''" placeholder="结束时间">
             </div>
         </div>
         <div class="form-group form-btns">
-            <button type="submit" class="btn btn-primary">保存</button>
-            <button type="submit" class="btn btn-default">取消</button>
+            <button type="submit" class="btn btn-primary" id="submitCar">保存</button>
+            <button type="submit" class="btn btn-default" onclick="loadHtml('/oa/car/list', {pageSize: 10, currentPage: 1, key: ''})">取消</button>
         </div>
     </form>
 </div>
+<script type="text/javascript" src="/public/js/car/carForm.js"></script>
 </body>
 </html>

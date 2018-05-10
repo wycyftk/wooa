@@ -30,7 +30,7 @@
                         <td th:text="${orgSata.index + (oaOrgPagtion.currentPage - 1)  * oaOrgPagtion.pageSize} + 1"></td>
                         <td th:text="${org.orgName}"></td>
                         <td th:text="${org.description}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/org/updata\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delOrg(' + ${org.id} + ')'">删除</span><span>查看</span></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/org/update\',{id:' +  ${org.id} + '})'">编辑</span><span th:onclick="'delOrg(' + ${org.id} + ')'">删除</span></td>
                     </tr>
                     </tbody>
                 </table>

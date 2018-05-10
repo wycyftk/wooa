@@ -11,10 +11,12 @@
     <result column="meeting_name" jdbcType="VARCHAR" property="meetingName" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="oa_meeting_roomId" jdbcType="INTEGER" property="oaMeetingRoomId" />
+    <result column="meeting_room" jdbcType="VARCHAR" property="meetingRoom" />
   </resultMap>
   <sql id="Base_Column_List">
     id, create_id, create_time, update_id, update_time, end_time, meeting_name, start_time, 
-    status
+    status, oa_meeting_roomId, meeting_room
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,11 +31,12 @@
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaMeeting">
     insert into oa_meeting (id, create_id, create_time, 
       update_id, update_time, end_time, 
-      meeting_name, start_time, status
+      meeting_name, start_time, status, oa_meeting_roomId, meeting_room
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{meetingName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      #{meetingName,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+      #{oaMeetingRoomId,jdbcType=INTEGER}, #{meetingRoom,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaMeeting">
@@ -62,6 +65,12 @@
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="oaMeetingRoomId != null">
+        oa_meeting_roomId = #{oaMeetingRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="meetingRoom != null">
+        meeting_room = #{meetingRoom,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

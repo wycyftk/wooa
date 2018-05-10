@@ -35,7 +35,6 @@ public class OaInfoApi {
         oaInfo.setCreateId(webUtil.getLoginId());
         oaInfo.setCreateTime(now);
         oaInfo.setDelFlg(0);
-        //todo 查询当前登录人的部门
         if(oaInfo.getOrgId() == 1){
             Integer orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
             oaInfo.setOrgId(orgId);

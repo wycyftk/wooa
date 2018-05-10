@@ -135,4 +135,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertUserOrg" parameterType="com.wo.ms.oa.entity.UserOrg">
+    INSERT INTO user_org(user_id, org_id) VALUE (#{userId, jdbcType=INTEGER}, #{orgId, jdbcType=INTEGER})
+  </insert>
+  <delete id="delUserOrg" parameterType="com.wo.ms.oa.entity.UserOrg">
+    DELETE FROM user_org WHERE user_id = #{userId, jdbcType=INTEGER} AND org_id = #{orgId, jdbcType=INTEGER}
+  </delete>
 </mapper>

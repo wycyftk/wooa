@@ -2,12 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>人员列表</title>
-    <link href="/asset/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+    <title>车辆列表</title>
 </head>
 <body>
-<div class="head">
-
+<div th:fragment="carList">
+    <div class="list-content">
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="车名" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+                <button class="btn btn-primary" onclick="loadHtml('/oa/car/add')">新增</button>
+            </div>
+        </div>
+        <div class="table-block">
+            <div class="table-content">
+                <table class="table">
+                    <thead>
+                    <th>序号</th>
+                    <th>车名</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${oaCarPagtion.getCarList().size() > 0}" th:each="car, carStat : ${oaCarPagtion.getCarList()}">
+                        <td th:text="${carStat.index} + 1"></td>
+                        <td th:text="${car.carName}"></td>
+                        <td th:text="${car.startTime}"></td>
+                        <td th:text="${car.endTime}"></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/car/update\',{id:' +  ${car.id} + '})'">编辑</span><span th:onclick="'delcar(' + ${car.id} + ')'">删除</span><span>查看</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pagination-block">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:class="${oaCarPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${oaCarPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaCarPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${oaCarPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaCarPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li th:if="${oaCarPagtion.getCurrentPage() > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${oaCarPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${oaCarPagtion.getCurrentPage() + 1 <= oaCarPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${oaCarPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${oaCarPagtion.getCurrentPage() + 2 <= oaCarPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${oaCarPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${oaCarPagtion.getCurrentPage() < oaCarPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${oaCarPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script type="text/javascript" src="/public/js/car/carList.js"></script>
 </body>
 </html>

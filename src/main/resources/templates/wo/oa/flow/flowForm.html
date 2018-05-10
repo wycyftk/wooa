@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>流程列表</title>
+</head>
+<body>
+<div th:fragment="flowForm">
+    <h4 class="form-title">新建工作</h4>
+    <div class="form-group row">
+        <label for="flowName" class="col-sm-1 col-form-label">流程名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="flowName" placeholder="流程名称">
+        </div>
+        <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="flowType">
+                <option value="meeting" selected>会议室申请</option>
+                <option value="car">用车申请</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row" id="meetingBlock">
+        <label for="meetingName" class="col-sm-1 col-form-label">会议名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="meetingName"  placeholder="会议名称">
+        </div>
+        <label for="meetingRoom" class="offset-sm-1 col-sm-1 col-form-label">会议室</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="meetingRoom">
+
+            </select>
+        </div>
+    </div>
+    <div class="form-group row flow-car" id="carBlock">
+        <label for="reason" class="col-sm-1 col-form-label">用车原因</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="reason" placeholder="用车原因">
+        </div>
+        <label for="car" class="col-sm-1 offset-sm-1 col-form-label">车</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="car">
+
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="startTime" class="col-sm-1 col-form-label">开始时间</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="startTime" placeholder="开始时间">
+        </div>
+        <label for="endTime" class="offset-sm-1 col-sm-1 col-form-label">结束时间</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="endTime" placeholder="结束时间">
+        </div>
+    </div>
+    <div class="form-group form-btns">
+        <button class="btn btn-primary" id="submitFlow">保存</button>
+        <button class="btn btn-default" onclick="loadHtml('/oa/flow/list')">取消</button>
+    </div>
+</div>
+<script src="/public/js/flow/flowForm.js" type="text/javascript"></script>
+</body>
+</html>

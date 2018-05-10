@@ -30,4 +30,10 @@ public class Home {
         view.addObject("user", oaUser);
         return view;
     }
+
+    @RequestMapping("/main")
+    public ModelAndView main(){
+        ModelAndView view = new ModelAndView("wo/oa/layout/main");
+        return view;
+    }
 }

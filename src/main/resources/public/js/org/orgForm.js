@@ -11,7 +11,7 @@
                 success: function (data) {
                     console.log(data);
                     if(data.status){
-                        loadHtml('/oa/org/add');
+                        loadHtml('/oa/org/list', {pageSize: 10, currentPage: 1});
                     }
                 },
                 error: function (data) {
@@ -59,8 +59,8 @@
                 $("#chooseOrgName").val($(_this).text());
                 $("#chooseOrgId").val($(_this).data('orgid'));
             }
-            $(".fa-plus-square-o").unbind("click", chooseOrg);
-            $(".fa-plus-square-o").click(chooseOrg);
+            $(_this).unbind("click", chooseOrg);
+            $(_this).click(chooseOrg);
         });
     }
 
@@ -98,7 +98,7 @@
         var org = {};
         org.id = $("#id").val();
         org.orgName = $("#orgName").val();
-        org.descrition = $('#descrition').val();
+        org.description = $('#description').val();
         $("input[name=relation]").each(function () {
            if(this.checked){
                org.relation = $(this).val();

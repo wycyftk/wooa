@@ -28,7 +28,7 @@ public class OaOrgController {
     }
 
     @RequestMapping("/update")
-    public ModelAndView updateOrg(Integer id){
+    public ModelAndView updateOrg(@RequestParam("id") Integer id){
         ModelAndView view = new ModelAndView("wo/oa/org/orgForm");
         OaOrg oaOrg = oaOrgService.selectByPrimaryKey(id);
         view.addObject("org", oaOrg);
