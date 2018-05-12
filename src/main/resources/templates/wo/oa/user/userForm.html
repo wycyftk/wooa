@@ -30,7 +30,7 @@
     <div class="form-group row">
         <label for="birthday" class="col-sm-1 col-form-label">生日</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="birthday" th:value="${user} != null ? ${user.password} : ''" placeholder="生日">
+            <input type="text" class="form-control" id="birthday" th:value="${user} != null ? ${#calendars.format(user.birthday, 'yyyy-MM-dd')} : ''" placeholder="生日">
         </div>
         <label for="email" class="offset-sm-1 col-sm-1 col-form-label">邮箱</label>
         <div class="col-sm-4">

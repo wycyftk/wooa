@@ -6,6 +6,7 @@ var delInfo = function (id) {
        dataType: 'json',
        success: function (data) {
             console.log(data);
+            alert(data.message);
        },
         error: function (data) {
 

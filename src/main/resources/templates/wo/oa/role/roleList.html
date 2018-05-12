@@ -30,7 +30,7 @@
                         <td th:text="${roleSata.index + (rolePaging.currentPage - 1)  * rolePaging.pageSize} + 1"></td>
                         <td th:text="${role.roleName}"></td>
                         <td th:text="${role.roleCode}"></td>
-                        <td><span th:onclick="'loadHtml(\'/oa/role/update\',{id:' +  ${role.id} + '})'">编辑</span><span th:onclick="'delUser(' + ${role.id} + ')'">删除</span></td>
+                        <td><span th:onclick="'loadHtml(\'/oa/role/update\',{id:' +  ${role.id} + '})'">编辑</span><span th:onclick="'delRole(' + ${role.id} + ')'">删除</span></td>
                     </tr>
                     </tbody>
                 </table>

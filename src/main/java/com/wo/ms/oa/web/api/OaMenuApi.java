@@ -56,7 +56,7 @@ public class OaMenuApi {
         return result;
     }
 
-    @Delete("/delete")
+    @DeleteMapping("/del")
     public Map<String, Object> deleteMenu(Integer id){
         Map<String, Object> result = new HashMap<>();
         oaMenuService.deleteByPrimaryKey(id);

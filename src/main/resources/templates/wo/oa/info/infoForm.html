@@ -40,7 +40,7 @@
     <div class="form-group row">
         <label for="content" class="col-sm-1 col-form-label">内容</label>
         <div class="col-sm-10">
-            <textarea class="form-control" id="content" rows="15" th:value="${info != null} ? ${info.content} : ''"></textarea>
+            <textarea class="form-control" id="content" rows="15" th:text="${info != null} ? ${info.content} : ''"></textarea>
         </div>
         <input type="text" id="id" style="display: none;" th:value="${info != null} ? ${info.id} : ''">
     </div>

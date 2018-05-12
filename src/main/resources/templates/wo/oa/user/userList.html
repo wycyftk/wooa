@@ -36,7 +36,7 @@
                             <td th:text="${user.sex} == 1 ? '男' : '女'"></td>
                             <td th:text="${user.mobile}"></td>
                             <td th:text="${user.email}"></td>
-                            <td><span th:onclick="'loadHtml(\'/oa/user/update\',{id:' +  ${user.id} + '})'">编辑</span><span th:onclick="'deluser(' + ${user.id} + ')'">删除</span></td>
+                            <td><span th:onclick="'loadHtml(\'/oa/user/update\',{id:' +  ${user.id} + '})'">编辑</span><span th:onclick="'delUser(' + ${user.id} + ')'">删除</span></td>
                         </tr>
                     </tbody>
                 </table>

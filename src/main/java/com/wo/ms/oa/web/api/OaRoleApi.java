@@ -46,7 +46,7 @@ public class OaRoleApi {
         return result;
     }
 
-    @Delete("/delete")
+    @DeleteMapping("/del")
     public Map<String, Object> deleteRole(Integer id){
         Map<String, Object> result = new HashMap<>();
         oaRoleService.deleteByPrimaryKey(id);

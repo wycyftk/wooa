@@ -11,6 +11,7 @@
                 success: function (data) {
                     console.log(data);
                     if(data.status){
+                        alert("编辑成功");
                         loadHtml('/oa/org/list', {pageSize: 10, currentPage: 1});
                     }
                 },
@@ -28,7 +29,8 @@
                 success: function (data) {
                     console.log(data);
                     if(data.status){
-                        loadHtml('/oa/org/add');
+                        alert("新增成功");
+                        loadHtml('/oa/org/list', {pageSize: 10, currentPage: 1});
                     }
                 },
                 error: function (data) {

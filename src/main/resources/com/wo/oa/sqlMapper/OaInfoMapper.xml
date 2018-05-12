@@ -48,10 +48,10 @@
       AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oa_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE oa_info SET del_flg = 1
+    where id = #{id,jdbcType=INTEGER} AND del_flg = 0
+  </update>
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaInfo">
     insert into oa_info (id, create_id, create_time, 
       update_id, update_time, content, 

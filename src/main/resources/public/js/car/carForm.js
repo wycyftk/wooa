@@ -9,7 +9,7 @@
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    alert("修改成功");
+                    alert("编辑成功");
                     loadHtml('/oa/car/list', {pageSize: 10, currentPage: 1});
                 },
                 error: function (data) {

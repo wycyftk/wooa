@@ -9,8 +9,8 @@
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    alert("修改成功");
-                    loadHtml('/oa/role/list');
+                    alert("编辑成功");
+                    loadHtml('/oa/role/list', {pageSize: 10, currentPage: 1});
                 },
                 error: function (data) {
 
@@ -25,8 +25,7 @@
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     alert("新增成功");
-                    $('#roleCode').val('');
-                    $("#roleName").val('');
+                    loadHtml('/oa/role/list', {pageSize: 10, currentPage: 1});
                 },
                 error: function (data) {
 

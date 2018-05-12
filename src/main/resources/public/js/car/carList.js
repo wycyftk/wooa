@@ -1,10 +1,11 @@
-var delRole = function (id) {
+var delcar = function (id) {
     $.ajax({
        url: '/oa/api/car/del?id=' + id,
        type: 'delete',
        dataType: 'json',
        success: function (data) {
-            console.log(data);
+           console.log(data);
+           loadHtml('/oa/car/list', {key: '', pageSize: 10, currentPage: 1});
        },
         error: function (data) {
 

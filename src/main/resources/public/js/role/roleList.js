@@ -6,6 +6,8 @@ var delRole = function (id) {
        dataType: 'json',
        success: function (data) {
             console.log(data);
+            alert(data.message);
+           loadHtml('/oa/role/list', {key: '', pageSize: 10, currentPage: 1});
        },
         error: function (data) {
 

@@ -4,10 +4,7 @@ import com.wo.ms.oa.entity.OaInfo;
 import com.wo.ms.oa.services.OaInfoService;
 import com.wo.ms.oa.services.OaUserService;
 import com.wo.ms.oa.util.WebUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -44,6 +41,33 @@ public class OaInfoApi {
         oaInfoService.insert(oaInfo);
         result.put("status", true);
         result.put("message", "信息发布成功");
+        return result;
+    }
+
+    @PutMapping("/update")
+    public Map<String, Object> update(@RequestBody OaInfo oaInfo){
+        Map<String, Object> result = new HashMap<>();
+        Date now = new Date();
+        oaInfo.setUpdateId(webUtil.getLoginId());
+        oaInfo.setUpdateTime(now);
+        if(oaInfo.getOrgId() == 1){
+            Integer orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
+            oaInfo.setOrgId(orgId);
+        }
+        oaInfo.setPublishId(webUtil.getLoginId());
+        oaInfo.setStatus(1);
+        oaInfoService.updateByPrimaryKeySelective(oaInfo);
+        result.put("status", true);
+        result.put("message", "信息编辑成功");
+        return result;
+    }
+
+    @DeleteMapping("/del")
+    public Map<String, Object> delete(@RequestParam("id") Integer id){
+        Map<String, Object> result = new HashMap<>();
+        oaInfoService.deleteByPrimaryKey(id);
+        result.put("status", true);
+        result.put("message", "信息删除成功");
         return result;
     }
 }

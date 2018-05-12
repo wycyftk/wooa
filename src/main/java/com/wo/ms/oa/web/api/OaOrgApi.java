@@ -60,7 +60,7 @@ public class OaOrgApi {
         return result;
     }
 
-    @Delete("/delete")
+    @DeleteMapping("/del")
     public Map<String, Object> deleteRole(Integer id){
         Map<String, Object> result = new HashMap<>();
         oaOrgService.deleteByPrimaryKey(id);

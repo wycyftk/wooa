@@ -5,7 +5,8 @@ var delUser = function (id) {
        type: 'delete',
        dataType: 'json',
        success: function (data) {
-
+           alert(data.message);
+           loadHtml('/oa/user/list', {key: '', pageSize: 10, currentPage: 1});
        },
         error: function (data) {
 

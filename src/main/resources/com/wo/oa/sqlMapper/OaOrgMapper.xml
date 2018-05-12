@@ -68,10 +68,13 @@
     <include refid="Base_Column_List" />
     FROM oa_org WHERE left_node = 1 AND del_flg = 0;
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oa_org
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    SELECT @left_node := left_node, @right_node := right_node
+        FROM oa_org WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0;
+      UPDATE oa_org SET left_node = left_node - @right_node + @left_node - 1 WHERE left_node > @right_node AND del_flg = 0;
+      UPDATE oa_org SET right_node = right_node - @right_node + @left_node - 1 WHERE right_node > @right_node AND del_flg = 0;
+      UPDATE oa_org SET del_flg = 1 WHERE right_node <![CDATA[<=]]> @right_node AND left_node >= @left_node AND del_flg = 0;
+  </update>
   <insert id="insert" parameterType="com.wo.ms.oa.dto.OaOrgDto">
     SELECT @left_node := left_node, @right_node := right_node, @level := org_level
     FROM oa_org WHERE id = #{chooseOrgId, jdbcType=INTEGER} AND del_flg = 0;

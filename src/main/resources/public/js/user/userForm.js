@@ -9,8 +9,8 @@
                 type: 'put',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    alert("修改成功");
-                    loadHtml('/oa/user/list');
+                    alert("编辑成功");
+                    loadHtml('/oa/user/list', {pageSize: 10, currentPage: 1});
                 },
                 error: function (data) {
 
@@ -26,11 +26,7 @@
                 success: function (data) {
                     if(data.status){
                         alert("新增成功");
-                        $("#name").val('');
-                        $('#username').val('');
-                        $('#email').val('');
-                        $('#birthday').val('');
-                        $('#mobile').val('');
+                        loadHtml('/oa/user/list', {pageSize: 10, currentPage: 1});
                     }
                 },
                 error: function (data) {

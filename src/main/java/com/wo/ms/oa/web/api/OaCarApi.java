@@ -3,6 +3,7 @@ package com.wo.ms.oa.web.api;
 import com.wo.ms.oa.entity.OaCar;
 import com.wo.ms.oa.services.OaCarService;
 import com.wo.ms.oa.util.WebUtil;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -55,6 +56,22 @@ public class OaCarApi {
             e.printStackTrace();
             result.put("status", false);
             result.put("message", "修改失败");
+        }
+        return result;
+    }
+
+    @DeleteMapping("/del")
+    public Map<String, Object> del(@RequestParam Integer id) {
+        Map<String, Object> result = new HashMap<>();
+        Date now = new Date();
+        try{
+            oaCarService.deleteByPrimaryKey(id);
+            result.put("status", true);
+            result.put("message", "删除车辆信息成功");
+        } catch (Exception e){
+            e.printStackTrace();
+            result.put("status", false);
+            result.put("message", "删除失败");
         }
         return result;
     }

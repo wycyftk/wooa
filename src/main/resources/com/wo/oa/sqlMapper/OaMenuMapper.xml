@@ -65,10 +65,13 @@
     WHERE oa_menu.left_node > p.ln AND <![CDATA[oa_menu.right_node < p.rn and]]> oa_menu.menu_level = p.lev + 1 AND del_flg = 0
     ORDER BY oa_menu.left_node
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oa_menu
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      SELECT @left_node := left_node, @right_node := right_node
+        FROM oa_menu WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0;
+      UPDATE oa_menu SET left_node = left_node - @right_node + @left_node - 1 WHERE left_node > @right_node AND del_flg = 0;
+      UPDATE oa_menu SET right_node = right_node - @right_node + @left_node - 1 WHERE right_node > @right_node AND del_flg = 0;
+      UPDATE oa_menu SET del_flg = 1 WHERE right_node <![CDATA[<=]]> @right_node AND left_node >= @left_node AND del_flg = 0;
+  </update>
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaMenu">
     insert into oa_menu (id, create_id, create_time, 
       update_id, update_time, del_flg, 

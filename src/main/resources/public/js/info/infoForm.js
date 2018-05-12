@@ -10,6 +10,8 @@
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     console.log(data);
+                    alert("编辑成功");
+                    loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {
 
@@ -24,6 +26,8 @@
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     console.log(data);
+                    alert("新增成功");
+                    loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {
 

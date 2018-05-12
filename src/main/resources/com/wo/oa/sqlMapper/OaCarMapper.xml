@@ -58,7 +58,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{carName,jdbcType=VARCHAR}, 
-      #{car_brand,jdbcType=VARCHAR}, #{car_num,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      #{carBrand,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaCar">
