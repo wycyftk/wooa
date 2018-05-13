@@ -25,6 +25,13 @@ public class OaflowController {
     @Resource
     private UseCarRecordService useCarRecordService;
 
+    /**
+     * 查询自己提交的流程
+     * @param key 关键字
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
     @RequestMapping("/myWork")
     public ModelAndView myWork(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
         ModelAndView view = new ModelAndView("wo/oa/flow/myWork");
@@ -38,6 +45,12 @@ public class OaflowController {
 
     @RequestMapping("/newWork")
     public ModelAndView newWork(){
+        ModelAndView view = new ModelAndView("wo/oa/flow/flowForm");
+        return view;
+    }
+
+    @RequestMapping("/editWork")
+    public ModelAndView editWork(@RequestParam("flowId") Integer flowId){
         ModelAndView view = new ModelAndView("wo/oa/flow/flowForm");
         return view;
     }

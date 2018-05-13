@@ -9,20 +9,26 @@ import java.util.Date;
  * 用车记录
  */
 @Entity(name = "use_car_record")
-public class UseCarRecord implements Serializable {
-    @Id
+public class UseCarRecord extends BaseEntity {
+    /**
+     * 车id
+     */
     private Integer carId;
 
-    @Id
-    private Integer flowId;
-
-    private String carName;
     /**
-     * 流程状态
-     * 0.流程结束 1.第一节点，部长审批 2.第二节点，车辆管理员 3.总经理审批
+     * 车名
      */
-    private Integer flowStatus;
+    private String carName;
 
+    /**
+     * 用车状态
+     * 0.未使用 1.已使用 2.审批中
+     */
+    private Integer carStatus;
+
+    /**
+     * 用车原因
+     */
     private String reason;
 
     private Date startTime;
@@ -31,6 +37,14 @@ public class UseCarRecord implements Serializable {
 
     public Integer getCarId() {
         return carId;
+    }
+
+    public Integer getCarStatus() {
+        return carStatus;
+    }
+
+    public void setCarStatus(Integer carStatus) {
+        this.carStatus = carStatus;
     }
 
     public String getReason() {
@@ -51,22 +65,6 @@ public class UseCarRecord implements Serializable {
 
     public void setCarId(Integer carId) {
         this.carId = carId;
-    }
-
-    public Integer getFlowId() {
-        return flowId;
-    }
-
-    public void setFlowId(Integer flowId) {
-        this.flowId = flowId;
-    }
-
-    public Integer getFlowStatus() {
-        return flowStatus;
-    }
-
-    public void setFlowStatus(Integer flowStatus) {
-        this.flowStatus = flowStatus;
     }
 
     public Date getStartTime() {

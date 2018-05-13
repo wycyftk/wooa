@@ -24,4 +24,6 @@ public interface OaRoleService {
     int delUserRole(Integer userId);
 
     List<Map<String, Object>> selectUserRole(Integer userId);
+
+    List<String> selectUserRoleCode(Integer userId);
 }

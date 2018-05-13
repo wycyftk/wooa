@@ -69,6 +69,11 @@ public class OaOrgServiceImpl implements OaOrgService {
     }
 
     @Override
+    public List<Integer> selectUserOrgId(Integer userId) {
+        return oaOrgMapper.selectUserOrgId(userId);
+    }
+
+    @Override
     public int deleteUserOrg(Integer userId) {
         return oaOrgMapper.deleteUserOrg(userId);
     }

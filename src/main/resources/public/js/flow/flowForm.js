@@ -48,6 +48,7 @@
 
     $('#submitFlow').click(function () {
         var flow = getFlow();
+        flow.status = 2;
         $.ajax({
             url: '/oa/api/flow/add',
             data: JSON.stringify(flow),
@@ -57,6 +58,24 @@
             success: function (data) {
                 alert("提交成功");
                 loadHtml("/oa/main");
+            },
+            error: function (data) {
+
+            }
+        });
+    });
+
+    $('#keepFlow').click(function () {
+        var flow = getFlow();
+        flow.status = 1;
+        $.ajax({
+            url: '/oa/api/flow/add',
+            data: JSON.stringify(flow),
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json;charset=utf-8',
+            success: function (data) {
+                alert("保存成功");
             },
             error: function (data) {
 
@@ -87,7 +106,6 @@
         var flow = {};
         flow.flowName = $("#flowName").val();
         flow.flowType = carOrMeeting;
-        debugger;
         if(carOrMeeting == 'car'){
             flow.carId = $("#car option:selected").val();
             flow.reason = $("#reason").val();

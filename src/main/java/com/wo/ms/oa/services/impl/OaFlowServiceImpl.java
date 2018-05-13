@@ -2,6 +2,7 @@ package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.OaFlowMapper;
 import com.wo.ms.oa.dto.OaFlowPagtionDto;
+import com.wo.ms.oa.entity.FlowCarMeeting;
 import com.wo.ms.oa.entity.OaFlow;
 import com.wo.ms.oa.services.OaFlowService;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class OaFlowServiceImpl implements OaFlowService {
         OaFlowPagtionDto oaFlowPagtionDto = new OaFlowPagtionDto();
         oaFlowPagtionDto.setCurrentPage(currentPage);
         oaFlowPagtionDto.setPageSize(pageSize);
-        oaFlowPagtionDto.setFlowList(oaFlowMapper.selectFlowByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
-        oaFlowPagtionDto.setTotalPage((oaFlowMapper.selectFlowByKey(key) - 1) / pageSize + 1);
+        oaFlowPagtionDto.setFlowInfo(oaFlowMapper.selectFlowByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
+        oaFlowPagtionDto.setTotalPage((oaFlowMapper.selectFlowByKey(key, loginId) - 1) / pageSize + 1 );
         return oaFlowPagtionDto;
     }
 
@@ -31,5 +32,15 @@ public class OaFlowServiceImpl implements OaFlowService {
     @Override
     public int insert(OaFlow oaFlow) {
         return oaFlowMapper.insert(oaFlow);
+    }
+
+    @Override
+    public int deleteFlow(Integer id, String type) {
+        return oaFlowMapper.deleteFlow(id, type);
+    }
+
+    @Override
+    public int addFlowCarMeeting(FlowCarMeeting flowCarMeeting) {
+        return oaFlowMapper.addFlowCarMeeting(flowCarMeeting);
     }
 }

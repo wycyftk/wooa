@@ -10,12 +10,12 @@
     <div class="form-group row">
         <label for="flowName" class="col-sm-1 col-form-label">流程名称</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="flowName" placeholder="流程名称">
+            <input type="text" class="form-control" id="flowName" th:value="${flow != null} ? ${flow.flowName} : ''" placeholder="流程名称">
         </div>
         <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
         <div class="col-sm-4">
             <select class="form-control" id="flowType">
-                <option value="meeting" selected>会议室申请</option>
+                <option value="meeting" th:selected="${flow != null}">会议室申请</option>
                 <option value="car">用车申请</option>
             </select>
         </div>
@@ -55,7 +55,8 @@
         </div>
     </div>
     <div class="form-group form-btns">
-        <button class="btn btn-primary" id="submitFlow">保存</button>
+        <button class="btn btn-primary" id="keepFlow">保存</button>
+        <button class="btn btn-primary" id="submitFlow">提交</button>
         <button class="btn btn-default" onclick="loadHtml('/oa/flow/list')">取消</button>
     </div>
 </div>

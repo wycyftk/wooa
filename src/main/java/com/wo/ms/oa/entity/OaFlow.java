@@ -31,15 +31,29 @@ public class OaFlow extends BaseEntity{
     private String approvalName;
 
     /**
-     * 意见
+     * 备注
      */
-    private String approvalIdea;
+    private String note;
 
     /**
      * 审批意见
      * 0.同意 1.驳回
      */
+    private Integer opinion;
+
+    /**
+     * 状态
+     * 1.草稿 2.已提交 3.部长审批 4.管理员审批 5.总经理审批 0.审批完成
+     */
     private Integer status;
+
+    public Integer getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(Integer opinion) {
+        this.opinion = opinion;
+    }
 
     public String getLaunchName() {
         return launchName;
@@ -53,12 +67,12 @@ public class OaFlow extends BaseEntity{
         return approvalName;
     }
 
-    public String getApprovalIdea() {
-        return approvalIdea;
+    public String getNote() {
+        return note;
     }
 
-    public void setApprovalIdea(String approvalIdea) {
-        this.approvalIdea = approvalIdea;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Integer getStatus() {

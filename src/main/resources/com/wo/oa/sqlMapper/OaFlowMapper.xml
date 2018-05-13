@@ -12,12 +12,13 @@
     <result column="launch_name" jdbcType="VARCHAR" property="launchName" />
     <result column="approval_name" jdbcType="VARCHAR" property="approvalName" />
     <result column="launch_id" jdbcType="INTEGER" property="launchId" />
-    <result column="approval_idea" jdbcType="VARCHAR" property="approvalIdea" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="opinion" jdbcType="INTEGER" property="opinion" />
   </resultMap>
   <sql id="Base_Column_List">
     id, create_id, create_time, update_id, update_time, approval_id, flow_name, launch_name,
-    approval_name, launch_id, approval_idea, status
+    approval_name, launch_id, note, status, opinion
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,40 +26,85 @@
     from oa_flow
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectFlowByKeyLimit" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM oa_flow
+  <select id="selectFlowByKeyLimit" resultType="java.util.Map">
+    SELECT * FROM (
+    SELECT * FROM oa_flow LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
     <trim prefix="where" prefixOverrides="AND " suffix="">
       <if test="key != null">
-        AND concat_ws(",", flow_name, launch_name, approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+        AND concat_ws(",", oa_flow.flow_name, oa_flow.launch_name, oa_flow.approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
       </if>
       <if test="loginId != null">
-        AND launch_id = #{loginId, jdbcType=INTEGER}
+        AND oa_flow.launch_id = #{loginId, jdbcType=INTEGER}
       </if>
     </trim>
-    ORDER BY update_time
+    GROUP BY fcm.use_car_record_id HAVING MAX(oa_flow.create_time)
+    UNION
+    SELECT * FROM oa_flow LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
+    <trim prefix="where" prefixOverrides="AND " suffix="">
+      <if test="key != null">
+        AND concat_ws(",", oa_flow.flow_name, oa_flow.launch_name, oa_flow.approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      </if>
+      <if test="loginId != null">
+        AND oa_flow.launch_id = #{loginId, jdbcType=INTEGER}
+      </if>
+    </trim>
+    GROUP BY fcm.meeting_id HAVING MAX(oa_flow.create_time)) AS r
+    ORDER BY r.update_time
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectFlowByKey" resultType="java.lang.Integer">
-    SELECT count(*) FROM oa_flow
-    <trim prefix="where" prefixOverrides="and ">
+    SELECT COUNT(*) FROM (
+    SELECT * FROM oa_flow LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
+    <trim prefix="where" prefixOverrides="AND " suffix="">
       <if test="key != null">
-        concat_ws(",", flow_name, launch_name, approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+        AND concat_ws(",", oa_flow.flow_name, oa_flow.launch_name, oa_flow.approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      </if>
+      <if test="loginId != null">
+        AND oa_flow.launch_id = #{loginId, jdbcType=INTEGER}
       </if>
     </trim>
+    GROUP BY fcm.use_car_record_id HAVING MAX(oa_flow.create_time)
+    UNION
+    SELECT * FROM oa_flow LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
+    <trim prefix="where" prefixOverrides="AND " suffix="">
+      <if test="key != null">
+        AND concat_ws(",", oa_flow.flow_name, oa_flow.launch_name, oa_flow.approval_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      </if>
+      <if test="loginId != null">
+        AND oa_flow.launch_id = #{loginId, jdbcType=INTEGER}
+      </if>
+    </trim>
+    GROUP BY fcm.meeting_id HAVING MAX(oa_flow.create_time)) AS r
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_flow
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteFlow">
+    DELETE FROM oa_flow WHERE id in
+    ( SELECT r.id FROM
+      (SELECT f.id AS id from oa_flow AS f LEFT JOIN flow_car_meeting AS fcm ON f.id = fcm.flow_id
+         WHERE
+          <if test="type == 'car'">fcm.use_car_record_id = #{id, jdbcType=INTEGER}</if>
+          <if test="type == 'meeting'">fcm.meeting_id = #{id, jdbcType=INTEGER}</if>
+      ) AS r
+    );
+    DELETE FROM flow_car_meeting WHERE
+    <if test="type == 'car'">use_car_record_id = #{id, jdbcType=INTEGER}</if>
+    <if test="type == 'meeting'">meeting_id = #{id, jdbcType=INTEGER}</if>;
+
+  </delete>
+  <insert id="addFlowCarMeeting" parameterType="com.wo.ms.oa.entity.FlowCarMeeting">
+    INSERT INTO flow_car_meeting (use_car_record_id, flow_id, meeting_id)
+    VALUES (#{useCarRecordId, jdbcType=INTEGER}, #{flowId, jdbcType=INTEGER}, #{meetingId, jdbcType=INTEGER})
+  </insert>
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaFlow" useGeneratedKeys="true" keyProperty="id">
     insert into oa_flow (id, create_id, create_time,
       update_id, update_time, approval_id, 
-      flow_name, launch_name, approval_name, launch_id, approval_idea, status)
+      flow_name, launch_name, approval_name, launch_id, note, status, opinion)
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{approvalId,jdbcType=INTEGER}, 
       #{flowName,jdbcType=VARCHAR}, #{launchName,jdbcType=VARCHAR},#{approvalName,jdbcType=VARCHAR},
-      #{launchId,jdbcType=INTEGER}, #{approvalIdea,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+      #{launchId,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{opinion, jdbcType=INTEGER})
   </insert>
 </mapper>

@@ -28,6 +28,8 @@ public interface OaOrgService {
 
     List<Map<String, Object>> selectOrgByUserId(Integer userId);
 
+    List<Integer> selectUserOrgId(Integer userId);
+
     int deleteUserOrg(Integer userId);
 
     int assignOrg(UserOrg userOrg);

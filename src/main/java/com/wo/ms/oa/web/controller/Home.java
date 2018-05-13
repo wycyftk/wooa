@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/oa")
@@ -24,10 +27,14 @@ public class Home {
     }
 
     @RequestMapping("/home")
-    public ModelAndView homePage(){
+    public ModelAndView homePage(HttpServletRequest request){
         ModelAndView view = new ModelAndView("wo/oa/index");
         OaUser oaUser = oaUserService.selectOaUser(webUtil.getLoginId());
+        HttpSession session = request.getSession();
+        List<String> roleList = (List<String>)session.getAttribute("roleCodes");
+        List<Integer> orgIds = (List<Integer>) session.getAttribute("orgIds");
         view.addObject("user", oaUser);
+        view.addObject("roleList", roleList);
         return view;
     }
 

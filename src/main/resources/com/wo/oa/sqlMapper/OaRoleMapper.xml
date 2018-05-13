@@ -42,6 +42,9 @@
     LEFT JOIN (SELECT * FROM user_role WHERE user_id = #{userId, jdbcType=INTEGER}) AS ur ON role.id = ur.role_id
     ORDER BY create_time DESC
   </select>
+    <select id="selectUserRoleCode" resultType="java.lang.String">
+        SELECT role.role_code FROM oa_role AS role LEFT JOIN user_role AS ur ON role.id = ur.role_id WHERE ur.user_id = #{userId, jdbcType=INTEGER}
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_role
     where id = #{id,jdbcType=INTEGER}

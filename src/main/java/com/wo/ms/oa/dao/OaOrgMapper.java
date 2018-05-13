@@ -31,6 +31,8 @@ public interface OaOrgMapper {
 
     List<Map<String, Object>> selectOrgByUserId(@Param("userId") Integer userId);
 
+    List<Integer> selectUserOrgId(@Param("userId") Integer userId);
+
     int deleteUserOrg(@Param("userId") Integer userId);
 
     int updateByPrimaryKeySelective(OaOrg record);

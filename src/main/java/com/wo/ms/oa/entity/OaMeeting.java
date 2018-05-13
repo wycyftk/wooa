@@ -10,11 +10,6 @@ import java.util.Date;
 @Entity(name = "oa_meeting")
 public class OaMeeting extends BaseEntity {
     /**
-     * 流程id
-     */
-    private Integer flowId;
-
-    /**
      * 会议室id
      */
     private Integer oaMeetingRoomId;
@@ -42,6 +37,7 @@ public class OaMeeting extends BaseEntity {
 
     /**
      * 会议状态
+     * 0.已开 1.未开 2.会议室审批中
      */
     private Integer status;
 
@@ -75,14 +71,6 @@ public class OaMeeting extends BaseEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Integer getFlowId() {
-        return flowId;
-    }
-
-    public void setFlowId(Integer flowId) {
-        this.flowId = flowId;
     }
 
     public Integer getOaMeetingRoomId() {

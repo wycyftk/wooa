@@ -22,6 +22,8 @@ public interface OaRoleMapper {
 
     List<Map<String, Object>> selectUserRole(@Param("userId") Integer userId);
 
+    List<String> selectUserRoleCode(@Param("userId")Integer userId);
+
     int assginRole(UserRole userRole);
 
     int delUserRole(@Param("userId") Integer userId);

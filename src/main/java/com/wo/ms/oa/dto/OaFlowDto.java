@@ -18,8 +18,13 @@ public class OaFlowDto {
     private Date startTime;
     private Date endTime;
 
-    private String approvalIdea;
+    private String note;
     private Integer status;
+    private String approvalName;
+    private Integer approvalId;
+    private Integer launchId;
+    private String launchName;
+    private Integer opinion;
 
     public String getFlowName() {
         return flowName;
@@ -109,19 +114,59 @@ public class OaFlowDto {
         this.endTime = endTime;
     }
 
-    public String getApprovalIdea() {
-        return approvalIdea;
-    }
-
-    public void setApprovalIdea(String approvalIdea) {
-        this.approvalIdea = approvalIdea;
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getApprovalName() {
+        return approvalName;
+    }
+
+    public void setApprovalName(String approvalName) {
+        this.approvalName = approvalName;
+    }
+
+    public Integer getApprovalId() {
+        return approvalId;
+    }
+
+    public void setApprovalId(Integer approvalId) {
+        this.approvalId = approvalId;
+    }
+
+    public Integer getLaunchId() {
+        return launchId;
+    }
+
+    public void setLaunchId(Integer launchId) {
+        this.launchId = launchId;
+    }
+
+    public String getLaunchName() {
+        return launchName;
+    }
+
+    public void setLaunchName(String launchName) {
+        this.launchName = launchName;
+    }
+
+    public Integer getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(Integer opinion) {
+        this.opinion = opinion;
     }
 }

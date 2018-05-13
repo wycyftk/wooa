@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 public interface UseCarRecordMapper {
     int insert(UseCarRecord record);
 
-    int updateByPrimaryKeySelective(@Param("car") UseCarRecord record, @Param("flowId") Integer flowId);
+    int updateByPrimaryKeySelective(@Param("car") UseCarRecord record);
+
+    int deleteUseCarRecord(@Param("id") Integer id);
 
     UseCarRecord selectUserCarRecordByFlowId(Integer flowId);
 }

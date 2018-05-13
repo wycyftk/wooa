@@ -13,7 +13,6 @@
             </div>
             <div class="col-sm-6">
                 <button class="btn btn-primary" id="search">搜索</button>
-                <button class="btn btn-primary" onclick="loadHtml('/oa/flow/add')">新增</button>
             </div>
         </div>
         <div class="table-block">
@@ -29,22 +28,17 @@
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${oaFlowPagtion.getFlowInfo().size() > 0}" th:each="flow, flowStat : ${oaFlowPagtion.getFlowInfo()}">
+                    <tr th:if="${oaFlowPagtion.getFlowList().size() > 0}" th:each="flow, flowStat : ${oaFlowPagtion.getFlowList()}">
                         <td th:text="${flowStat.index} + 1"></td>
                         <td th:text="${flow.launch_name}"></td>
-                        <td th:text="${flow.containsKey('approval_name')} ? ${flow.approval_name} : ''"></td>
+                        <td th:text="${flow.approval_name}"></td>
                         <td th:text="${flow.flow_name}"></td>
                         <td th:text="${#calendars.format(flow.update_time, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:if="${flow.status == 1}" th:text="${flow.status == 1} ? '草稿' : ''"></td>
-                        <td th:if="${flow.status == 2}" th:text="${flow.status == 2} ? '已提交' : ''"></td>
                         <td th:if="${flow.status == 3}" th:text="${flow.status == 3} ? '部长审批' : ''"></td>
                         <td th:if="${flow.status == 4}" th:text="${flow.status == 4} ? '管理审批' : ''"></td>
                         <td th:if="${flow.status == 5}" th:text="${flow.status == 5} ? '总经理审批' : ''"></td>
-                        <td th:if="${flow.status == 6}" th:text="${flow.status == 6} ? '审批完成' : ''"></td>
                         <td>
-                            <span th:if="${flow.status == 1}" th:onclick="'loadHtml(\'/oa/flow/flow\',{id:' +  ${flow.id} + '})'">编辑</span>
-                            <span th:onclick="'delflow(' + (${flow.use_car_record_id > 0} ? '\'car\'' : '\'meeting\'') + ',' + (${flow.use_car_record_id > 0} ? ${flow.use_car_record_id} : ${flow.meeting_id}) + ')'">删除</span>
-                            <span>查看</span>
+                            <span th:onclick="'loadHtml(\'/oa/flow/approval\',{id:' +  ${flow.id} + '})'">处理</span>
                         </td>
                     </tr>
                     </tbody>
@@ -66,6 +60,6 @@
         </div>
     </div>
 </div>
-<script src="/public/js/flow/myWorkList.js" type="text/javascript"></script>
+<script src="/public/js/flow/flowList.js" type="text/javascript"></script>
 </body>
 </html>

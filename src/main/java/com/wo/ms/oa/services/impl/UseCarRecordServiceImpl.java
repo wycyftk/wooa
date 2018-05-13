@@ -18,8 +18,13 @@ public class UseCarRecordServiceImpl implements UseCarRecordService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(UseCarRecord record, Integer flowId) {
-        return useCarRecordMapper.updateByPrimaryKeySelective(record, flowId);
+    public int updateByPrimaryKeySelective(UseCarRecord record) {
+        return useCarRecordMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteUseCarRecord(Integer id) {
+        return useCarRecordMapper.deleteUseCarRecord(id);
     }
 
     @Override

@@ -60,4 +60,9 @@ public class OaRoleServiceImpl implements OaRoleService {
     public List<Map<String, Object>> selectUserRole(Integer userId) {
         return oaRoleMapper.selectUserRole(userId);
     }
+
+    @Override
+    public List<String> selectUserRoleCode(Integer userId) {
+        return oaRoleMapper.selectUserRoleCode(userId);
+    }
 }

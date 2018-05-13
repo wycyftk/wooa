@@ -18,6 +18,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return false;
         }else{
             session.setAttribute("loginId", session.getAttribute("loginId"));
+            if(request.getRequestURL().indexOf("/oa/loginPage") > 0){
+                response.sendRedirect(request.getContextPath() + "/oa/home");
+            }
             return true;
         }
     }
