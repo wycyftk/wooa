@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OaOrgMapper {
@@ -27,6 +28,10 @@ public interface OaOrgMapper {
     List<OaOrg> selectSubOrg(Integer id);
 
     List<OaOrg> selectOrgsByLevel(Integer level);
+
+    List<Map<String, Object>> selectOrgByUserId(@Param("userId") Integer userId);
+
+    int deleteUserOrg(@Param("userId") Integer userId);
 
     int updateByPrimaryKeySelective(OaOrg record);
 

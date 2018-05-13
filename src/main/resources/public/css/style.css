@@ -304,6 +304,14 @@ ul li{
     float: right;
 }
 
+#roleList label, #orgList label{
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100px;
+}
+
 /* content */
 
 /* org */

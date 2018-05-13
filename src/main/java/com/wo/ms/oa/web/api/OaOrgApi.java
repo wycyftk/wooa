@@ -3,6 +3,7 @@ package com.wo.ms.oa.web.api;
 import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.entity.OaOrg;
 import com.wo.ms.oa.entity.OaRole;
+import com.wo.ms.oa.entity.UserOrg;
 import com.wo.ms.oa.services.OaOrgService;
 import com.wo.ms.oa.services.OaRoleService;
 import com.wo.ms.oa.util.WebUtil;
@@ -76,6 +77,41 @@ public class OaOrgApi {
         result.put("status", true);
         result.put("message", "查找子组织成功");
         result.put("data", orgList);
+        return result;
+    }
+
+    @GetMapping("/getOrgsById")
+    public Map<String, Object> getOrgsById(@RequestParam("userId") Integer userId){
+        Map<String, Object> result = new HashMap<>();
+        try{
+            List<Map<String, Object>> orgList = oaOrgService.selectOrgByUserId(userId);
+            result.put("status", true);
+            result.put("data", orgList);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("status", false);
+            result.put("message", "查找组织失败");
+        }
+        return result;
+    }
+
+    @PostMapping("/assginOrg")
+    public Map<String, Object> assignOrg(@RequestBody List<UserOrg> userOrgList){
+        Map<String, Object> result = new HashMap<>();
+        try{
+            if(userOrgList.size() > 0){
+                oaOrgService.deleteUserOrg(userOrgList.get(0).getUserId());
+                for(int i = 0; i < userOrgList.size(); i++){
+                    oaOrgService.assignOrg(userOrgList.get(i));
+                }
+            }
+            result.put("status", true);
+            result.put("message", "分配组织成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("status", false);
+            result.put("message", "分配组织失败");
+        }
         return result;
     }
 }

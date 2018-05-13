@@ -3,9 +3,11 @@ package com.wo.ms.oa.services;
 import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.dto.OaOrgPagtionDto;
 import com.wo.ms.oa.entity.OaOrg;
+import com.wo.ms.oa.entity.UserOrg;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Map;
 
 public interface OaOrgService {
     int deleteByPrimaryKey(Integer id);
@@ -23,6 +25,12 @@ public interface OaOrgService {
     List<OaOrg> selectSubOrg(Integer id);
 
     List<OaOrg> selectOrgsByLevel(Integer level);
+
+    List<Map<String, Object>> selectOrgByUserId(Integer userId);
+
+    int deleteUserOrg(Integer userId);
+
+    int assignOrg(UserOrg userOrg);
 
     int updateByPrimaryKeySelective(OaOrg record);
 }

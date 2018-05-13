@@ -37,10 +37,19 @@
       WHERE concat_ws(",", role_name, role_code) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
   </select>
+  <select id="selectUserRole" resultType="java.util.Map">
+    SELECT role.id as roleId, role.role_name as roleName, ur.user_id AS userId FROM oa_role AS role
+    LEFT JOIN (SELECT * FROM user_role WHERE user_id = #{userId, jdbcType=INTEGER}) AS ur ON role.id = ur.role_id
+    ORDER BY create_time DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <insert id="assginRole" parameterType="com.wo.ms.oa.entity.UserRole">
+    INSERT INTO user_role (user_id, role_id)
+    VALUES (#{userId, jdbcType=INTEGER}, #{roleId, jdbcType=INTEGER})
+  </insert>
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaRole">
     insert into oa_role (id, create_id, create_time, 
       update_id, update_time, role_name, role_code
@@ -49,6 +58,10 @@
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{roleName,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}
       )
   </insert>
+  <delete id="delUserRole" parameterType="java.lang.Integer">
+    delete from user_role
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaRole">
     update oa_role
     <set>

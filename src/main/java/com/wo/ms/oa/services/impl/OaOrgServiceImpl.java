@@ -4,11 +4,13 @@ import com.wo.ms.oa.dao.OaOrgMapper;
 import com.wo.ms.oa.dto.OaOrgDto;
 import com.wo.ms.oa.dto.OaOrgPagtionDto;
 import com.wo.ms.oa.entity.OaOrg;
+import com.wo.ms.oa.entity.UserOrg;
 import com.wo.ms.oa.services.OaOrgService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OaOrgServiceImpl implements OaOrgService {
@@ -59,6 +61,21 @@ public class OaOrgServiceImpl implements OaOrgService {
     @Override
     public List<OaOrg> selectOrgsByLevel(Integer level) {
         return oaOrgMapper.selectOrgsByLevel(level);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectOrgByUserId(Integer userId) {
+        return oaOrgMapper.selectOrgByUserId(userId);
+    }
+
+    @Override
+    public int deleteUserOrg(Integer userId) {
+        return oaOrgMapper.deleteUserOrg(userId);
+    }
+
+    @Override
+    public int assignOrg(UserOrg userOrg) {
+        return oaOrgMapper.insertUserOrg(userOrg);
     }
 
     @Override

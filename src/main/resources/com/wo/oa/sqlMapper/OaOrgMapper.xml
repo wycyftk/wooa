@@ -68,6 +68,15 @@
     <include refid="Base_Column_List" />
     FROM oa_org WHERE left_node = 1 AND del_flg = 0;
   </select>
+  <select id="selectOrgByUserId" resultType="java.util.Map">
+    SELECT oo.id AS orgId, oo.org_name AS orgName, uo.user_id AS userId FROM oa_org AS oo
+    LEFT JOIN (SELECT * FROM user_org WHERE user_id = #{userId, jdbcType=INTEGER}) AS uo ON oo.id = uo.org_id
+    WHERE left_node > 1 AND del_flg = 0
+    ORDER BY oo.left_node
+  </select>
+  <delete id="deleteUserOrg" parameterType="java.lang.Integer">
+    DELETE FROM user_org  WHERE user_id = #{userId, jdbcType=INTEGER}
+  </delete>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     SELECT @left_node := left_node, @right_node := right_node
         FROM oa_org WHERE id = #{id, jdbcType=INTEGER} AND del_flg = 0;

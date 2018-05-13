@@ -2,11 +2,14 @@ package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.OaRoleMapper;
 import com.wo.ms.oa.entity.OaRole;
+import com.wo.ms.oa.entity.UserRole;
 import com.wo.ms.oa.services.OaRoleService;
 import com.wo.ms.oa.dto.OaRolePagtionDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OaRoleServiceImpl implements OaRoleService {
@@ -41,5 +44,20 @@ public class OaRoleServiceImpl implements OaRoleService {
     @Override
     public int updateByPrimaryKeySelective(OaRole record) {
         return oaRoleMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int assginRole(UserRole userRole) {
+        return oaRoleMapper.assginRole(userRole);
+    }
+
+    @Override
+    public int delUserRole(Integer userId) {
+        return oaRoleMapper.delUserRole(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectUserRole(Integer userId) {
+        return oaRoleMapper.selectUserRole(userId);
     }
 }

@@ -36,7 +36,12 @@
                             <td th:text="${user.sex} == 1 ? '男' : '女'"></td>
                             <td th:text="${user.mobile}"></td>
                             <td th:text="${user.email}"></td>
-                            <td><span th:onclick="'loadHtml(\'/oa/user/update\',{id:' +  ${user.id} + '})'">编辑</span><span th:onclick="'delUser(' + ${user.id} + ')'">删除</span></td>
+                            <td>
+                                <span th:onclick="'loadHtml(\'/oa/user/update\',{id:' +  ${user.id} + '})'">编辑</span>
+                                <span th:onclick="'delUser(' + ${user.id} + ')'">删除</span>
+                                <span data-toggle="modal" data-target="#roleModal" th:data-userid-role="${user.id}">分配角色</span>
+                                <span data-toggle="modal" data-target="#orgModal" th:data-userid-org="${user.id}">分配组织</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -53,6 +58,48 @@
                         </ul>
                     </nav>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">分配角色</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="roleList">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="assignRole">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="orgModal" tabindex="-1" role="dialog" aria-labelledby="orgModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orgModalLabel">分配组织</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="orgList">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="assignOrg">保存</button>
             </div>
         </div>
     </div>
