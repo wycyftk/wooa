@@ -20,7 +20,17 @@ public interface OaFlowMapper {
 
     Integer selectFlowByKey(@Param("key") String key, @Param("loginId") Integer loginId);
 
+    List<Map<String, Object>> selectFlowByKeyLimitTodo(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
+
+    List<Map<String, Object>> selectFlowByKeyLimitByStatus(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("status") Integer status);
+
+    List<Map<String, Object>> selectFlowByKeyLimitByOrgIds(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("orgIds") List<Integer> orgIds, @Param("loginId") Integer loginId);
+
+    Integer selectFlowByKeyTodo(@Param("key") String key, @Param("loginId") Integer loginId);
+
     int deleteFlow(@Param("id") Integer id, @Param("type") String type);
 
     int addFlowCarMeeting(FlowCarMeeting flowCarMeeting);
+
+    int updateByPrimaryKeySelective(OaFlow oaFlow);
 }

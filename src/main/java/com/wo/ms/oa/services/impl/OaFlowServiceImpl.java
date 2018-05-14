@@ -8,6 +8,9 @@ import com.wo.ms.oa.services.OaFlowService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OaFlowServiceImpl implements OaFlowService {
@@ -21,6 +24,36 @@ public class OaFlowServiceImpl implements OaFlowService {
         oaFlowPagtionDto.setPageSize(pageSize);
         oaFlowPagtionDto.setFlowInfo(oaFlowMapper.selectFlowByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
         oaFlowPagtionDto.setTotalPage((oaFlowMapper.selectFlowByKey(key, loginId) - 1) / pageSize + 1 );
+        return oaFlowPagtionDto;
+    }
+
+    @Override
+    public OaFlowPagtionDto selectFlowByKeyLimitTodo(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleList, List<Integer> orgIds) {
+        OaFlowPagtionDto oaFlowPagtionDto = new OaFlowPagtionDto();
+        List<Map<String, Object>> flows = new ArrayList<>();
+        List<Map<String, Object>> newFlows = new ArrayList<>();
+
+        oaFlowPagtionDto.setCurrentPage(currentPage);
+        oaFlowPagtionDto.setPageSize(pageSize);
+
+        if(roleList.contains("president")){
+            flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 4));
+        } else if (roleList.contains("res_admin")){
+            flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 5));
+        } else if (roleList.contains("minister")) {
+            flows.addAll(oaFlowMapper.selectFlowByKeyLimitByOrgIds(key, pageSize, (currentPage - 1) * pageSize, orgIds, loginId));
+        }
+
+        int i = 0, index = i + (currentPage - 1) * pageSize;
+
+        while (i < pageSize){
+            if(flows.size() > index)
+                newFlows.add(flows.get(index));
+            i++;
+        }
+
+        oaFlowPagtionDto.setFlowInfo(newFlows);
+        oaFlowPagtionDto.setTotalPage((flows.size() - 1) / pageSize + 1 );
         return oaFlowPagtionDto;
     }
 
@@ -42,5 +75,10 @@ public class OaFlowServiceImpl implements OaFlowService {
     @Override
     public int addFlowCarMeeting(FlowCarMeeting flowCarMeeting) {
         return oaFlowMapper.addFlowCarMeeting(flowCarMeeting);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaFlow oaFlow) {
+        return oaFlowMapper.updateByPrimaryKeySelective(oaFlow);
     }
 }

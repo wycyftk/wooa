@@ -90,6 +90,15 @@ public class OaFlowApi {
             }
 
             oaFlowService.addFlowCarMeeting(flowCarMeeting);
+
+            if(oaFlow.getStatus() == 2){
+                oaFlow.setId(null);
+                oaFlow.setStatus(3);
+                oaFlowService.insert(oaFlow);
+                //生成一条状态为部长审批的记录
+                flowCarMeeting.setFlowId(oaFlow.getId());
+                oaFlowService.addFlowCarMeeting(flowCarMeeting);
+            }
             result.put("status", true);
             result.put("message", "提交成功");
         }catch (Exception e){
@@ -106,37 +115,44 @@ public class OaFlowApi {
 
         try{
             Integer loginId = webUtil.getLoginId();
+            OaUser user = oaUserService.selectOaUser(loginId);
             Date now = new Date();
 
-            //初始化流程相关数据
+            //更新上一个节点审批人数据
             OaFlow oaFlow = new OaFlow();
+            oaFlow.setId(oaFlowDto.getFlowId());
+            oaFlow.setApprovalId(loginId);
+            oaFlow.setApprovalName(user.getName());
+            oaFlow.setUpdateId(loginId);
+            oaFlow.setUpdateTime(now);
+            oaFlowService.updateByPrimaryKeySelective(oaFlow);
+
+            oaFlow.setId(null);
             oaFlow.setFlowName(oaFlowDto.getFlowName());
             oaFlow.setLaunchId(webUtil.getLoginId());
             oaFlow.setLaunchName(oaUserService.selectOaUser(webUtil.getLoginId()).getName());
             oaFlow.setCreateId(loginId);
-            oaFlow.setUpdateId(loginId);
             oaFlow.setCreateTime(now);
-            oaFlow.setUpdateTime(now);
-            oaFlow.setApprovalId(loginId);
-            Integer flowId = oaFlowService.insert(oaFlow);
 
-            if("car".equals(oaFlowDto.getFlowType())){
-                UseCarRecord useCarRecord = new UseCarRecord();
-                useCarRecord.setCarId(oaFlowDto.getCarId());
-                useCarRecord.setEndTime(oaFlowDto.getEndTime());
-                useCarRecord.setStartTime(oaFlowDto.getStartTime());
-                useCarRecord.setReason(oaFlowDto.getReason());
-                useCarRecord.setUpdateId(loginId);
-                useCarRecord.setCarStatus(2);
-                useCarRecordService.updateByPrimaryKeySelective(useCarRecord);
+            if(oaFlow.getStatus() == 5){
+                oaFlow.setStatus(0);
+                // todo 给发起人发送消息
+            } else {
+                if("meeting".equals(oaFlowDto.getFlowType()) && oaFlowDto.getStatus() == 3){
+                    oaFlow.setStatus(5);
+                } else {
+                    oaFlow.setStatus(oaFlow.getStatus() + 1);
+                }
             }
 
+            Integer flowId = oaFlowService.insert(oaFlow);
+
             result.put("status", true);
-            result.put("message", "提交成功");
+            result.put("message", "操作成功");
         }catch (Exception e){
             e.printStackTrace();
             result.put("status", false);
-            result.put("message", "提交流程发生错误");
+            result.put("message", "操作流程发生错误");
         }
         return result;
     }

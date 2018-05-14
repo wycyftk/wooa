@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/oa/flow")
@@ -38,6 +41,27 @@ public class OaflowController {
         key = key == null ? "" : key;
 
         OaFlowPagtionDto oaFlowPagtion = oaFlowService.selectFlowByKeyLimit(key, pageSize, currentPage, webUtil.getLoginId());
+        view.addObject("oaFlowPagtion", oaFlowPagtion);
+        view.addObject("key", key);
+        return view;
+    }
+
+    /**
+     * 查询自己提交的流程
+     * @param key 关键字
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping("/todoWork")
+    public ModelAndView todoWork(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage, HttpServletRequest request){
+        ModelAndView view = new ModelAndView("wo/oa/flow/todoWorkList");
+        key = key == null ? "" : key;
+        HttpSession session = request.getSession();
+        List<String> roleCodes = (List<String>)session.getAttribute("roleCodes");
+        List<Integer> orgIds = (List<Integer>) session.getAttribute("orgIds");
+
+        OaFlowPagtionDto oaFlowPagtion = oaFlowService.selectFlowByKeyLimitTodo(key, pageSize, currentPage, webUtil.getLoginId(), roleCodes, orgIds);
         view.addObject("oaFlowPagtion", oaFlowPagtion);
         view.addObject("key", key);
         return view;
