@@ -10,41 +10,41 @@
     <div class="form-group row">
         <label for="flowName" class="col-sm-1 col-form-label">流程名称</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="flowName" th:value="${flow} != null ? ${flow.flow_name} : ''" placeholder="流程名称">
+            <input type="text" class="form-control" id="flowName" th:value="${flow.containsKey('flow_name')} ? ${flow.flow_name} : ''" placeholder="流程名称">
         </div>
         <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
         <div class="col-sm-4">
-            <input disabled type="text" class="form-control" id="flowType" th:value="${flow} != null ? ${flow.flowType} : ''" placeholder="流程类型">
+            <input disabled type="text" class="form-control" id="flowType" th:value="${flow.containsKey('flowType')} ? ${flow.flowType} : ''" placeholder="流程类型">
         </div>
     </div>
     <div class="form-group row" th:if="${flowType == 'meeting'}" id="meeting">
         <label for="meetingName" class="col-sm-1 col-form-label">会议名称</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="meetingName" th:value="${flow.containsKey('meeting_name')} != null ? ${flow.meeting_name} : ''" placeholder="会议名称">
+            <input type="text" class="form-control" id="meetingName" th:value="${flow.containsKey('meeting_name')} ? ${flow.meeting_name} : ''" placeholder="会议名称">
         </div>
         <label for="meetingRoom" class="offset-sm-1 col-sm-1 col-form-label">会议室</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="meetingRoom" th:value="${flow.containsKey('meeting_room')} != null ? ${flow.meeting_room} : ''" placeholder="会议室">
+            <input type="text" class="form-control" id="meetingRoom" th:value="${flow.containsKey('meeting_room')} ? ${flow.meeting_room} : ''" placeholder="会议室">
         </div>
     </div>
     <div class="form-group row flow-car" th:if="${flow.flowType == 'car'}" id="car">
         <label for="reason" class="col-sm-1 col-form-label">用车原因</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="reason" th:value="${flow.containsKey('reason')} != null ? ${flow.reason} : ''" placeholder="用车原因">
+            <input type="text" class="form-control" id="reason" th:value="${flow.containsKey('reason')} ? ${flow.reason} : ''" placeholder="用车原因">
         </div>
         <label for="carName" class="col-sm-1 offset-sm-1 col-form-label">车</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="carName"  th:value="${flow.containsKey('car_name')} != null ? ${flow.car_name} : ''">
+            <input type="text" class="form-control" id="carName"  th:value="${flow.containsKey('car_name')} ? ${flow.car_name} : ''">
         </div>
     </div>
     <div class="form-group row">
         <label for="startTime" class="col-sm-1 col-form-label">开始时间</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="startTime" placeholder="开始时间" th:value="${flow.containsKey('start_time')} != null ? ${flow.start_time} : ''">
+            <input type="text" class="form-control" id="startTime" placeholder="开始时间" th:value="${flow.containsKey('start_time')} ? ${flow.start_time} : ''">
         </div>
         <label for="endTime" class="offset-sm-1 col-sm-1 col-form-label">结束时间</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="endTime" placeholder="结束时间" th:value="${flow.containsKey('end_time')} != null ? ${flow.end_time} : ''">
+            <input type="text" class="form-control" id="endTime" placeholder="结束时间" th:value="${flow.containsKey('end_time')} ? ${flow.end_time} : ''">
         </div>
     </div>
     <div class="form-group row">
