@@ -5,6 +5,7 @@ import com.wo.ms.oa.entity.FlowCarMeeting;
 import com.wo.ms.oa.entity.OaFlow;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OaFlowService {
     OaFlowPagtionDto selectFlowByKeyLimit(String key, Integer pageSize, Integer currentPage, Integer loginId);
@@ -12,6 +13,8 @@ public interface OaFlowService {
     OaFlowPagtionDto selectFlowByKeyLimitTodo(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleList, List<Integer> orgIds);
 
     OaFlow selectFlow(Integer id);
+
+    Map<String, Object> selectFlowById(Integer flowId);
 
     int insert(OaFlow oaFlow);
 

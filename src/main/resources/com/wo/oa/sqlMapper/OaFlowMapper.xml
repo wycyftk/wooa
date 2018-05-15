@@ -130,8 +130,9 @@
     </trim>
     GROUP BY fcm.meeting_id HAVING MAX(oa_flow.create_time)) AS r
   </select>
-  <select id="selectFlowByKeyLimitByStatus" resultType="java.util.Map">
-    SELECT * FROM oa_flow AS flow
+  <select id="selectFlowByKeyLimitByStatus" resultMap="BaseResultMap">
+    SELECT <include refid="Mul_Column_List" ><property name="alias" value="flow"></property></include>
+    FROM oa_flow AS flow
     LEFT JOIN flow_car_meeting AS fcm ON fcm.flow_id = flow.id
     WHERE flow.status = #{status, jdbcType=INTEGER} AND flow.approval_id IS NULL
     <if test="key != null">
@@ -139,7 +140,7 @@
     </if>
     GROUP BY fcm.meeting_id HAVING MAX(flow.create_time)
   </select>
-  <select id="selectFlowByKeyLimitByOrgIds" resultType="java.util.Map">
+  <select id="selectFlowByKeyLimitByOrgIds" resultMap="BaseResultMap">
     SELECT 
     <include refid="Mul_Column_List" ><property name="alias" value="flow"></property></include>
     FROM oa_flow AS flow
@@ -154,6 +155,20 @@
       AND concat_ws(',', flow_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
     GROUP BY fcm.meeting_id HAVING MAX(flow.create_time)
+  </select>
+  <select id="selectCarFlowById" resultType="java.util.Map">
+    SELECT * FROM
+	oa_flow
+    LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
+    LEFT JOIN use_car_record AS ucr ON ucr.id = fcm.use_car_record_id
+    WHERE oa_flow.id = #{flowId, jdbcType=INTEGER} AND fcm.use_car_record_id <![CDATA[<>]]> 0
+  </select>
+  <select id="selectMeetingFlowById" resultType="java.util.Map">
+    SELECT * FROM
+    oa_flow
+    LEFT JOIN flow_car_meeting AS fcm ON oa_flow.id = fcm.flow_id
+    LEFT JOIN oa_meeting AS om ON om.id = fcm.meeting_id
+    WHERE oa_flow.id = #{flowId, jdbcType=INTEGER} AND fcm.meeting_id <![CDATA[<>]]> 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_flow

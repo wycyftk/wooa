@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/oa/flow")
@@ -82,16 +83,9 @@ public class OaflowController {
     @RequestMapping("/approval")
     public ModelAndView approval(@RequestParam("flowId") Integer flowId){
         ModelAndView view = new ModelAndView("wo/oa/flow/approvalFlowForm");
-        OaFlow oaFlow = oaFlowService.selectFlow(flowId);
-        UseCarRecord useCarRecord = useCarRecordService.selectUserCarRecordByFlowId(flowId);
+        Map<String, Object> oaFlow = oaFlowService.selectFlowById(flowId);
 
         view.addObject("flow", oaFlow);
-        view.addObject("car", useCarRecord);
-        if(useCarRecord != null){
-            view.addObject("flowType", "car");
-        } else {
-            view.addObject("flowType", "meeting");
-        }
         return view;
     }
 }

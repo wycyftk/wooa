@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,8 @@ public class OaFlowServiceImpl implements OaFlowService {
     @Override
     public OaFlowPagtionDto selectFlowByKeyLimitTodo(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleList, List<Integer> orgIds) {
         OaFlowPagtionDto oaFlowPagtionDto = new OaFlowPagtionDto();
-        List<Map<String, Object>> flows = new ArrayList<>();
-        List<Map<String, Object>> newFlows = new ArrayList<>();
+        List<OaFlow> flows = new ArrayList<>();
+        List<OaFlow> newFlows = new ArrayList<>();
 
         oaFlowPagtionDto.setCurrentPage(currentPage);
         oaFlowPagtionDto.setPageSize(pageSize);
@@ -46,13 +47,14 @@ public class OaFlowServiceImpl implements OaFlowService {
 
         int i = 0, index = i + (currentPage - 1) * pageSize;
 
-        while (i < pageSize){
+        while (i < pageSize && i < flows.size()){
             if(flows.size() > index)
                 newFlows.add(flows.get(index));
             i++;
+            index++;
         }
 
-        oaFlowPagtionDto.setFlowInfo(newFlows);
+        oaFlowPagtionDto.setFlowList(newFlows);
         oaFlowPagtionDto.setTotalPage((flows.size() - 1) / pageSize + 1 );
         return oaFlowPagtionDto;
     }
@@ -60,6 +62,20 @@ public class OaFlowServiceImpl implements OaFlowService {
     @Override
     public OaFlow selectFlow(Integer id) {
         return oaFlowMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> selectFlowById(Integer flowId) {
+        Map<String, Object> carFlow = oaFlowMapper.selectCarFlowById(flowId);
+        Map<String, Object> meetingFlow = oaFlowMapper.selectMeetingFlowById(flowId);
+
+        if (!carFlow.isEmpty()){
+            carFlow.put("flowType", "car");
+            return carFlow;
+        } else {
+            meetingFlow.put("flowType", "meeting");
+            return meetingFlow;
+        }
     }
 
     @Override

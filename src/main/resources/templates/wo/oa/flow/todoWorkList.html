@@ -30,15 +30,15 @@
                     <tbody>
                     <tr th:if="${oaFlowPagtion.getFlowList().size() > 0}" th:each="flow, flowStat : ${oaFlowPagtion.getFlowList()}">
                         <td th:text="${flowStat.index} + 1"></td>
-                        <td th:text="${flow.launch_name}"></td>
-                        <td th:text="${flow.approval_name}"></td>
-                        <td th:text="${flow.flow_name}"></td>
-                        <td th:text="${#calendars.format(flow.update_time, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${flow.launchName}"></td>
+                        <td th:text="${flow.approvalName}"></td>
+                        <td th:text="${flow.flowName}"></td>
+                        <td th:text="${#calendars.format(flow.updateTime, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:if="${flow.status == 3}" th:text="${flow.status == 3} ? '部长审批' : ''"></td>
                         <td th:if="${flow.status == 4}" th:text="${flow.status == 4} ? '管理审批' : ''"></td>
                         <td th:if="${flow.status == 5}" th:text="${flow.status == 5} ? '总经理审批' : ''"></td>
                         <td>
-                            <span th:onclick="'loadHtml(\'/oa/flow/approval\',{id:' +  ${flow.id} + '})'">处理</span>
+                            <span th:onclick="'loadHtml(\'/oa/flow/approval\',{flowId:' +  ${flow.id} + '})'">处理</span>
                         </td>
                     </tr>
                     </tbody>
