@@ -117,35 +117,54 @@ public class OaFlowApi {
             Integer loginId = webUtil.getLoginId();
             OaUser user = oaUserService.selectOaUser(loginId);
             Date now = new Date();
+            FlowCarMeeting flowCarMeeting = new FlowCarMeeting();
+            boolean isZjlApproval = false; // 当前是否是总经理审批
 
             //更新上一个节点审批人数据
-            OaFlow oaFlow = new OaFlow();
-            oaFlow.setId(oaFlowDto.getFlowId());
+            OaFlow oaFlow = oaFlowService.selectFlow(oaFlowDto.getFlowId());
             oaFlow.setApprovalId(loginId);
             oaFlow.setApprovalName(user.getName());
             oaFlow.setUpdateId(loginId);
             oaFlow.setUpdateTime(now);
+            oaFlow.setOpinion(oaFlowDto.getOpinion());
             oaFlowService.updateByPrimaryKeySelective(oaFlow);
 
             oaFlow.setId(null);
-            oaFlow.setFlowName(oaFlowDto.getFlowName());
-            oaFlow.setLaunchId(webUtil.getLoginId());
-            oaFlow.setLaunchName(oaUserService.selectOaUser(webUtil.getLoginId()).getName());
-            oaFlow.setCreateId(loginId);
             oaFlow.setCreateTime(now);
 
-            if(oaFlow.getStatus() == 5){
-                oaFlow.setStatus(0);
-                // todo 给发起人发送消息
-            } else {
-                if("meeting".equals(oaFlowDto.getFlowType()) && oaFlowDto.getStatus() == 3){
-                    oaFlow.setStatus(5);
+            if(oaFlowDto.getOpinion() == 0) {
+                // 同意之后，新建下一个节点数据
+                if(oaFlow.getStatus() == 5){
+                    // 如果当前是总经理审批，则结束流程
+                    isZjlApproval = true;
+                    oaFlow.setStatus(0);
+                    // todo 给发起人发送消息
                 } else {
-                    oaFlow.setStatus(oaFlow.getStatus() + 1);
+                    if("meeting".equals(oaFlowDto.getFlowType()) && oaFlowDto.getStatus() == 3){
+                        oaFlow.setStatus(5);
+                    } else {
+                        oaFlow.setStatus(oaFlow.getStatus() + 1);
+                    }
                 }
+            } else {
+                // 驳回后，状态变成编辑状态
+                oaFlow.setStatus(1);
             }
 
-            Integer flowId = oaFlowService.insert(oaFlow);
+            if(isZjlApproval){
+
+            } else {
+                // 不是最后一个节点，并且不是同意
+                oaFlow.setApprovalName(null);
+                oaFlow.setApprovalId(null);
+                oaFlow.setOpinion(null);
+                Integer flowId = oaFlowService.insert(oaFlow);
+                flowCarMeeting.setFlowId(oaFlow.getId());
+                flowCarMeeting.setMeetingId(oaFlowDto.getMeetingId());
+                flowCarMeeting.setUseCarRecordId(oaFlowDto.getUseCarRecordId());
+
+                oaFlowService.addFlowCarMeeting(flowCarMeeting);
+            }
 
             result.put("status", true);
             result.put("message", "操作成功");

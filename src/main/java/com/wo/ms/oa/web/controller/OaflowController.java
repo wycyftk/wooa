@@ -68,6 +68,24 @@ public class OaflowController {
         return view;
     }
 
+    /**
+     * 查询自己处理过的流程
+     * @param key 关键字
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping("/completeWork")
+    public ModelAndView completeWork(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage, HttpServletRequest request){
+        ModelAndView view = new ModelAndView("wo/oa/flow/completeWork");
+        key = key == null ? "" : key;
+
+        OaFlowPagtionDto oaFlowPagtion = oaFlowService.selectCompleteFlowByKeyLimit(key, pageSize, currentPage, webUtil.getLoginId());
+        view.addObject("oaFlowPagtion", oaFlowPagtion);
+        view.addObject("key", key);
+        return view;
+    }
+
     @RequestMapping("/newWork")
     public ModelAndView newWork(){
         ModelAndView view = new ModelAndView("wo/oa/flow/flowForm");

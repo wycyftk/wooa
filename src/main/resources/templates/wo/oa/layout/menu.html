@@ -27,7 +27,7 @@
                     <li><a href="javascript:;" onclick="loadHtml('/oa/flow/newWork')">新建工作</a></li>
                     <li><a href="javascript:;" onclick="loadHtml('/oa/flow/myWork', {pageSize:10, currentPage:1})">我的工作</a></li>
                     <li th:if="${roleList.contains('minister')} or ${roleList.contains('president')} or ${roleList.contains('res_admin')} or ${roleList.contains('meeting_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/flow/todoWork', {pageSize:10, currentPage:1})">待办工作</a></li>
-                    <li th:if="${roleList.contains('minister')} or ${roleList.contains('president')} or ${roleList.contains('res_admin')} or ${roleList.contains('meeting_admin')}"><a href="javascript:;">已办工作</a></li>
+                    <li th:if="${roleList.contains('minister')} or ${roleList.contains('president')} or ${roleList.contains('res_admin')} or ${roleList.contains('meeting_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/flow/completeWork', {pageSize:10, currentPage:1})">已办工作</a></li>
                 </ul>
             </li>
             <li th:if="${roleList.contains('res_admin')} or ${roleList.contains('meeting_admin')}">

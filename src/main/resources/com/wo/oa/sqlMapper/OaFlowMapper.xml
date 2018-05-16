@@ -170,6 +170,26 @@
     LEFT JOIN oa_meeting AS om ON om.id = fcm.meeting_id
     WHERE oa_flow.id = #{flowId, jdbcType=INTEGER} AND fcm.meeting_id <![CDATA[<>]]> 0
   </select>
+  <select id="selectCompleteFlowByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"><property name="alis" value="flow"></property></include>
+    FROM oa_flow AS flow
+    WHERE approval_id = #{loginId, jdbcType=INTEGER}
+    <if test="key != null">
+      AND concat_ws(",", flow_name, launch_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    ORDER BY create_time DESC
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectCompleteFlowByKey" resultType="java.lang.Integer">
+    SELECT
+      count(*)
+    FROM oa_flow AS flow
+    WHERE approval_id = #{loginId, jdbcType=INTEGER}
+    <if test="key != null">
+      AND concat_ws(",", flow_name, launch_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_flow
     where id = #{id,jdbcType=INTEGER}

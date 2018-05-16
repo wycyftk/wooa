@@ -20,6 +20,9 @@ public interface OaFlowMapper {
 
     Map<String, Object> selectMeetingFlowById(@Param("flowId") Integer flowId);
 
+    List<OaFlow> selectCompleteFlowByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
+
+    Integer selectCompleteFlowByKey(@Param("key") String key, @Param("loginId") Integer loginId);
 
     List<Map<String, Object>> selectFlowByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
 

@@ -10,10 +10,12 @@ public class OaFlowDto {
     private String meetingName;
     private Integer meetingRoomId;
     private String meetingRoom;
+    private Integer meetingId;
 
     private String reason;
     private Integer carId;
     private String carName;
+    private Integer useCarRecordId;
 
     private Date startTime;
     private Date endTime;
@@ -44,6 +46,22 @@ public class OaFlowDto {
 
     public String getCarName() {
         return carName;
+    }
+
+    public Integer getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(Integer meetingId) {
+        this.meetingId = meetingId;
+    }
+
+    public Integer getUseCarRecordId() {
+        return useCarRecordId;
+    }
+
+    public void setUseCarRecordId(Integer useCarRecordId) {
+        this.useCarRecordId = useCarRecordId;
     }
 
     public Integer getFlowId() {

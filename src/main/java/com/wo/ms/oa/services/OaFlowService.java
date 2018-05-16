@@ -12,6 +12,8 @@ public interface OaFlowService {
 
     OaFlowPagtionDto selectFlowByKeyLimitTodo(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleList, List<Integer> orgIds);
 
+    OaFlowPagtionDto selectCompleteFlowByKeyLimit(String key, Integer pageSize, Integer currentPage, Integer loginId);
+
     OaFlow selectFlow(Integer id);
 
     Map<String, Object> selectFlowById(Integer flowId);

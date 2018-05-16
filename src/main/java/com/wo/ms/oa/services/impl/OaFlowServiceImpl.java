@@ -37,9 +37,9 @@ public class OaFlowServiceImpl implements OaFlowService {
         oaFlowPagtionDto.setCurrentPage(currentPage);
         oaFlowPagtionDto.setPageSize(pageSize);
 
-        if(roleList.contains("president")){
+        if(roleList.contains("res_admin")){
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 4));
-        } else if (roleList.contains("res_admin")){
+        } else if (roleList.contains("president")){
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 5));
         } else if (roleList.contains("minister")) {
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByOrgIds(key, pageSize, (currentPage - 1) * pageSize, orgIds, loginId));
@@ -56,6 +56,16 @@ public class OaFlowServiceImpl implements OaFlowService {
 
         oaFlowPagtionDto.setFlowList(newFlows);
         oaFlowPagtionDto.setTotalPage((flows.size() - 1) / pageSize + 1 );
+        return oaFlowPagtionDto;
+    }
+
+    @Override
+    public OaFlowPagtionDto selectCompleteFlowByKeyLimit(String key, Integer pageSize, Integer currentPage, Integer loginId) {
+        OaFlowPagtionDto oaFlowPagtionDto = new OaFlowPagtionDto();
+        oaFlowPagtionDto.setCurrentPage(currentPage);
+        oaFlowPagtionDto.setPageSize(pageSize);
+        oaFlowPagtionDto.setFlowList(oaFlowMapper.selectCompleteFlowByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
+        oaFlowPagtionDto.setTotalPage((oaFlowMapper.selectCompleteFlowByKey(key, loginId) - 1) / pageSize + 1);
         return oaFlowPagtionDto;
     }
 
