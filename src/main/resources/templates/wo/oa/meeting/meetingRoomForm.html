@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会议室管理</title>
+</head>
+<body>
+<div class="meetingRoomForm">
+    <h4 class="form-title">会议室管理</h4>
+    <div class="form-group row">
+        <label for="meetingRoom" class="col-sm-1 col-form-label">会议室名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="meetingRoom" th:value="${meetingRoom != null} ? ${meetingRoom.meetingRoom} : ''" placeholder="会议室名称">
+        </div>
+        <label class="col-sm-1 col-form-label">会议室大小</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="size">
+                <option value="1">1 - 9人</option>
+                <option value="2">10 - 29人</option>
+                <option value="3">30 - 49人</option>
+                <option value="4">50人以上</option>
+            </select>
+        </div>
+        <input id="id" type="text" th:value="${meetingRoom != null} ? ${meetingRoom.id} : ''" style="display: none" >
+    </div>
+    <div class="form-group form-btns">
+        <button type="submit" class="btn btn-primary" id="submitMeetingRoom">保存</button>
+        <button type="submit" class="btn btn-default" onclick="loadHtml( '/oa/meetingRoom/list',{pageSize:10,currentPage:1})">取消</button>
+    </div>
+</div>
+<script src="/public/js/meeting/meetingRoomForm.js" type="text/javascript"></script>
+</body>
+</html>

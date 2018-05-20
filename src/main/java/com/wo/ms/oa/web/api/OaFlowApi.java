@@ -40,9 +40,9 @@ public class OaFlowApi {
             Integer loginId = webUtil.getLoginId();
             Date now = new Date();
             FlowCarMeeting flowCarMeeting = new FlowCarMeeting();
+            OaFlow oaFlow = new OaFlow();
 
             //初始化流程相关数据
-            OaFlow oaFlow = new OaFlow();
             oaFlow.setFlowName(oaFlowDto.getFlowName());
             oaFlow.setLaunchId(webUtil.getLoginId());
             oaFlow.setLaunchName(oaUserService.selectOaUser(webUtil.getLoginId()).getName());
@@ -50,8 +50,14 @@ public class OaFlowApi {
             oaFlow.setUpdateId(loginId);
             oaFlow.setCreateTime(now);
             oaFlow.setUpdateTime(now);
+            oaFlow.setId(oaFlowDto.getFlowId());
             oaFlow.setStatus(oaFlowDto.getStatus());
-            Integer flowId = oaFlowService.insert(oaFlow);
+
+            if(oaFlowDto.getFlowId() == null){
+                oaFlowService.insert(oaFlow);
+            } else {
+                oaFlowService.updateByPrimaryKeySelective(oaFlow);
+            }
 
             if("car".equals(oaFlowDto.getFlowType())){
                 UseCarRecord useCarRecord = new UseCarRecord();
@@ -65,12 +71,18 @@ public class OaFlowApi {
                 useCarRecord.setUpdateId(loginId);
                 useCarRecord.setUpdateTime(now);
                 useCarRecord.setCarStatus(1);  //用车申请审批中
-                useCarRecordService.insert(useCarRecord);
 
+                if( oaFlowDto.getFlowId() == null){
+                    useCarRecordService.insert(useCarRecord);
+                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
+                } else {
+                    useCarRecord.setId(oaFlowDto.getUseCarRecordId());
+                    useCarRecordService.updateByPrimaryKeySelective(useCarRecord);
+                }
                 flowCarMeeting.setUseCarRecordId(useCarRecord.getId());
                 flowCarMeeting.setFlowId(oaFlow.getId());
                 flowCarMeeting.setMeetingId(0);
-            } else {
+            } else{
                 OaMeeting oaMeeting = new OaMeeting();
                 oaMeeting.setStartTime(oaFlowDto.getStartTime());
                 oaMeeting.setEndTime(oaFlowDto.getEndTime());
@@ -82,14 +94,18 @@ public class OaFlowApi {
                 oaMeeting.setUpdateId(loginId);
                 oaMeeting.setUpdateTime(now);
                 oaMeeting.setStatus(2);  //会议申请审批中
-                oaMeetingService.insert(oaMeeting);
 
+                if(oaFlowDto.getFlowId() == null){
+                    oaMeetingService.insert(oaMeeting);
+                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
+                } else {
+                    oaMeeting.setId(oaFlowDto.getMeetingId());
+                    oaMeetingService.updateByPrimaryKeySelective(oaMeeting);
+                }
                 flowCarMeeting.setUseCarRecordId(0);
                 flowCarMeeting.setFlowId(oaFlow.getId());
                 flowCarMeeting.setMeetingId(oaMeeting.getId());
             }
-
-            oaFlowService.addFlowCarMeeting(flowCarMeeting);
 
             if(oaFlow.getStatus() == 2){
                 oaFlow.setId(null);
@@ -140,7 +156,7 @@ public class OaFlowApi {
                     oaFlow.setStatus(0);
                     // todo 给发起人发送消息
                 } else {
-                    if("meeting".equals(oaFlowDto.getFlowType()) && oaFlowDto.getStatus() == 3){
+                    if("meeting".equals(oaFlowDto.getFlowType()) && oaFlow.getStatus() == 3){
                         oaFlow.setStatus(5);
                     } else {
                         oaFlow.setStatus(oaFlow.getStatus() + 1);

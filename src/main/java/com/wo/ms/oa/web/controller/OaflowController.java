@@ -1,5 +1,6 @@
 package com.wo.ms.oa.web.controller;
 
+import com.wo.ms.oa.dto.OaFlowDto;
 import com.wo.ms.oa.dto.OaFlowPagtionDto;
 import com.wo.ms.oa.entity.OaFlow;
 import com.wo.ms.oa.entity.UseCarRecord;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,12 +91,16 @@ public class OaflowController {
     @RequestMapping("/newWork")
     public ModelAndView newWork(){
         ModelAndView view = new ModelAndView("wo/oa/flow/flowForm");
+        Map<String, Object> oaFlowDto = new HashMap<>();
+        view.addObject("flow", oaFlowDto);
         return view;
     }
 
     @RequestMapping("/editWork")
     public ModelAndView editWork(@RequestParam("flowId") Integer flowId){
         ModelAndView view = new ModelAndView("wo/oa/flow/flowForm");
+        Map<String, Object> oaFlowDto = oaFlowService.selectFlowById(flowId);
+        view.addObject("flow", oaFlowDto);
         return view;
     }
 

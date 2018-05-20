@@ -8,9 +8,11 @@
     <result column="update_id" jdbcType="INTEGER" property="updateId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="meeting_room" jdbcType="VARCHAR" property="meetingRoom" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="size" jdbcType="INTEGER" property="size" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, update_id, update_time, meeting_room
+    id, create_id, create_time, update_id, update_time, meeting_room, status, size
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,16 +20,39 @@
     from oa_meeting_room
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByKeyLimit" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    FROM oa_meeting_room
+    <if test="key != null">
+      WHERE concat_ws(",", meeting_room) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    ORDER BY meeting_room
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectCountByKey" resultType="java.lang.Integer">
+    select count(*)
+    FROM oa_meeting_room
+    <if test="key != null">
+      WHERE concat_ws(",", meeting_room) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+  </select>
+  <select id="selectCanUseMeetingRoom" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" />
+    FROM oa_meeting_room
+    WHERE status = 0
+    ORDER BY meeting_room
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_meeting_room
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaMeetingRoom">
     insert into oa_meeting_room (id, create_id, create_time, 
-      update_id, update_time, meeting_room
+      update_id, update_time, meeting_room, status, size
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{meetingRoom,jdbcType=VARCHAR}
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{meetingRoom,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaMeetingRoom">
@@ -47,6 +72,12 @@
       </if>
       <if test="meetingRoom != null">
         meeting_room = #{meetingRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

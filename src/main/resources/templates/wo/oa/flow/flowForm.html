@@ -10,24 +10,24 @@
     <div class="form-group row">
         <label for="flowName" class="col-sm-1 col-form-label">流程名称</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="flowName" th:value="${flow != null} ? ${flow.flowName} : ''" placeholder="流程名称">
+            <input type="text" class="form-control" id="flowName" th:value="${flow.containsKey('flow_name')} ? ${flow.flow_name} : ''"  placeholder="流程名称">
         </div>
         <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
         <div class="col-sm-4">
-            <select class="form-control" id="flowType">
-                <option value="meeting" th:selected="${flow != null}">会议室申请</option>
-                <option value="car">用车申请</option>
+            <select class="form-control" id="flowType" th:disabled="${flow.size() > 0} ? true : false">
+                <option value="meeting" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'meeting'} ? true : false) : ''" >会议室申请</option>
+                <option value="car" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'car'} ? true : false) : ''">用车申请</option>
             </select>
         </div>
     </div>
     <div class="form-group row" id="meetingBlock">
         <label for="meetingName" class="col-sm-1 col-form-label">会议名称</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="meetingName"  placeholder="会议名称">
+            <input type="text" class="form-control" th:value="${flow.containsKey('meeting_name')} ? ${flow.meeting_name} : ''"  id="meetingName"  placeholder="会议名称">
         </div>
         <label for="meetingRoom" class="offset-sm-1 col-sm-1 col-form-label">会议室</label>
         <div class="col-sm-4">
-            <select class="form-control" id="meetingRoom">
+            <select class="form-control" id="meetingRoom" th:data-choose-room="${flow.containsKey('meeting_room')} ? ${flow.meeting_room} : ''">
 
             </select>
         </div>
@@ -35,11 +35,11 @@
     <div class="form-group row flow-car" id="carBlock">
         <label for="reason" class="col-sm-1 col-form-label">用车原因</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="reason" placeholder="用车原因">
+            <input type="text" class="form-control" id="reason" placeholder="用车原因" th:value="${flow.containsKey('reason')} ? ${flow.reason} : ''">
         </div>
         <label for="car" class="col-sm-1 offset-sm-1 col-form-label">车</label>
         <div class="col-sm-4">
-            <select class="form-control" id="car">
+            <select class="form-control" id="car" th:data-choose-car="${flow.containsKey('car_id')} ? ${flow.car_id} : ''">
 
             </select>
         </div>
@@ -53,6 +53,9 @@
         <div class="col-sm-4">
             <input type="text" class="form-control" id="endTime" placeholder="结束时间">
         </div>
+        <input type="text" th:value="${flow.containsKey('id')} ? ${flow.id} : ''" id="flowId" style="display: none;">
+        <input type="text" th:value="${flow.containsKey('use_car_record_id')} ? ${flow.use_car_record_id} : ''" id="useCarRecordId" style="display: none;">
+        <input type="text" th:value="${flow.containsKey('meeting_id')} ? ${flow.meeting_id} : ''" id="meetingId" style="display: none;">
     </div>
     <div class="form-group form-btns">
         <button class="btn btn-primary" id="keepFlow">保存</button>

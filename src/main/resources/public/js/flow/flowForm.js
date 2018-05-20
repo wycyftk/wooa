@@ -19,7 +19,7 @@
         });
 
         $.ajax({
-            url: '/oa/api/meetingRoom/get',
+            url: '/oa/api/meetingRoom/meetingRoomList',
             type: 'get',
             success: function (data) {
                 if(data.status){
@@ -34,13 +34,19 @@
 
     function htmlStr(objs, type) {
         var html = "";
+        var carId = $('#car').data('choose-car');
+        var meetingRoomId = $('#meetingRoom').data('choose-room');
+        var selected = ''
+
         if(type == 'car'){
             for(var i = 0;i < objs.length; i++){
-                html += "<option value='" + objs[i].id + "'>" + objs[i].carName + "</option>";
+                selected = carId == objs[i].carId ? 'selected' : '';
+                html += "<option value='" + objs[i].id + "'" + selected + ">" + objs[i].carName + "</option>";
             }
         } else {
             for(var i = 0;i < objs.length; i++){
-                html += "<option value='" + objs[i].id + "'>" + objs[i].meetingRoom + "</option>";
+                selected = carId == objs[i].meetingRoomId ? 'selected' : '';
+                html += "<option value='" + objs[i].id + "'" + selected + ">" + objs[i].meetingRoom + "</option>";
             }
         }
         return html;
@@ -106,14 +112,19 @@
         var flow = {};
         flow.flowName = $("#flowName").val();
         flow.flowType = carOrMeeting;
+        flow.flowId = $("#flowId").val();
         if(carOrMeeting == 'car'){
             flow.carId = $("#car option:selected").val();
             flow.reason = $("#reason").val();
             flow.carName = $("#car option:selected").text();
+            flow.useCarRecordId = $("#useCarRecordId").val();
+            flow.meetingId = 0;
         } else {
             flow.meetingRoomId = $("#meetingRoom option:selected").val();
             flow.meetingName = $("#meetingName").val();
             flow.meetingRoom = $("#meetingRoom option:selected").text();
+            flow.meetingId = $("#meetingId").val();
+            flow.useCarRecordId = 0;
         }
         flow.startTime = $("#startTime").val();
         flow.endTime = $("#endTime").val();

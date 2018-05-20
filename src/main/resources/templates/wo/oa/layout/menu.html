@@ -33,7 +33,7 @@
             <li th:if="${roleList.contains('res_admin')} or ${roleList.contains('meeting_admin')}">
                 <a href="javascript:;"><i class="fa fa-bookmark"></i>辅助办公</a>
                 <ul class="sub-menu-nav">
-                    <li th:if="${roleList.contains('meeting_admin')}"><a href="javascript:;">会议室管理</a></li>
+                    <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/meetingRoom/list', {pageSize:10, currentPage:1})">会议室管理</a></li>
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/car/list', {pageSize:10, currentPage:1})">车辆管理</a></li>
                 </ul>
             </li>

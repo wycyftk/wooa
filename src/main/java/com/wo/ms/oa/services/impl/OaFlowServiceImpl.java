@@ -39,9 +39,11 @@ public class OaFlowServiceImpl implements OaFlowService {
 
         if(roleList.contains("res_admin")){
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 4));
-        } else if (roleList.contains("president")){
+        }
+        if (roleList.contains("president")){
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByStatus(key, pageSize, (currentPage - 1) * pageSize, 5));
-        } else if (roleList.contains("minister")) {
+        }
+        if (roleList.contains("minister")) {
             flows.addAll(oaFlowMapper.selectFlowByKeyLimitByOrgIds(key, pageSize, (currentPage - 1) * pageSize, orgIds, loginId));
         }
 
@@ -79,7 +81,7 @@ public class OaFlowServiceImpl implements OaFlowService {
         Map<String, Object> carFlow = oaFlowMapper.selectCarFlowById(flowId);
         Map<String, Object> meetingFlow = oaFlowMapper.selectMeetingFlowById(flowId);
 
-        if (!carFlow.isEmpty()){
+        if (carFlow != null){
             carFlow.put("flowType", "car");
             return carFlow;
         } else {

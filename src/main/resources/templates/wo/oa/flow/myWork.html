@@ -40,9 +40,9 @@
                         <td th:if="${flow.status == 3}" th:text="${flow.status == 3} ? '部长审批' : ''"></td>
                         <td th:if="${flow.status == 4}" th:text="${flow.status == 4} ? '管理审批' : ''"></td>
                         <td th:if="${flow.status == 5}" th:text="${flow.status == 5} ? '总经理审批' : ''"></td>
-                        <td th:if="${flow.status == 6}" th:text="${flow.status == 6} ? '审批完成' : ''"></td>
+                        <td th:if="${flow.status == 0}" th:text="${flow.status == 0} ? '审批完成' : ''"></td>
                         <td>
-                            <span th:if="${flow.status == 1}" th:onclick="'loadHtml(\'/oa/flow/flow\',{id:' +  ${flow.id} + '})'">编辑</span>
+                            <span th:if="${flow.status == 1}" th:onclick="'loadHtml(\'/oa/flow/editWork\',{flowId:' +  ${flow.id} + '})'">编辑</span>
                             <span th:onclick="'delflow(' + (${flow.use_car_record_id > 0} ? '\'car\'' : '\'meeting\'') + ',' + (${flow.use_car_record_id > 0} ? ${flow.use_car_record_id} : ${flow.meeting_id}) + ')'">删除</span>
                             <span>查看</span>
                         </td>
