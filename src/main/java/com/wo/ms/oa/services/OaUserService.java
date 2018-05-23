@@ -12,6 +12,10 @@ public interface OaUserService {
 
     List<OaUser> selectOaUserByKey(String key);
 
+    List<Integer> selectUserIdByOrgId(Integer orgId);
+
+    List<Integer> selectAllUserId();
+
     OaUserPagtionDto selectOaUserPagtion(String key, Integer pageSize, Integer currentPage);
 
     Integer checkUser(String username, String password);

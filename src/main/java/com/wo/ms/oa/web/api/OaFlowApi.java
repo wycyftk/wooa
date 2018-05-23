@@ -2,18 +2,13 @@ package com.wo.ms.oa.web.api;
 
 import com.wo.ms.oa.dto.OaFlowDto;
 import com.wo.ms.oa.entity.*;
-import com.wo.ms.oa.services.OaFlowService;
-import com.wo.ms.oa.services.OaMeetingService;
-import com.wo.ms.oa.services.OaUserService;
-import com.wo.ms.oa.services.UseCarRecordService;
+import com.wo.ms.oa.services.*;
 import com.wo.ms.oa.util.WebUtil;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/oa/api/flow")
@@ -32,6 +27,9 @@ public class OaFlowApi {
 
     @Resource
     private OaFlowService oaFlowService;
+
+    @Resource
+    private OaInfoService oaInfoService;
 
     @PostMapping("/add")
     public Map<String, Object> addFlow(@RequestBody OaFlowDto oaFlowDto){
@@ -72,16 +70,19 @@ public class OaFlowApi {
                 useCarRecord.setUpdateTime(now);
                 useCarRecord.setCarStatus(1);  //用车申请审批中
 
-                if( oaFlowDto.getFlowId() == null){
-                    useCarRecordService.insert(useCarRecord);
-                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
-                } else {
-                    useCarRecord.setId(oaFlowDto.getUseCarRecordId());
-                    useCarRecordService.updateByPrimaryKeySelective(useCarRecord);
-                }
                 flowCarMeeting.setUseCarRecordId(useCarRecord.getId());
                 flowCarMeeting.setFlowId(oaFlow.getId());
                 flowCarMeeting.setMeetingId(0);
+
+                if( oaFlowDto.getFlowId() == null){
+                    useCarRecordService.insert(useCarRecord);
+                    flowCarMeeting.setUseCarRecordId(useCarRecord.getId());
+                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
+                } else {
+                    useCarRecord.setId(oaFlowDto.getUseCarRecordId());
+                    flowCarMeeting.setUseCarRecordId(useCarRecord.getId());
+                    useCarRecordService.updateByPrimaryKeySelective(useCarRecord);
+                }
             } else{
                 OaMeeting oaMeeting = new OaMeeting();
                 oaMeeting.setStartTime(oaFlowDto.getStartTime());
@@ -95,16 +96,19 @@ public class OaFlowApi {
                 oaMeeting.setUpdateTime(now);
                 oaMeeting.setStatus(2);  //会议申请审批中
 
-                if(oaFlowDto.getFlowId() == null){
-                    oaMeetingService.insert(oaMeeting);
-                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
-                } else {
-                    oaMeeting.setId(oaFlowDto.getMeetingId());
-                    oaMeetingService.updateByPrimaryKeySelective(oaMeeting);
-                }
                 flowCarMeeting.setUseCarRecordId(0);
                 flowCarMeeting.setFlowId(oaFlow.getId());
                 flowCarMeeting.setMeetingId(oaMeeting.getId());
+
+                if(oaFlowDto.getFlowId() == null){
+                    oaMeetingService.insert(oaMeeting);
+                    flowCarMeeting.setMeetingId(oaMeeting.getId());
+                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
+                } else {
+                    oaMeeting.setId(oaFlowDto.getMeetingId());
+                    flowCarMeeting.setMeetingId(oaMeeting.getId());
+                    oaMeetingService.updateByPrimaryKeySelective(oaMeeting);
+                }
             }
 
             if(oaFlow.getStatus() == 2){
@@ -154,7 +158,16 @@ public class OaFlowApi {
                     // 如果当前是总经理审批，则结束流程
                     isZjlApproval = true;
                     oaFlow.setStatus(0);
-                    // todo 给发起人发送消息
+                    OaInfo info = new OaInfo();
+                    info.setStatus(2);
+                    info.setDelFlg(0);
+                    info.setContent("您的流程已经审批完成");
+                    info.setInfoTitle("流程审批");
+                    info.setCreateTime(now);
+                    info.setUpdateTime(now);
+                    info.setImportant(2);
+                    List<Integer> userId = new ArrayList<>();
+                    oaInfoService.publishInfo(info, userId);
                 } else {
                     if("meeting".equals(oaFlowDto.getFlowType()) && oaFlow.getStatus() == 3){
                         oaFlow.setStatus(5);

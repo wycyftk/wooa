@@ -46,12 +46,7 @@
                info.important = $(_this).val();
            }
         });
-        $("input[name=orgId]").each(function () {
-            var _this = this;
-            if(_this.checked){
-                info.orgId = $(_this).val();
-            }
-        });
+        info.orgId = $('#orgId option:selected').val();
         info.content = $("#content").val();
         return info;
     }

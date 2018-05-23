@@ -32,7 +32,11 @@
                         <td th:text="${info.infoTitle}"></td>
                         <td th:text="${info.orgId != null} ? '部门公告' : '全体消息'"></td>
                         <td th:text="${info.important == 1} ? '重要' : '一般'"></td>
-                        <td><span th:if="${info.publishId} == ${loginId}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span><span th:if="${info.publishId} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span></td>
+                        <td>
+                            <span th:if="${info.publishId} == ${loginId}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span>
+                            <span th:if="${info.publishId} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span>
+                            <span th:if="${info.publishId} == ${loginId}" th:onclick="">查看</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

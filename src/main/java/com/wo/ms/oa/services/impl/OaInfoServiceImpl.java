@@ -3,10 +3,12 @@ package com.wo.ms.oa.services.impl;
 import com.wo.ms.oa.dao.OaInfoMapper;
 import com.wo.ms.oa.dto.OaInfoPagtionDto;
 import com.wo.ms.oa.entity.OaInfo;
+import com.wo.ms.oa.entity.UserAndInfo;
 import com.wo.ms.oa.services.OaInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +27,21 @@ public class OaInfoServiceImpl implements OaInfoService {
     }
 
     @Override
+    public int publishInfo(OaInfo info, List<Integer> userIds) {
+        oaInfoMapper.insert(info);
+        List<UserAndInfo> userAndInfos = new ArrayList<>();
+        for(int i = 0;i < userIds.size(); i++){
+            UserAndInfo userAndInfo = new UserAndInfo();
+            userAndInfo.setInfoId(info.getId());
+            userAndInfo.setHasRead(0);
+            userAndInfo.setUserId(userIds.get(i));
+            userAndInfos.add(userAndInfo);
+        }
+        oaInfoMapper.insertUserAndInfo(userAndInfos);
+        return 1;
+    }
+
+    @Override
     public OaInfo selectByPrimaryKey(Integer id) {
         return oaInfoMapper.selectByPrimaryKey(id);
     }
@@ -37,6 +54,11 @@ public class OaInfoServiceImpl implements OaInfoService {
     @Override
     public int updateByPrimaryKeySelective(OaInfo record) {
         return oaInfoMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public Integer selectNoReadInfoNum(Integer userId) {
+        return oaInfoMapper.selectNoReadInfoNum(userId);
     }
 
     @Override

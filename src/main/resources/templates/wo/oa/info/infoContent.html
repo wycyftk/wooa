@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查看信息</title>
+</head>
+<body>
+<div class="infoForm">
+    <h4 class="form-title">信息查看</h4>
+    <div>
+        <h4 th:text="${info.infoTitle}"></h4>
+        <span th:text="${#calendars.format(info.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+        <div>
+            <p th:text="${info.content}"></p>
+        </div>
+    </div>
+    <div class="form-group form-btns">
+        <button type="submit" class="btn btn-primary" id="submitInfo">保存</button>
+        <button type="submit" class="btn btn-default" onclick="loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''})">取消</button>
+    </div>
+</div>
+<script src="/public/js/info/infoForm.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.wo.ms.oa.web.controller;
 
 import com.wo.ms.oa.entity.OaUser;
+import com.wo.ms.oa.services.OaInfoService;
 import com.wo.ms.oa.services.OaUserService;
 import com.wo.ms.oa.util.WebUtil;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class Home {
     @Resource
     private OaUserService oaUserService;
 
+    @Resource
+    private OaInfoService oaInfoService;
+
     @RequestMapping("/loginPage")
     public String loginPage(){
         return "wo/oa/login";
@@ -33,8 +37,10 @@ public class Home {
         HttpSession session = request.getSession();
         List<String> roleList = (List<String>)session.getAttribute("roleCodes");
         List<Integer> orgIds = (List<Integer>) session.getAttribute("orgIds");
+        Integer noReadInfo = oaInfoService.selectNoReadInfoNum(webUtil.getLoginId());
         view.addObject("user", oaUser);
         view.addObject("roleList", roleList);
+        view.addObject("noReadInfo", noReadInfo);
         return view;
     }
 

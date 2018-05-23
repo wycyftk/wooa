@@ -46,4 +46,12 @@ public class OaInfoController {
     public String addMenu(){
         return "wo/oa/info/infoForm";
     }
+
+    @RequestMapping("/view")
+    public ModelAndView infoPage(Integer id){
+        ModelAndView view = new ModelAndView("wo/oa/info/infoContent");
+        OaInfo info = oaInfoService.selectByPrimaryKey(id);
+        view.addObject("info", info);
+        return view;
+    }
 }

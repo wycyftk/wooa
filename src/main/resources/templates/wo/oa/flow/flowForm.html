@@ -15,8 +15,8 @@
         <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
         <div class="col-sm-4">
             <select class="form-control" id="flowType" th:disabled="${flow.size() > 0} ? true : false">
-                <option value="meeting" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'meeting'} ? true : false) : ''" >会议室申请</option>
-                <option value="car" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'car'} ? true : false) : ''">用车申请</option>
+                <option value="meeting" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'meeting'} ? true : false) : true" >会议室申请</option>
+                <option value="car" th:selected="${flow.containsKey('flowType')} ? (${flow.flowType == 'car'} ? true : false) : false">用车申请</option>
             </select>
         </div>
     </div>

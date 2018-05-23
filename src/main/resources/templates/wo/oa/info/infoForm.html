@@ -25,16 +25,12 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label">部门通知</label>
+        <label class="col-sm-1 col-form-label">消息类型</label>
         <div class="col-sm-4">
-            <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="orgId" th:checked="${info != null} and ${info.orgId != null} ?  true : false" value="1" id="orgId1">
-                <label class="form-check-label" for="orgId1">是</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="orgId" th:checked="${info != null} and ${info.orgId != null} ?  false : true" value="0" id="orgId2">
-                <label class="form-check-label" for="orgId2">否</label>
-            </div>
+            <select class="form-control" id="orgId">
+                <option th:selected="${info != null} and ${info.orgId != null} ?  true : false" value="0">部门消息</option>
+                <option th:selected="${info != null} and ${info.orgId != null} ?  false : true" value="1">全体通知</option>
+            </select>
         </div>
     </div>
     <div class="form-group row">

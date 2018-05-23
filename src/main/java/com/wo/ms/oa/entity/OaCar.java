@@ -21,6 +21,12 @@ public class OaCar extends BaseEntity {
     private String carBrand;
 
     /**
+     * 车座数
+     * 1. 4座 2.7座 3.9座 4.11座
+     */
+    private Integer carSeat;
+
+    /**
      * 车牌号
      */
     private String carNum;
@@ -30,6 +36,14 @@ public class OaCar extends BaseEntity {
      * 0.可用 1.不可用
      */
     private Integer status;
+
+    public Integer getCarSeat() {
+        return carSeat;
+    }
+
+    public void setCarSeat(Integer carSeat) {
+        this.carSeat = carSeat;
+    }
 
     public String getCarName() {
         return carName;

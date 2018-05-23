@@ -26,6 +26,7 @@ public class OaInfo extends BaseEntity {
 
     /**
      * 是否重要
+     * 1.一般 2.重要 3.紧急
      */
     private Integer important;
 

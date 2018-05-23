@@ -23,4 +23,8 @@ public interface OaUserMapper {
     int updateByPrimaryKeySelective(OaUser record);
 
     Integer selectOrgIdByUserId(Integer userId);
+
+    List<Integer> selectUserIdByOrgId(@Param("orgId") Integer orgId);
+
+    List<Integer> selectAllUserId();
 }

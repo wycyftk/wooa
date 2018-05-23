@@ -11,9 +11,10 @@
     <result column="car_brand" jdbcType="VARCHAR" property="carBrand" />
     <result column="car_num" jdbcType="VARCHAR" property="carNum" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="car_seat" jdbcType="INTEGER" property="carSeat" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_id, create_time, update_id, update_time, car_name, car_brand, car_num, status
+    id, create_id, create_time, update_id, update_time, car_name, car_brand, car_num, status, car_seat
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -54,11 +55,11 @@
   <insert id="insert" parameterType="com.wo.ms.oa.entity.OaCar">
     insert into oa_car (id, create_id, create_time, 
       update_id, update_time, car_name, 
-      car_brand, car_num, status
+      car_brand, car_num, status, car_seat
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{carName,jdbcType=VARCHAR}, 
-      #{carBrand,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      #{carBrand,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{carSeat,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaCar">
@@ -87,6 +88,9 @@
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="carSeat != null">
+        car_seat = #{carSeat,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

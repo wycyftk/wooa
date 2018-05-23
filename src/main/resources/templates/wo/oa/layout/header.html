@@ -16,7 +16,7 @@
                 <a href="#">
                     <i class="fa fa-envelope-o"></i>
                 </a>
-                <span class="info-num"></span>
+                <span class="info-num" onclick="loadHtml('/oa/info/list', {pageSize:10, currentPage:1})" th:text="${noReadInfo == 0} ? '' : ${noReadInfo}"></span>
             </div>
             <div class="user-block">
                 <a href="#" class="username" th:text="${user.name}"></a>

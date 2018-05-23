@@ -26,6 +26,16 @@ public class OaUserServiceImpl implements OaUserService{
     }
 
     @Override
+    public List<Integer> selectUserIdByOrgId(Integer orgId) {
+        return oaUserMapper.selectUserIdByOrgId(orgId);
+    }
+
+    @Override
+    public List<Integer> selectAllUserId() {
+        return oaUserMapper.selectAllUserId();
+    }
+
+    @Override
     public OaUserPagtionDto selectOaUserPagtion(String key, Integer pageSize, Integer currentPage) {
         OaUserPagtionDto oaUserPagtionDto = new OaUserPagtionDto();
         oaUserPagtionDto.setCurrentPage(currentPage);

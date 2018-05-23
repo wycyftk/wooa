@@ -2,6 +2,7 @@ package com.wo.ms.oa.services;
 
 import com.wo.ms.oa.dto.OaInfoPagtionDto;
 import com.wo.ms.oa.entity.OaInfo;
+import com.wo.ms.oa.entity.UserAndInfo;
 
 import java.util.List;
 
@@ -10,11 +11,15 @@ public interface OaInfoService {
 
     int insert(OaInfo record);
 
+    int publishInfo(OaInfo info,  List<Integer> userIds);
+
     OaInfo selectByPrimaryKey(Integer id);
 
     List<OaInfo> selectAllInfos();
 
     int updateByPrimaryKeySelective(OaInfo record);
+
+    Integer selectNoReadInfoNum(Integer userId);
 
     OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage);
 }

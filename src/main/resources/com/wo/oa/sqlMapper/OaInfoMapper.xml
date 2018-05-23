@@ -48,6 +48,9 @@
       AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
   </select>
+  <select id="selectNoReadInfoNum" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM user_and_info WHERE user_id = #{userId, jdbcType=INTEGER} AND has_read = 0
+  </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     UPDATE oa_info SET del_flg = 1
     where id = #{id,jdbcType=INTEGER} AND del_flg = 0
@@ -63,6 +66,13 @@
       #{delFlg,jdbcType=INTEGER}, #{important,jdbcType=INTEGER}, #{infoTitle,jdbcType=VARCHAR}, 
       #{orgId,jdbcType=INTEGER}, #{publishId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
       )
+  </insert>
+  <insert id="insertUserAndInfo" parameterType="com.wo.ms.oa.entity.UserAndInfo">
+    INSERT INTO user_and_info (user_id, info_id, has_read) VALUES
+    <foreach collection="userAndInfos" separator="," item="userAndInfo">
+      (#{userAndInfo.userId, jdbcType=INTEGER}, #{userAndInfo.infoId, jdbcType=INTEGER},
+      #{userAndInfo.hasRead, jdbcType=INTEGER})
+    </foreach>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wo.ms.oa.entity.OaInfo">
     update oa_info
