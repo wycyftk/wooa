@@ -22,20 +22,24 @@
                     <thead>
                     <th>序号</th>
                     <th>标题</th>
-                    <th>信息类型</th>
+                    <th>消息类型</th>
                     <th>重要程度</th>
+                    <th th:if='${infoPagtion.getInfos().get(0).containsKey("has_read")}'>状态</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
-                    <tr th:if="${infoPagtion.getInfoList().size() > 0}" th:each="info, infoSata : ${infoPagtion.getInfoList()}">
+                    <tr th:if="${infoPagtion.getInfos().size() > 0}" th:each="info, infoSata : ${infoPagtion.getInfos()}">
                         <td th:text="${infoSata.index} + 1"></td>
-                        <td th:text="${info.infoTitle}"></td>
-                        <td th:text="${info.orgId != null} ? '部门公告' : '全体消息'"></td>
-                        <td th:text="${info.important == 1} ? '重要' : '一般'"></td>
+                        <td th:text="${info.info_title}"></td>
+                        <td th:text="${info.info_type}"></td>
+                        <td th:if="${info.important == 0}">一般</td>
+                        <td th:if="${info.important == 1}">重要</td>
+                        <td th:if="${info.important == 2}">紧急</td>
+                        <td th:if='${info.containsKey("has_read")}' th:text="${info.has_read == 0} ? '未读' : '已读'"></td>
                         <td>
-                            <span th:if="${info.publishId} == ${loginId}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span>
-                            <span th:if="${info.publishId} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span>
-                            <span th:if="${info.publishId} == ${loginId}" th:onclick="">查看</span>
+                            <span th:if="${info.publish_id} == ${loginId}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span>
+                            <span th:if="${info.publish_id} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span>
+                            <span th:onclick="'loadHtml(\'/oa/info/view\',{id:' +  ${info.id} + '})'">查看</span>
                         </td>
                     </tr>
                     </tbody>

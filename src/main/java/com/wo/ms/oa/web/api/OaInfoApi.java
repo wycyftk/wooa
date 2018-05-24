@@ -9,6 +9,7 @@ import com.wo.ms.oa.util.WebUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RestController
@@ -24,7 +25,7 @@ public class OaInfoApi {
     private WebUtil webUtil;
 
     @PostMapping("/add")
-    public Map<String, Object> addInfo(@RequestBody OaInfo oaInfo){
+    public Map<String, Object> addInfo(@RequestBody OaInfo oaInfo, HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
         Date now = new Date();
         List<UserAndInfo> userAndInfos = new ArrayList<>();
@@ -35,7 +36,7 @@ public class OaInfoApi {
         oaInfo.setCreateId(webUtil.getLoginId());
         oaInfo.setCreateTime(now);
         oaInfo.setDelFlg(0);
-        if(oaInfo.getOrgId() == 1){
+        if(oaInfo.getOrgId() != null){
             orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
             userIds = oaUserService.selectUserIdByOrgId(orgId);
         } else {
@@ -43,10 +44,13 @@ public class OaInfoApi {
         }
         oaInfo.setOrgId(orgId);
         oaInfo.setPublishId(webUtil.getLoginId());
-        oaInfo.setStatus(1);
         oaInfoService.publishInfo(oaInfo, userIds);
         result.put("status", true);
-        result.put("message", "信息发布成功");
+        if(oaInfo.getStatus() == 0){
+            result.put("message", "信息已保存");
+        } else {
+            result.put("message", "信息发布成功");
+        }
         return result;
     }
 
@@ -56,7 +60,7 @@ public class OaInfoApi {
         Date now = new Date();
         oaInfo.setUpdateId(webUtil.getLoginId());
         oaInfo.setUpdateTime(now);
-        if(oaInfo.getOrgId() == 1){
+        if(oaInfo.getOrgId() != null){
             Integer orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
             oaInfo.setOrgId(orgId);
         }

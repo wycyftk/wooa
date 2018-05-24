@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OaInfoMapper {
@@ -19,7 +20,11 @@ public interface OaInfoMapper {
 
     int updateByPrimaryKeySelective(OaInfo record);
 
-    List<OaInfo> selectInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start);
+    Integer hasRead(@Param("infoId") Integer infoId, @Param("userId") Integer userId);
+
+    List<Map<String, Object>> selectInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
+
+    List<Map<String, Object>> selectAllInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start);
 
     Integer selectInfoByKey(@Param("key") String key);
 

@@ -25,6 +25,12 @@ public class OaInfo extends BaseEntity {
     private Integer orgId;
 
     /**
+     * 消息类型
+     * 部门消息、全体公告、系统通知
+     */
+    private String infoType;
+
+    /**
      * 是否重要
      * 1.一般 2.重要 3.紧急
      */
@@ -46,6 +52,14 @@ public class OaInfo extends BaseEntity {
      * 是否删除
      */
     private Integer delFlg;
+
+    public String getInfoType() {
+        return infoType;
+    }
+
+    public void setInfoType(String infoType) {
+        this.infoType = infoType;
+    }
 
     public String getInfoTitle() {
         return infoTitle;

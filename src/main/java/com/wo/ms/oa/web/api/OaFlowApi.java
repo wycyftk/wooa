@@ -159,14 +159,18 @@ public class OaFlowApi {
                     isZjlApproval = true;
                     oaFlow.setStatus(0);
                     OaInfo info = new OaInfo();
-                    info.setStatus(2);
+                    info.setStatus(1);
                     info.setDelFlg(0);
                     info.setContent("您的流程已经审批完成");
                     info.setInfoTitle("流程审批");
                     info.setCreateTime(now);
+                    info.setCreateId(loginId);
                     info.setUpdateTime(now);
+                    info.setUpdateId(loginId);
                     info.setImportant(2);
+                    info.setInfoType("系统通知");
                     List<Integer> userId = new ArrayList<>();
+                    userId.add(oaFlow.getLaunchId());
                     oaInfoService.publishInfo(info, userId);
                 } else {
                     if("meeting".equals(oaFlowDto.getFlowType()) && oaFlow.getStatus() == 3){

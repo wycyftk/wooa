@@ -11,13 +11,14 @@
     <result column="del_flg" jdbcType="INTEGER" property="delFlg" />
     <result column="important" jdbcType="INTEGER" property="important" />
     <result column="info_title" jdbcType="VARCHAR" property="infoTitle" />
+    <result column="info_type" jdbcType="VARCHAR" property="infoType" />
     <result column="org_id" jdbcType="INTEGER" property="orgId" />
     <result column="publish_id" jdbcType="INTEGER" property="publishId" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     id, create_id, create_time, update_id, update_time, content, del_flg, important, 
-    info_title, org_id, publish_id, status
+    info_title, org_id, publish_id, status, info_type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,15 +32,29 @@
     FROM oa_info
     WHERE del_flg = 0 ORDER BY create_time DESC
   </select>
-  <select id="selectInfoByKeyLimit" resultMap="BaseResultMap">
+  <select id="selectAllInfoByKeyLimit" resultType="java.util.Map">
     SELECT
-    <include refid="Base_Column_List" />
+    *
     FROM oa_info
-    WHERE del_flg = 0
+    WHERE oa_info.del_flg = 0
     <if test="key != null">
       AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
-    ORDER BY create_time DESC
+    ORDER BY create_time
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectInfoByKeyLimit" resultType="java.util.Map">
+    SELECT
+    *
+    FROM oa_info LEFT JOIN user_and_info AS uai ON oa_info.id = uai.info_id
+    WHERE oa_info.del_flg = 0
+    <if test="key != null">
+      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    <if test="loginId != null">
+      AND uai.user_id = #{loginId, jdbcType=INTEGER}
+    </if>
+    ORDER BY uai.has_read
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectInfoByKey" resultType="java.lang.Integer">
@@ -51,20 +66,23 @@
   <select id="selectNoReadInfoNum" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM user_and_info WHERE user_id = #{userId, jdbcType=INTEGER} AND has_read = 0
   </select>
+  <update id="hasRead">
+    UPDATE user_and_info SET has_read = 1 WHERE info_id = #{infoId, jdbcType=INTEGER} AND user_id = #{userId, jdbcType=INTEGER}
+  </update>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     UPDATE oa_info SET del_flg = 1
     where id = #{id,jdbcType=INTEGER} AND del_flg = 0
   </update>
-  <insert id="insert" parameterType="com.wo.ms.oa.entity.OaInfo">
+  <insert id="insert" parameterType="com.wo.ms.oa.entity.OaInfo" useGeneratedKeys="true" keyProperty="id">
     insert into oa_info (id, create_id, create_time, 
       update_id, update_time, content, 
       del_flg, important, info_title, 
-      org_id, publish_id, status
+      org_id, publish_id, status, info_type
       )
     values (#{id,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
       #{delFlg,jdbcType=INTEGER}, #{important,jdbcType=INTEGER}, #{infoTitle,jdbcType=VARCHAR}, 
-      #{orgId,jdbcType=INTEGER}, #{publishId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      #{orgId,jdbcType=INTEGER}, #{publishId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{infoType,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertUserAndInfo" parameterType="com.wo.ms.oa.entity.UserAndInfo">
@@ -109,6 +127,9 @@
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="infoType != null">
+        info_type = #{infoType,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

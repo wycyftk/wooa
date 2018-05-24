@@ -21,5 +21,7 @@ public interface OaInfoService {
 
     Integer selectNoReadInfoNum(Integer userId);
 
-    OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage);
+    Integer hasRead(Integer infoId, Integer userId);
+
+    OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId);
 }
