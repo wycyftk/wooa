@@ -27,6 +27,8 @@ public interface OaOrgMapper {
 
     List<OaOrg> selectSubOrg(Integer id);
 
+    List<Map<Integer, String>> selectOrgNameByIds(@Param("orgIds") List<Integer> orgIds);
+
     List<OaOrg> selectOrgsByLevel(Integer level);
 
     List<Map<String, Object>> selectOrgByUserId(@Param("userId") Integer userId);

@@ -15,18 +15,24 @@
         <label class="offset-sm-1 col-sm-1 col-form-label">是否重要</label>
         <div class="col-sm-4 form-check form-check-inline">
             <select class="form-control" id="important">
-                <option th:selected="${info != null} and ${info.important == 1} ?  true : false" value="1">一般</option>
-                <option th:selected="${info != null} and ${info.important == 2} ?  false : true" value="2">重要</option>
-                <option th:selected="${info != null} and ${info.important == 3} ?  false : true" value="3">紧急</option>
+                <option th:selected="(${info != null} and ${info.important == 1}) or ${info == null} ?  true : false" value="1">一般</option>
+                <option th:selected="${info != null} and ${info.important == 2} ?  true : false" value="2">重要</option>
+                <option th:selected="${info != null} and ${info.important == 3} ?  true : false" value="3">紧急</option>
             </select>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-1 col-form-label">消息类型</label>
         <div class="col-sm-4">
-            <select class="form-control" id="infoType">
+            <select class="form-control" id="infoType" th:disabled="${info != null} ? true : false">
+                <option th:selected="(${info != null} and ${info.infoType == '全体通知'}) or ${info == null} ?  true : false" value="全体通知">全体通知</option>
                 <option th:selected="${info != null} and ${info.infoType == '部门消息'} ?  true : false" value="部门消息">部门消息</option>
-                <option th:selected="${info != null} and ${info.infoType == '全体通知'} ?  false : true" value="全体通知">全体通知</option>
+            </select>
+        </div>
+        <label class="offset-sm-1 col-sm-1 col-form-label chooseOrg">部门</label>
+        <div class="col-sm-4 chooseOrg">
+            <select class="form-control" id="orgId" th:data-choose-org="${info != null ? info.orgId : ''}" th:disabled="${info != null} ? true : false">
+
             </select>
         </div>
     </div>

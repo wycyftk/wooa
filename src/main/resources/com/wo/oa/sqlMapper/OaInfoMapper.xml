@@ -38,8 +38,20 @@
     FROM oa_info
     WHERE oa_info.del_flg = 0
     <if test="key != null">
-      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
+    ORDER BY create_time
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectInfoByKeyAndPublishLimit" resultType="java.util.Map">
+    SELECT
+    *
+    FROM oa_info
+    WHERE del_flg = 0
+    <if test="key != null">
+      AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    AND publish_id = #{loginId, jdbcType=INTEGER}
     ORDER BY create_time
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
@@ -49,25 +61,26 @@
     FROM oa_info LEFT JOIN user_and_info AS uai ON oa_info.id = uai.info_id
     WHERE oa_info.del_flg = 0
     <if test="key != null">
-      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
     <if test="loginId != null">
       AND uai.user_id = #{loginId, jdbcType=INTEGER}
     </if>
+    AND oa_info.status = 1
     ORDER BY uai.has_read
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectInfoByKey" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM oa_info WHERE del_flg = 0
     <if test="key != null">
-      AND concat_ws(",", content, info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+      AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
   </select>
   <select id="selectNoReadInfoNum" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM user_and_info WHERE user_id = #{userId, jdbcType=INTEGER} AND has_read = 0
   </select>
   <update id="hasRead">
-    UPDATE user_and_info SET has_read = 1 WHERE info_id = #{infoId, jdbcType=INTEGER} AND user_id = #{userId, jdbcType=INTEGER}
+    UPDATE user_and_info SET has_read = 1 WHERE info_id = #{infoId, jdbcType=INTEGER} AND user_id = #{userId, jdbcType=INTEGER} AND has_read = 0
   </update>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     UPDATE oa_info SET del_flg = 1
@@ -109,9 +122,6 @@
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="delFlg != null">
-        del_flg = #{delFlg,jdbcType=INTEGER},
       </if>
       <if test="important != null">
         important = #{important,jdbcType=INTEGER},

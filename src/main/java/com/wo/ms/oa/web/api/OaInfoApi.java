@@ -36,13 +36,13 @@ public class OaInfoApi {
         oaInfo.setCreateId(webUtil.getLoginId());
         oaInfo.setCreateTime(now);
         oaInfo.setDelFlg(0);
-        if(oaInfo.getOrgId() != null){
-            orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
-            userIds = oaUserService.selectUserIdByOrgId(orgId);
+        if("部门消息".equals(oaInfo.getInfoType())){
+            userIds = oaUserService.selectUserIdByOrgId(oaInfo.getOrgId());
+            orgId = oaInfo.getOrgId();
         } else {
             userIds = oaUserService.selectAllUserId();
+            oaInfo.setOrgId(0);
         }
-        oaInfo.setOrgId(orgId);
         oaInfo.setPublishId(webUtil.getLoginId());
         oaInfoService.publishInfo(oaInfo, userIds);
         result.put("status", true);
@@ -60,15 +60,25 @@ public class OaInfoApi {
         Date now = new Date();
         oaInfo.setUpdateId(webUtil.getLoginId());
         oaInfo.setUpdateTime(now);
-        if(oaInfo.getOrgId() != null){
-            Integer orgId = oaUserService.selectOrgIdByUserId(webUtil.getLoginId());
-            oaInfo.setOrgId(orgId);
-        }
         oaInfo.setPublishId(webUtil.getLoginId());
-        oaInfo.setStatus(1);
         oaInfoService.updateByPrimaryKeySelective(oaInfo);
         result.put("status", true);
         result.put("message", "信息编辑成功");
+        return result;
+    }
+
+    @PutMapping("/read")
+    public Map<String, Object> read(@RequestParam("infoId") Integer infoId){
+        Map<String, Object> result = new HashMap<>();
+        Integer loginId = webUtil.getLoginId();
+        Integer hasRead = oaInfoService.hasRead(infoId, loginId);
+        if(hasRead > 0) {
+            result.put("status", true);
+            result.put("message", "用户读取消息");
+        } else {
+            result.put("status", false);
+            result.put("message", "该消息已读");
+        }
         return result;
     }
 

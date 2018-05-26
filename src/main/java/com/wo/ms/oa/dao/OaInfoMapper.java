@@ -24,6 +24,8 @@ public interface OaInfoMapper {
 
     List<Map<String, Object>> selectInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
 
+    List<Map<String, Object>> selectInfoByKeyAndPublishLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
+
     List<Map<String, Object>> selectAllInfoByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start);
 
     Integer selectInfoByKey(@Param("key") String key);

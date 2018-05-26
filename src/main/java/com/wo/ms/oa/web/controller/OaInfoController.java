@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -24,9 +25,10 @@ public class OaInfoController {
     private WebUtil webUtil;
 
     @RequestMapping("/list")
-    public ModelAndView infoList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
+    public ModelAndView infoList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage, HttpServletRequest request){
         ModelAndView view = new ModelAndView("wo/oa/info/infoList");
-        OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage, null);
+        List<String> roleCodes = (List)request.getSession().getAttribute("roleCodes");
+        OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage, webUtil.getLoginId(), roleCodes);
         key = key == null ? "" : key;
         view.addObject("infoPagtion", infoPagtion);
         view.addObject("key", key);
@@ -36,8 +38,8 @@ public class OaInfoController {
 
     @RequestMapping("/notice")
     public ModelAndView infoNotice(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage){
-        ModelAndView view = new ModelAndView("wo/oa/info/infoList");
-        OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage, webUtil.getLoginId());
+        ModelAndView view = new ModelAndView("wo/oa/info/notice");
+        OaInfoPagtionDto infoPagtion = oaInfoService.selectNoticePagtionByKey(key, pageSize, currentPage, webUtil.getLoginId());
         key = key == null ? "" : key;
         view.addObject("infoPagtion", infoPagtion);
         view.addObject("key", key);
@@ -59,13 +61,14 @@ public class OaInfoController {
     }
 
     @RequestMapping("/view")
-    public ModelAndView infoPage(Integer id){
+    public ModelAndView infoPage(@RequestParam("id") Integer id, @RequestParam("type") String type){
         ModelAndView view = new ModelAndView("wo/oa/info/infoContent");
         OaInfo info = oaInfoService.selectByPrimaryKey(id);
         Integer loginId = webUtil.getLoginId();
         Integer hasRead = oaInfoService.hasRead(id, loginId);
         view.addObject("info", info);
         view.addObject("hasRead", hasRead);
+        view.addObject("type", type);
         return view;
     }
 }

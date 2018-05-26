@@ -23,5 +23,7 @@ public interface OaInfoService {
 
     Integer hasRead(Integer infoId, Integer userId);
 
-    OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId);
+    OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleCodes);
+
+    OaInfoPagtionDto selectNoticePagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId);
 }

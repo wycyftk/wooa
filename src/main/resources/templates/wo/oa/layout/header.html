@@ -12,11 +12,9 @@
             <h1 class="home-title">惟沃科技办公自动化平台</h1>
         </div>
         <div class="user">
-            <div class="info">
-                <a href="#">
-                    <i class="fa fa-envelope-o"></i>
-                </a>
-                <span class="info-num" onclick="loadHtml('/oa/info/list', {pageSize:10, currentPage:1})" th:text="${noReadInfo == 0} ? '' : ${noReadInfo}"></span>
+            <div class="info" onclick="loadHtml('/oa/info/notice', {pageSize:10, currentPage:1})">
+                <i class="fa fa-envelope-o"></i>
+                <span class="info-num" th:text="${noReadInfo == 0} ? '' : ${noReadInfo}"></span>
             </div>
             <div class="user-block">
                 <a href="#" class="username" th:text="${user.name}"></a>

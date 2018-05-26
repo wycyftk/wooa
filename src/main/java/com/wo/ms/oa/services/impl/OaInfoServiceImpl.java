@@ -67,17 +67,26 @@ public class OaInfoServiceImpl implements OaInfoService {
     }
 
     @Override
-    public OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId) {
+    public OaInfoPagtionDto selectInfoPagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId, List<String> roleCodes) {
         OaInfoPagtionDto oaInfoPagtionDto = new OaInfoPagtionDto();
         oaInfoPagtionDto.setCurrentPage(currentPage);
         oaInfoPagtionDto.setPageSize(pageSize);
-        if(loginId == null){
+        if(roleCodes.contains("admin") || roleCodes.contains("root")){
             oaInfoPagtionDto.setInfos(oaInfoMapper.selectAllInfoByKeyLimit(key, pageSize, (currentPage - 1) * pageSize));
         } else {
-            oaInfoPagtionDto.setInfos(oaInfoMapper.selectInfoByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
+            oaInfoPagtionDto.setInfos(oaInfoMapper.selectInfoByKeyAndPublishLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
         }
         oaInfoPagtionDto.setTotalPage((oaInfoMapper.selectInfoByKey(key) - 1) / pageSize + 1);
         return oaInfoPagtionDto;
     }
 
+    @Override
+    public OaInfoPagtionDto selectNoticePagtionByKey(String key, Integer pageSize, Integer currentPage, Integer loginId) {
+        OaInfoPagtionDto oaInfoPagtionDto = new OaInfoPagtionDto();
+        oaInfoPagtionDto.setCurrentPage(currentPage);
+        oaInfoPagtionDto.setPageSize(pageSize);
+        oaInfoPagtionDto.setInfos(oaInfoMapper.selectInfoByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
+        oaInfoPagtionDto.setTotalPage((oaInfoMapper.selectInfoByKey(key) - 1) / pageSize + 1);
+        return oaInfoPagtionDto;
+    }
 }

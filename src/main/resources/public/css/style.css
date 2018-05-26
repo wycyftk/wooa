@@ -119,6 +119,11 @@ ul li{
     margin-right: 14px;
 }
 
+.info:hover {
+    background: #eeeeee;
+    cursor: pointer;
+}
+
 .user-block{
     display: flex;
     align-items: center;
@@ -358,3 +363,20 @@ ul li{
     display: none;
 }
 /* flow */
+
+/* info */
+.chooseOrg {
+    display: none;
+}
+
+.info-content {
+    min-height: 300px;
+}
+/* info */
+
+/* charts */
+#charts {
+    width: 600px;
+    height: 400px;
+}
+/* charts */

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +112,21 @@ public class OaOrgApi {
             e.printStackTrace();
             result.put("status", false);
             result.put("message", "分配组织失败");
+        }
+        return result;
+    }
+
+    @GetMapping("/getOrgNameAndId")
+    public Map<String, Object> getOrgNameAndId(HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        List<Integer> orgIds = (List)request.getSession().getAttribute("orgIds");
+        List<Map<Integer, String>> orgNameAndId = oaOrgService.selectOrgNameByIds(orgIds);
+        if(orgNameAndId.size() > 0){
+            result.put("data", orgNameAndId);
+            result.put("status", true);
+        } else {
+            result.put("status", false);
+            result.put("message", "当前登录用户没有分配部门");
         }
         return result;
     }

@@ -77,6 +77,12 @@
   <select id="selectUserOrgId" resultType="java.lang.Integer">
     SELECT org_id FROM user_org WHERE user_id = #{userId, jdbcType=INTEGER}
   </select>
+  <select id="selectOrgNameByIds" parameterType="java.util.List" resultType="java.util.Map">
+    select id, org_name FROM oa_org WHERE id IN
+    <foreach collection="orgIds" close=")" open="(" item="orgId" separator=",">
+      #{orgId, jdbcType=INTEGER}
+    </foreach>
+  </select>
   <delete id="deleteUserOrg" parameterType="java.lang.Integer">
     DELETE FROM user_org  WHERE user_id = #{userId, jdbcType=INTEGER}
   </delete>

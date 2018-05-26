@@ -23,6 +23,7 @@
                 <ul class="sub-menu-nav">
                     <li><a href="javascript:;" onclick="loadHtml('/oa/info/list', {pageSize:10, currentPage:1})">消息管理</a></li>
                     <li><a href="javascript:;" onclick="loadHtml('/oa/info/notice', {pageSize:10, currentPage:1})">我的消息</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/info/add')">发布消息</a></li>
                 </ul>
             </li>
             <li>
@@ -39,6 +40,7 @@
                 <ul class="sub-menu-nav">
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/meetingRoom/list', {pageSize:10, currentPage:1})">会议室管理</a></li>
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/car/list', {pageSize:10, currentPage:1})">车辆管理</a></li>
+                    <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/charts/charts')">统计</a></li>
                 </ul>
             </li>
         </ul>
