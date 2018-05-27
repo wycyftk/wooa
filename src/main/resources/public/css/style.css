@@ -1,7 +1,6 @@
 body, div, h1, a, h2, h3, p, input, ul, li, a, label{
     padding: 0;
     margin: 0;
-    font-family: "Microsoft YaHei UI";
 }
 
 label{
@@ -215,7 +214,7 @@ ul li{
     display: block;
 }
 
-.menu-nav > li > a:hover, .active{
+.menu-nav > li > a:hover{
     background: #68dff0;
     color: #ffffff;
     -webkit-transition: all 0.5s ease;

@@ -107,6 +107,47 @@
            }
         }
     });
+
+    $(document).ready(function () {
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+
+        $("#startTime").datetimepicker({
+            language:  'zh-CN',
+            format: 'Y-m-d',
+            autoclose: true,
+            todayBtn: true,
+            yearStart: 1900,
+            yearEnd: 2018,
+            timepicker: false,
+            value: startTime ? startTime : ''
+        }).on('change',function(ev){
+            var st = $("#startTime").val();
+            var et = $("#endTime").val();
+            if (st > et) {
+                alert("开始时间不能大于结束时间");
+                $("#startTime").val("")
+            }
+        });
+
+        $("#endTime").datetimepicker({
+            language:  'zh-CN',
+            format: 'Y-m-d',
+            autoclose: true,
+            todayBtn: true,
+            yearStart: 1980,
+            yearEnd: 2050,
+            timepicker: false,
+            value: endTime ? endTime : ''
+        }).on('change',function(ev){
+            var st = $("#startTime").val();
+            var et = $("#endTime").val();
+            if (st > et) {
+                alert("结束时间应该大于开始时间");
+                $("#endTime").val("")
+            }
+        });
+    })
     
     function getFlow() {
         var flow = {};

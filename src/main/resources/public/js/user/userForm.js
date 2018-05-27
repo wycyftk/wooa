@@ -35,7 +35,23 @@
             });
         }
     });
-    
+
+    $(document).ready(function () {
+        var date = $("#birthday").val();
+
+        $("#birthday").datetimepicker({
+            minView: "month",
+            language:  'zh-CN',
+            format: 'Y-m-d',
+            autoclose: true,
+            todayBtn: true,
+            yearStart: 1900,
+            yearEnd: 2018,
+            timepicker: false,
+            value: date ? date : ''
+        });
+    })
+
     function getUser() {
         var user = {};
         user.id = $("#id").val();

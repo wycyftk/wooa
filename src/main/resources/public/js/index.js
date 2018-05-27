@@ -40,3 +40,5 @@ $(".username").click(function () {
     $(".user-operation").toggleClass()
 });
 
+$.datetimepicker.setLocale('zh');
+
