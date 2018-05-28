@@ -168,6 +168,7 @@ public class OaFlowApi {
                     info.setUpdateTime(now);
                     info.setUpdateId(loginId);
                     info.setImportant(1);
+                    info.setPublishId(0);
                     info.setInfoType("系统通知");
                     List<Integer> userId = new ArrayList<>();
                     userId.add(oaFlow.getLaunchId());

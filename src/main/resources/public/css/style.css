@@ -390,6 +390,22 @@ ul li{
 .info-content {
     min-height: 300px;
 }
+
+.info-content h4 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.info-content span {
+    border-bottom: 1px solid #cccccc;
+    display: block;
+    text-align: center;
+}
+
+.info-content p {
+    margin-top: 10px;
+    text-indent: 2em;
+}
 /* info */
 
 /* charts */

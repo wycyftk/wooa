@@ -6,7 +6,6 @@
 </head>
 <body>
 <div class="infoForm">
-    <h4 class="form-title">信息查看</h4>
     <div class="info-content">
         <h4 th:text="${info.infoTitle}"></h4>
         <span th:text="${#calendars.format(info.createTime, 'yyyy-MM-dd HH:mm')}"></span>
