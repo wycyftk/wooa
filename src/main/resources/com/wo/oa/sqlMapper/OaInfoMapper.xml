@@ -52,7 +52,7 @@
       AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
     AND publish_id = #{loginId, jdbcType=INTEGER}
-    ORDER BY create_time
+    ORDER BY create_time DESC
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectInfoByKeyLimit" resultType="java.util.Map">
@@ -71,13 +71,14 @@
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectInfoByKey" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM oa_info WHERE del_flg = 0
+    SELECT COUNT(*) FROM oa_info WHERE del_flg = 0 AND status= 1
     <if test="key != null">
       AND concat_ws(",", info_title) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
   </select>
   <select id="selectNoReadInfoNum" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM user_and_info WHERE user_id = #{userId, jdbcType=INTEGER} AND has_read = 0
+    SELECT COUNT(*) FROM user_and_info AS uai LEFT JOIN oa_info AS oi ON uai.info_id = oi.id
+    WHERE uai.user_id = #{userId, jdbcType=INTEGER} AND uai.has_read = 0 AND oi.del_flg = 0 AND oi.status = 1
   </select>
   <update id="hasRead">
     UPDATE user_and_info SET has_read = 1 WHERE info_id = #{infoId, jdbcType=INTEGER} AND user_id = #{userId, jdbcType=INTEGER} AND has_read = 0

@@ -7,11 +7,11 @@
 <body>
 <div th:fragment="main">
     <div>
-        <h4>常用功能</h4>
+        <h4 style="border-bottom: 1px solid #ccc;padding-bottom: 10px;">常用功能</h4>
         <div class="functions">
-            <div class="function">我的消息</div>
-            <div class="function">我的工作</div>
-            <div class="function">我的消息</div>
+            <div class="function" onclick="loadHtml('/oa/info/notice', {pageSize:10, currentPage:1})">我的消息</div>
+            <div class="function" onclick="loadHtml('/oa/flow/myWork', {pageSize:10, currentPage:1})">我的工作</div>
+            <div class="function" onclick="loadHtml('/oa/info/add')">发布消息</div>
         </div>
     </div>
 </div>

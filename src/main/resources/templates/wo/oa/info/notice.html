@@ -34,10 +34,10 @@
                         <td th:if="${info.important == 1}">一般</td>
                         <td th:if="${info.important == 2}">重要</td>
                         <td th:if="${info.important == 3}">紧急</td>
-                        <td th:if="${info.important != 0 and info.important != 1 and info.important != 2}"></td>
+                        <td th:if="${info == null}"></td>
                         <td th:if='${info.containsKey("has_read")}' th:text="${info.has_read == 0} ? '未读' : '已读'"></td>
                         <td>
-                            <span th:onclick="'loadHtml(\'/oa/info/view\',{id:' +  ${info.id} + ' type: \'notice\'})'">查看</span>
+                            <span th:onclick="'loadHtml(\'/oa/info/view\',{id:' +  ${info.id} + ', type: \'notice\'})'">查看</span>
                         </td>
                     </tr>
                     </tbody>

@@ -124,7 +124,7 @@
         }).on('change',function(ev){
             var st = $("#startTime").val();
             var et = $("#endTime").val();
-            if (st > et) {
+            if (st > et && et) {
                 alert("开始时间不能大于结束时间");
                 $("#startTime").val("")
             }
@@ -142,9 +142,9 @@
         }).on('change',function(ev){
             var st = $("#startTime").val();
             var et = $("#endTime").val();
-            if (st > et) {
+            if (st > et && st) {
                 alert("结束时间应该大于开始时间");
-                $("#endTime").val("")
+                $("#endTime").val(st)
             }
         });
     })

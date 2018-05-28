@@ -12,6 +12,7 @@
                 success: function (data) {
                     console.log(data);
                     alert(data.message);
+                    updateReadInfoNum();
                     loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {
@@ -28,6 +29,7 @@
                 success: function (data) {
                     console.log(data);
                     alert(data.message);
+                    updateReadInfoNum();
                     loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {
@@ -50,6 +52,7 @@
                 success: function (data) {
                     console.log(data);
                     alert(data.message);
+                    updateReadInfoNum();
                     loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {
@@ -66,6 +69,7 @@
                 success: function (data) {
                     console.log(data);
                     alert(data.message);
+                    updateReadInfoNum();
                     loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1, key: ''});
                 },
                 error: function (data) {

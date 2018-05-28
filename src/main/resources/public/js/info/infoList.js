@@ -5,6 +5,8 @@ var delInfo = function (id) {
        dataType: 'json',
        success: function (data) {
             console.log(data);
+            updateReadInfoNum();
+            loadHtml('/oa/info/list', {pageSize: 10, currentPage: 1});
             alert(data.message);
        },
         error: function (data) {

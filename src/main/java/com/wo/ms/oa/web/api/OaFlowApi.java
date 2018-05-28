@@ -171,6 +171,7 @@ public class OaFlowApi {
                     info.setInfoType("系统通知");
                     List<Integer> userId = new ArrayList<>();
                     userId.add(oaFlow.getLaunchId());
+                    result.put("sendInfo", true);
                     oaInfoService.publishInfo(info, userId);
                 } else {
                     if("meeting".equals(oaFlowDto.getFlowType()) && oaFlow.getStatus() == 3){

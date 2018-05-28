@@ -9,7 +9,10 @@
             contentType: 'application/json;charset=utf-8',
             success: function (data) {
                 alert("提交成功");
-                //loadHtml("/oa/main");
+                if(data.sendInfo){
+                    updateReadInfoNum()
+                }
+                loadHtml("/oa/flow/todoWork", {pageSize: 10, currentPage: 1});
             },
             error: function (data) {
 

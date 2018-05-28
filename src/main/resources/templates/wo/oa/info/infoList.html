@@ -38,7 +38,7 @@
                         <td th:text="${info.status == 0} ? '编辑' : '已发布'"></td>
                         <td>
                             <span th:if="${info.publish_id} == ${loginId} and ${info.status == 0}" th:onclick="'loadHtml(\'/oa/info/update\',{id:' +  ${info.id} + '})'">编辑</span>
-                            <span th:if="${info.publish_id} == ${loginId}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span>
+                            <span th:if="${info.publish_id == loginId} or ${isAdmin == 0}" th:onclick="'delInfo(' + ${info.id} + ')'">删除</span>
                             <span th:onclick="'loadHtml(\'/oa/info/view\',{id:' +  ${info.id} + ', type: \'list\'})'">查看</span>
                         </td>
                     </tr>

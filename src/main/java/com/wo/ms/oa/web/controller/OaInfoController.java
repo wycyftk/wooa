@@ -28,11 +28,13 @@ public class OaInfoController {
     public ModelAndView infoList(@RequestParam(name = "key", required = false) String key, @RequestParam("pageSize") Integer pageSize, @RequestParam("currentPage") Integer currentPage, HttpServletRequest request){
         ModelAndView view = new ModelAndView("wo/oa/info/infoList");
         List<String> roleCodes = (List)request.getSession().getAttribute("roleCodes");
+        Integer isAdmin = roleCodes.contains("admin") || roleCodes.contains("root") ? 0 : 1;
         OaInfoPagtionDto infoPagtion = oaInfoService.selectInfoPagtionByKey(key, pageSize, currentPage, webUtil.getLoginId(), roleCodes);
         key = key == null ? "" : key;
         view.addObject("infoPagtion", infoPagtion);
         view.addObject("key", key);
         view.addObject("loginId", webUtil.getLoginId());
+        view.addObject("isAdmin", isAdmin);
         return view;
     }
 

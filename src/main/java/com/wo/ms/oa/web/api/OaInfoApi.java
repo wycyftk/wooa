@@ -90,4 +90,13 @@ public class OaInfoApi {
         result.put("message", "信息删除成功");
         return result;
     }
+
+    @GetMapping("/infoReadNum")
+    public Map<String, Object> infoReadNum() {
+        Map<String, Object> result = new HashMap<>();
+        Integer infoReadNum = oaInfoService.selectNoReadInfoNum(webUtil.getLoginId());
+        result.put("status", true);
+        result.put("data", infoReadNum);
+        return result;
+    }
 }

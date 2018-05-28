@@ -36,6 +36,20 @@ var logout = function () {
     });
 }
 
+var updateReadInfoNum = function () {
+    $.ajax({
+        url: '/oa/api/info/infoReadNum',
+        type: 'get',
+        dateType: 'json',
+        success: function (data) {
+            if (data.status) {
+                var num = data.data == 0 ? '' : data.data;
+                $(".info-num").text(num);
+            }
+        }
+    })
+}
+
 $(".username").click(function () {
     $(".user-operation").toggleClass()
 });

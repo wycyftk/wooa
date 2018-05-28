@@ -14,7 +14,8 @@
         </div>
         <label for="flowType" class="offset-sm-1 col-sm-1 col-form-label">流程类型</label>
         <div class="col-sm-4">
-            <input disabled type="text" class="form-control" id="flowType" th:value="${flow.containsKey('flowType')} ? ${flow.flowType} : ''" placeholder="流程类型">
+            <input disabled type="text" class="form-control" th:value="${flow.containsKey('flowType') and flow.flowType == 'car'} ? '用车申请' : '会议室申请'" placeholder="流程类型">
+            <input disabled type="text" class="form-control" id="flowType" th:value="${flow.containsKey('flowType')} ? ${flow.flowType} : ''" style="display: none" placeholder="流程类型">
         </div>
     </div>
     <div class="form-group row" th:if="${flowType == 'meeting'}" id="meeting">

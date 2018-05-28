@@ -22,7 +22,7 @@
                     <thead>
                     <th>序号</th>
                     <th>发起人</th>
-                    <th>处理人</th>
+                    <th>审批状态</th>
                     <th>流程名称</th>
                     <th>最近操作时间</th>
                     <th>状态</th>
@@ -32,7 +32,9 @@
                     <tr th:if="${oaFlowPagtion.getFlowInfo().size() > 0}" th:each="flow, flowStat : ${oaFlowPagtion.getFlowInfo()}">
                         <td th:text="${flowStat.index} + 1"></td>
                         <td th:text="${flow.launch_name}"></td>
-                        <td th:text="${flow.containsKey('approval_name')} ? ${flow.approval_name} : ''"></td>
+                        <td th:if="${flow.containsKey('approval_name') and flow.approval_name != null}">已审批</td>
+                        <td th:if="${flow.containsKey('approval_name') and flow.approval_name == null and flow.status > 1}">未审批</td>
+                        <td th:if="${flow.status <= 1}"></td>
                         <td th:text="${flow.flow_name}"></td>
                         <td th:text="${#calendars.format(flow.update_time, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:if="${flow.status == 1}" th:text="${flow.status == 1} ? '草稿' : ''"></td>
