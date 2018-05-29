@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用车列表</title>
+</head>
+<body>
+<div th:fragment="carList">
+    <div class="list-content">
+        <div class="search-block form-group col-sm-8 row">
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="key" placeholder="车名" th:value="${key != null} ? ${key} : ''">
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" id="search">搜索</button>
+            </div>
+        </div>
+        <div class="table-block">
+            <div class="table-content">
+                <table class="table">
+                    <thead>
+                    <th>序号</th>
+                    <th>车名</th>
+                    <th>车辆状态</th>
+                    <th>用车原因</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${useCarRecordPagtion.getUseCarRecordList().size() > 0}" th:each="useCar, useCarStat : ${useCarRecordPagtion.getUseCarRecordList()}">
+                        <td th:text="${useCarStat.index} + 1"></td>
+                        <td th:text="${useCar.carName}"></td>
+                        <td th:text="${useCar.carStatus}"></td>
+                        <td th:text="${useCar.reason}"></td>
+                        <td th:text="${#calendars.format(useCar.startTime, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#calendars.format(useCar.endTime, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <span th:onclick="'loadHtml(\'/oa/useCar/view\',{id:' +  ${useCar.id} + '})'">编辑</span>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pagination-block">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:class="${useCarRecordPagtion.getCurrentPage() > 1} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'">上一页</a></li>
+                            <li th:if="${useCarRecordPagtion.getCurrentPage() - 2 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() - 2} + ', key: \'' + ${key} + '\'})'" th:text="${useCarRecordPagtion.getCurrentPage() - 2}">1</a></li>
+                            <li th:if="${useCarRecordPagtion.getCurrentPage() - 1 > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() - 1} + ', key: \'' + ${key} + '\'})'" th:text="${useCarRecordPagtion.getCurrentPage() - 1}">2</a></li>
+                            <li th:if="${useCarRecordPagtion.getCurrentPage() > 0}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage()} + ', key: \'' + ${key} + '\'})'" th:text="${useCarRecordPagtion.getCurrentPage()}">3</a></li>
+                            <li th:if="${useCarRecordPagtion.getCurrentPage() + 1 <= useCarRecordPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'" th:text="${useCarRecordPagtion.getCurrentPage() + 1}">4</a></li>
+                            <li th:if="${useCarRecordPagtion.getCurrentPage() + 2 <= useCarRecordPagtion.getTotalPage()}" class="page-item"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() + 2} + ', key: \'' + ${key} + '\'})'" th:text="${useCarRecordPagtion.getCurrentPage() + 2}">5</a></li>
+                            <li th:class="${useCarRecordPagtion.getCurrentPage() < useCarRecordPagtion.getTotalPage()} ? 'page-item' : 'page-item disabled'"><a class="page-link" href="#" th:onclick="'loadHtml( \'/oa/car/list\',{pageSize:10,currentPage:' + ${useCarRecordPagtion.getCurrentPage() + 1} + ', key: \'' + ${key} + '\'})'">下一页</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/public/js/car/carList.js"></script>
+</body>
+</html>

@@ -40,6 +40,8 @@
                 <ul class="sub-menu-nav">
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/meetingRoom/list', {pageSize:10, currentPage:1})">会议室管理</a></li>
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/car/list', {pageSize:10, currentPage:1})">车辆管理</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/meeting/list', {pageSize:10, currentPage:1})">会议记录</a></li>
+                    <li><a href="javascript:;" onclick="loadHtml('/oa/useCar/list', {pageSize:10, currentPage:1})">用车记录</a></li>
                     <li th:if="${roleList.contains('res_admin')}"><a href="javascript:;" onclick="loadHtml('/oa/charts/charts')">统计</a></li>
                 </ul>
             </li>

@@ -1,6 +1,7 @@
 package com.wo.ms.oa.services.impl;
 
 import com.wo.ms.oa.dao.UseCarRecordMapper;
+import com.wo.ms.oa.dto.UseCarRecordPagtion;
 import com.wo.ms.oa.entity.UseCarRecord;
 import com.wo.ms.oa.services.UseCarRecordService;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,20 @@ public class UseCarRecordServiceImpl implements UseCarRecordService {
     @Override
     public UseCarRecord selectUserCarRecordByFlowId(Integer flowId) {
         return useCarRecordMapper.selectUserCarRecordByFlowId(flowId);
+    }
+
+    @Override
+    public UseCarRecord selectUseCarRecordByPrimary(Integer id) {
+        return useCarRecordMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public UseCarRecordPagtion selectMyUseCarLimit(String key, Integer pageSize, Integer currentPage, Integer loginId) {
+        UseCarRecordPagtion useCarRecordPagtion = new UseCarRecordPagtion();
+        useCarRecordPagtion.setCurrentPage(currentPage);
+        useCarRecordPagtion.setPageSize(pageSize);
+        useCarRecordPagtion.setUseCarRecordList(useCarRecordMapper.selectUseCarRecordByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
+        useCarRecordPagtion.setTotalPage(useCarRecordMapper.selectCountByKey(key, loginId));
+        return useCarRecordPagtion;
     }
 }

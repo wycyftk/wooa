@@ -18,11 +18,39 @@
     id, create_id, create_time, update_id, update_time, car_id, car_name, car_status, 
     end_time, reason, start_time
   </sql>
+  <sql id="Mut_Column_List">
+    ${alis}.id, ${alis}.create_id, ${alis}.create_time, ${alis}.update_id, ${alis}.update_time, ${alis}.car_id,
+    ${alis}.car_name, ${alis}.car_status, ${alis}.end_time, ${alis}.reason, ${alis}.start_time
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from use_car_record
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectUseCarRecordByKeyLimit" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Mut_Column_List"><property name="alis" value="ucr"></property></include>
+    FROM use_car_record AS ucr
+    LEFT JOIN flow_car_meeting AS fcm ON ucr.id = fcm.use_car_record_id
+    LEFT JOIN oa_flow AS of ON of.id = fcm.flow_id
+    WHERE of.launch_id = #{loginId, jdbcType=INTEGER}
+    <if test="key != null">
+      AND concat_ws(",", ucr.car_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    GROUP BY of.status HAVING of.status = 0
+    limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+  <select id="selectCountByKey" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM use_car_record AS ucr
+    LEFT JOIN flow_car_meeting AS fcm ON ucr.id = fcm.use_car_record_id
+    LEFT JOIN oa_flow AS of ON of.id = fcm.flow_id
+    WHERE of.launch_id = #{loginId, jdbcType=INTEGER}
+    <if test="key != null">
+      AND concat_ws(",", ucr.car_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
+    </if>
+    GROUP BY of.status HAVING of.status = 0
   </select>
   <delete id="deleteUseCarRecord" parameterType="java.lang.Integer">
     delete from use_car_record
