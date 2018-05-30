@@ -174,6 +174,12 @@ public class OaFlowApi {
                     userId.add(oaFlow.getLaunchId());
                     result.put("sendInfo", true);
                     oaInfoService.publishInfo(info, userId);
+
+                    oaFlowService.insert(oaFlow); // 添加完成节点
+                    flowCarMeeting.setFlowId(oaFlow.getId());
+                    flowCarMeeting.setMeetingId(oaFlowDto.getMeetingId());
+                    flowCarMeeting.setUseCarRecordId(oaFlowDto.getUseCarRecordId());
+                    oaFlowService.addFlowCarMeeting(flowCarMeeting);
                 } else {
                     if("meeting".equals(oaFlowDto.getFlowType()) && oaFlow.getStatus() == 3){
                         oaFlow.setStatus(5);

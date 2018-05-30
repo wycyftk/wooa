@@ -21,7 +21,6 @@
                     <thead>
                     <th>序号</th>
                     <th>车名</th>
-                    <th>车辆状态</th>
                     <th>用车原因</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
@@ -31,12 +30,11 @@
                     <tr th:if="${useCarRecordPagtion.getUseCarRecordList().size() > 0}" th:each="useCar, useCarStat : ${useCarRecordPagtion.getUseCarRecordList()}">
                         <td th:text="${useCarStat.index} + 1"></td>
                         <td th:text="${useCar.carName}"></td>
-                        <td th:text="${useCar.carStatus}"></td>
                         <td th:text="${useCar.reason}"></td>
                         <td th:text="${#calendars.format(useCar.startTime, 'yyyy-MM-dd')}"></td>
                         <td th:text="${#calendars.format(useCar.endTime, 'yyyy-MM-dd')}"></td>
                         <td>
-                            <span th:onclick="'loadHtml(\'/oa/useCar/view\',{id:' +  ${useCar.id} + '})'">编辑</span>
+                            <span th:onclick="'loadHtml(\'/oa/useCar/view\',{id:' +  ${useCar.id} + '})'">查看</span>
                     </tr>
                     </tbody>
                 </table>

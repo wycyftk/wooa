@@ -63,7 +63,7 @@
             contentType: 'application/json;charset=utf-8',
             success: function (data) {
                 alert("提交成功");
-                loadHtml("/oa/main");
+                loadHtml('/oa/flow/myWork', {pageSize:10, currentPage:1})
             },
             error: function (data) {
 
@@ -82,6 +82,7 @@
             contentType: 'application/json;charset=utf-8',
             success: function (data) {
                 alert("保存成功");
+                loadHtml('/oa/flow/myWork', {pageSize:10, currentPage:1})
             },
             error: function (data) {
 

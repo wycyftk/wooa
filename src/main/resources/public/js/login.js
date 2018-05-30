@@ -44,6 +44,12 @@
         var user = {};
         user.username = username;
         user.password = password;
+
+        if (username && password) {
+            isUsernameRight = true;
+            isPasswordRight = true;
+        }
+
         if(isUsernameRight && isPasswordRight){
             loginPrompt("");
             $.ajax({
@@ -63,6 +69,8 @@
                     }
                 }
             });
+        } else {
+            loginPrompt("请填写用户名和密码");
         }
     });
 
