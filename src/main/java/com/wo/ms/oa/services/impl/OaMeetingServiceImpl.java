@@ -7,6 +7,8 @@ import com.wo.ms.oa.services.OaMeetingService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OaMeetingServiceImpl implements OaMeetingService {
@@ -43,5 +45,10 @@ public class OaMeetingServiceImpl implements OaMeetingService {
     @Override
     public int updateByPrimaryKeySelective(OaMeeting record) {
         return oaMeetingMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public  List<Map<Integer, Integer>> selectDayAndMeetingNum() {
+        return oaMeetingMapper.selectDayAndMeetingNum();
     }
 }

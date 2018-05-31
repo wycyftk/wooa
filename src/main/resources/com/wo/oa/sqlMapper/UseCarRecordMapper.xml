@@ -52,6 +52,13 @@
     </if>
     GROUP BY of.status HAVING of.status = 0
   </select>
+  <select id="selectUseCarDayAndNum" resultType="java.util.Map">
+    SELECT datediff(ucr.end_time, ucr.start_time) AS dd, count(*) AS ct FROM use_car_record AS ucr
+    LEFT JOIN flow_car_meeting AS fcm ON ucr.id = fcm.use_car_record_id
+    LEFT JOIN oa_flow AS flow ON fcm.flow_id = flow.id
+    WHERE flow.status = 0
+    GROUP BY dd ORDER BY dd
+  </select>
   <delete id="deleteUseCarRecord" parameterType="java.lang.Integer">
     delete from use_car_record
     where id = #{id,jdbcType=INTEGER}

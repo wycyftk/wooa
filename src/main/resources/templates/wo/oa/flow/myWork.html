@@ -34,7 +34,7 @@
                         <td th:text="${flow.launch_name}"></td>
                         <td th:if="${flow.containsKey('approval_name') and flow.approval_name != null}">已审批</td>
                         <td th:if="${!flow.containsKey('approval_name') and flow.status > 2}">未审批</td>
-                        <td th:if="${flow.status <= 2}"></td>
+                        <td th:if="${flow.status <= 2 and flow.status > 0}"></td>
                         <td th:text="${flow.flow_name}"></td>
                         <td th:text="${#calendars.format(flow.update_time, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:if="${flow.status == 1}" th:text="${flow.status == 1} ? '草稿' : ''"></td>

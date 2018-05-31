@@ -1,61 +1,100 @@
 (function ($) {
-    var myChart = echarts.init(document.getElementById('charts'));
-    var option = {
-        title : {
-            text: '会议室与车辆使用情况统计',
-        },
-        tooltip : {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['会议室','车辆']
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                dataView : {show: true, readOnly: false},
-                magicType : {show: true, type: ['line', 'bar']},
-                restore : {show: true},
-                saveAsImage : {show: true}
+    function init() {
+        $.ajax({
+            url: '/oa/api/charts/data',
+            type: 'get',
+            dateType: 'json',
+            success: function (data) {
+                var meeting = dealData(data.meeting);
+                var useCar = dealData(data.useCar);
+                initCharts(meeting, useCar);
+            },
+            error: function (data) {
+
             }
-        },
-        calculable : true,
-        xAxis : [
-            {
-                type : 'category',
-                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        })
+    }
+
+    function dealData(data) {
+        var dataArr = new Array();
+        var i = 0;
+        var fiveDayOver = 0;
+        for ( i; i < 7; i++) {
+            for (var j = 0; j < data.length; j++) {
+                if (data[j].dd == i && i < 6) {
+                    dataArr[i] = data[j].ct;
+                } else if (data[j].dd > 5) {
+                    fiveDayOver += data[j].ct;
+                } else {
+                    dataArr[i] = 0
+                }
             }
-        ],
-        yAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        series : [
-            {
-                name:'会议室',
-                type:'bar',
-                data:[5, 10, 12, 23, 25, 20, 30, 40, 30, 10, 6, 10],
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
+        }
+        dataArr.push(fiveDayOver);
+        return dataArr;
+    }
+
+    function initCharts(meeting, useCar) {
+        var myChart = echarts.init(document.getElementById('charts'));
+        var option = {
+            title : {
+                text: '会议室与车辆使用情况统计',
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['会议室','车辆']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
                 }
             },
-            {
-                name:'车辆',
-                type:'bar',
-                data:[5, 10, 12, 23, 25, 20, 30, 40, 30, 10, 6, 10],
-                markPoint : {
-                    data : [
-                        {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183},
-                        {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
-                    ]
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1天内','1天','2天','3天','4天','5天','5天以上']
                 }
-            }
-        ]
-    };
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'会议室',
+                    type:'bar',
+                    data:meeting,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    }
+                },
+                {
+                    name:'车辆',
+                    type:'bar',
+                    data:useCar,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    }
+                }
+            ]
+        };
 
-    myChart.setOption(option);
+        myChart.setOption(option);
+    }
+
+    init();
 })(jQuery)

@@ -7,6 +7,8 @@ import com.wo.ms.oa.services.UseCarRecordService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UseCarRecordServiceImpl implements UseCarRecordService {
@@ -36,6 +38,11 @@ public class UseCarRecordServiceImpl implements UseCarRecordService {
     @Override
     public UseCarRecord selectUseCarRecordByPrimary(Integer id) {
         return useCarRecordMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Map<Integer, Integer>> selectUseCarDayAndNum() {
+        return useCarRecordMapper.selectUseCarDayAndNum();
     }
 
     @Override

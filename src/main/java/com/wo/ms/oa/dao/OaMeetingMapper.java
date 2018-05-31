@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OaMeetingMapper {
@@ -19,4 +20,6 @@ public interface OaMeetingMapper {
     Integer selectCountMyMeeting(@Param("key") String key, @Param("loginId") Integer loginId);
 
     int updateByPrimaryKeySelective(OaMeeting record);
+
+    List<Map<Integer, Integer>> selectDayAndMeetingNum();
 }

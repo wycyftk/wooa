@@ -52,6 +52,13 @@
     </if>
     GROUP BY of.status HAVING of.status = 0
   </select>
+  <select id="selectDayAndMeetingNum" resultType="java.util.Map">
+    SELECT datediff(om.end_time, om.start_time) AS dd, count(*) AS ct FROM oa_meeting AS om
+    LEFT JOIN flow_car_meeting AS fcm ON om.id = fcm.meeting_id
+    LEFT JOIN oa_flow AS flow ON fcm.flow_id = flow.id
+    WHERE flow.status = 0
+    GROUP BY dd ORDER BY dd
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from oa_meeting
     where id = #{id,jdbcType=INTEGER}

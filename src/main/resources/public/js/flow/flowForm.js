@@ -120,7 +120,6 @@
             todayBtn: true,
             yearStart: 1900,
             yearEnd: 2018,
-            timepicker: false,
             value: startTime ? startTime : ''
         }).on('change',function(ev){
             var st = $("#startTime").val();
@@ -138,7 +137,6 @@
             todayBtn: true,
             yearStart: 1980,
             yearEnd: 2050,
-            timepicker: false,
             value: endTime ? endTime : ''
         }).on('change',function(ev){
             var st = $("#startTime").val();

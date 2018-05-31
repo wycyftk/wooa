@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UseCarRecordMapper {
@@ -21,4 +22,6 @@ public interface UseCarRecordMapper {
     List<UseCarRecord> selectUseCarRecordByKeyLimit(@Param("key") String key, @Param("pageSize") Integer pageSize, @Param("start") Integer start, @Param("loginId") Integer loginId);
 
     Integer selectCountByKey(@Param("key") String key, @Param("loginId") Integer loginId);
+
+    List<Map<Integer, Integer>> selectUseCarDayAndNum();
 }

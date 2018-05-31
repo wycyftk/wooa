@@ -155,6 +155,7 @@
     <if test="key != null">
       AND concat_ws(',', flow_name) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
+    GROUP BY flow.id ORDER BY flow.update_time
   </select>
   <select id="selectCarFlowById" resultType="java.util.Map">
     SELECT * FROM
