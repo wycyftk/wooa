@@ -51,7 +51,7 @@ public class UseCarRecordServiceImpl implements UseCarRecordService {
         useCarRecordPagtion.setCurrentPage(currentPage);
         useCarRecordPagtion.setPageSize(pageSize);
         useCarRecordPagtion.setUseCarRecordList(useCarRecordMapper.selectUseCarRecordByKeyLimit(key, pageSize, (currentPage - 1) * pageSize, loginId));
-        useCarRecordPagtion.setTotalPage(useCarRecordMapper.selectCountByKey(key, loginId));
+        useCarRecordPagtion.setTotalPage((useCarRecordMapper.selectCountByKey(key, loginId) - 1) / pageSize + 1);
         return useCarRecordPagtion;
     }
 }

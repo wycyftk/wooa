@@ -1,10 +1,11 @@
 var delRole = function (id) {
     $.ajax({
-       url: '/oa/api/flow/del?id=' + id,
+       url: '/oa/api/flow/delFlow?id=' + id,
        type: 'delete',
        dataType: 'json',
        success: function (data) {
             console.log(data);
+            alert(data.message)
        },
         error: function (data) {
 

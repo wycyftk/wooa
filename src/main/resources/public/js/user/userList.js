@@ -93,7 +93,7 @@ $("span[data-userid-role]").each(function () {
         });
     });
 });
-
+//分配组织
 $("span[data-userid-org]").each(function () {
     var _this = this;
     $(_this).click(function () {

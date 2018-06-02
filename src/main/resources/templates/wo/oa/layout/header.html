@@ -17,7 +17,10 @@
                 <span class="info-num" th:text="${noReadInfo == 0} ? '' : ${noReadInfo}"></span>
             </div>
             <div class="user-block">
-                <a href="#" class="username" th:text="${user.name}"></a>
+                <div>
+                  <!--  <img src="/public/asset/imgs/user.jpg" height="30px" width="30px" />-->
+                    <a href="#" class="username" th:text="${user.name}"></a>
+                </div>
                 <ul class="user-operation">
                     <li><a href="#" th:onclick="'updatePassword(' + ${user.getId()} + ')'">修改密码</a></li>
                     <li><a href="#" th:onclick="'personalInfo(' + ${user.getId()} + ')'">个人信息</a></li>

@@ -5,13 +5,29 @@
     <title>查看信息</title>
 </head>
 <body>
+<img src="/public/asset/imgs/logo.png">
 <div class="infoForm">
     <div class="info-content">
-        <h4 th:text="${info.infoTitle}"></h4>
-        <span th:text="${#calendars.format(info.createTime, 'yyyy-MM-dd HH:mm')}"></span>
-        <div>
-            <p th:text="${info.content}"></p>
+<div class="message_title">
+    <h4>消息标题：</h4>
+    <i class="title" th:text="${info.infoTitle}"></i>
+</div>
+
+        <div class="message_content">
+            <h4>消息正文：</h4>
+            <i class="title" th:text="${info.content}"></i>
         </div>
+        <div class="message_publish">
+           <!-- <div >
+                <p class="resourse">发布人：</p>
+                <span th:text="${info.publishId}"></span>
+            </div>-->
+            <div >
+                <p class="resourse">发布时间：</p>
+                <span th:text="${#calendars.format(info.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+        </div>
+
     </div>
     <div class="form-group form-btns">
         <button type="submit" class="btn btn-default" th:onclick="'loadHtml(\'/oa/info/' + ${type} + '\', {pageSize: 10, currentPage: 1, key: \'\'})'">返回</button>

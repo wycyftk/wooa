@@ -324,7 +324,10 @@ ul li{
 }
 
 .form-btns{
-    float: right;
+    /*float: right;*/
+    position: fixed;
+    right: 60px;
+    bottom:50px;
 }
 
 #roleList label, #orgList label{
@@ -391,21 +394,47 @@ ul li{
     min-height: 300px;
 }
 
-.info-content h4 {
-    text-align: center;
-    padding-bottom: 10px;
+.message_title{
+    /*border-bottom: 1px solid #cccccc;*/
+    position: relative;
+    margin-left: 40%;
 }
 
-.info-content span {
+.message_content{
+    margin-top: 20px;
+}
+
+.message_publish{
+    /*float:right;*/
+    position: fixed;
+    right: 50px;
+    bottom: 120px;
+}
+.info-content h4{
+    display:inline;
+}
+
+.title{
+   /* text-align:center;*/
+    font-size: 18px;
+    font-style: normal;
+}
+.resourse{
+    display:inline;
+}
+/*.info-content span {
     border-bottom: 1px solid #cccccc;
     display: block;
     text-align: center;
-}
+}*/
 
-.info-content p {
+/*.info-content p {
     margin-top: 10px;
+    text-align: center;
     text-indent: 2em;
-}
+    font-size:18px;
+    display: inline;
+}*/
 /* info */
 
 /* charts */
@@ -413,4 +442,12 @@ ul li{
     width: 600px;
     height: 400px;
 }
+
+
 /* charts */
+
+.username{
+    font-size: 18px;
+}
+
+
