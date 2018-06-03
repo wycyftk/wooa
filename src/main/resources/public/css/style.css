@@ -469,19 +469,34 @@ body {
 }
 
 .meeting-tool, .car-tool {
-    width: 100px;
+    width: 140px;
     height: 40px;
-    margin: 10px 0;
+    margin: 5px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.car-tool span {
+    display: inline-block;
+    width: 112px;
 }
 
 .meeting-tool div{
     float: left;
     background-color: rgb(194,53,49);
+    width: 20px;
+    height: 10px;
+    margin-right: 5px;
 }
 
 .car-tool div{
     float: left;
     background-color: rgb(47,69,84);
+    width: 20px;
+    height: 10px;
+    margin-right: 5px;
 }
 /* charts */
 
