@@ -19,9 +19,9 @@
         var dataArr = new Array();
         var i = 0;
         var fiveDayOver = 0;
-        for ( i; i < 7; i++) {
+        for ( i; i < 6; i++) {
             for (var j = 0; j < data.length; j++) {
-                if (data[j].dd == i && i < 6) {
+                if (data[j].dd == i) {
                     dataArr[i] = data[j].ct;
                 } else if (data[j].dd > 5) {
                     fiveDayOver += data[j].ct;

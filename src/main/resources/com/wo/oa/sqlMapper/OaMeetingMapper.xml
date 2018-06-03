@@ -35,10 +35,10 @@
     LEFT JOIN flow_car_meeting AS fcm ON om.id = fcm.meeting_id
     LEFT JOIN oa_flow AS of ON of.id = fcm.flow_id
     WHERE of.launch_id = #{loginId, jdbcType=INTEGER}
+    AND of.status = 0
     <if test="key != null">
       AND concat_ws(",", om.meeting_name, om.meeting_room) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
-    GROUP BY of.status HAVING of.status = 0
     limit #{start, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
   </select>
   <select id="selectCountMyMeeting" resultType="java.lang.Integer">
@@ -47,10 +47,10 @@
     LEFT JOIN flow_car_meeting AS fcm ON om.id = fcm.meeting_id
     LEFT JOIN oa_flow AS of ON of.id = fcm.flow_id
     WHERE of.launch_id = #{loginId, jdbcType=INTEGER}
+    AND of.status = 0
     <if test="key != null">
       AND concat_ws(",", om.meeting_name, om.meeting_room) LIKE '%' #{key, jdbcType=VARCHAR} '%'
     </if>
-    GROUP BY of.status HAVING of.status = 0
   </select>
   <select id="selectDayAndMeetingNum" resultType="java.util.Map">
     SELECT datediff(om.end_time, om.start_time) AS dd, count(*) AS ct FROM oa_meeting AS om

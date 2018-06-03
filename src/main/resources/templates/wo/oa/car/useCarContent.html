@@ -8,21 +8,21 @@
 <div class="meetingForm">
     <h4 class="form-title">用车记录查看</h4>
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label">车辆名称</label>
+        <label class="col-sm-2 col-form-label" style="text-align: right;">车辆名称:</label>
         <div class="col-sm-4">
             <p th:text="${useCarRecord.carName}"></p>
         </div>
-        <label class="offset-sm-1 col-sm-1 col-form-label">用车原因</label>
+        <label class="col-sm-1 col-form-label">用车原因:</label>
         <div class="col-sm-4">
             <p th:text="${useCarRecord.reason}"></p>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-1 col-form-label">开始时间</label>
+        <label class="col-sm-2 col-form-label" style="text-align: right;">开始时间:</label>
         <div class="col-sm-4">
             <p th:text="${#calendars.format(useCarRecord.startTime, 'yyyy-MM-dd')}"></p>
         </div>
-        <label class="col-sm-1 col-form-label">结束时间</label>
+        <label class="col-sm-2 col-form-label" style="text-align: right;">结束时间</label>
         <div class="col-sm-4">
             <p th:text="${#calendars.format(useCarRecord.endTime, 'yyyy-MM-dd')}"></p>
         </div>
