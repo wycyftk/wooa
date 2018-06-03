@@ -144,7 +144,7 @@ body {
     -moz-border-radius: 3px;
     border-radius: 3px;
     position: absolute;
-    top: 30px;
+    top: 24px;
     right: 0;
     display: none;
 }
@@ -153,13 +153,25 @@ body {
     border-bottom: 1px solid #dddddd;
     text-align: center;
     width: 86px;
-    color: #4a4a4a;
+    color: #0275d8;
     cursor: pointer;
     margin: 2px 0;
 }
 
+.user-block:hover .user-operation{
+    display: block;
+}
+
 .logout{
     border-bottom: 0 !important;
+}
+
+.logout span {
+    color: #0275d8;
+}
+
+.logout span:hover {
+    text-decoration: underline;
 }
 
 .username{

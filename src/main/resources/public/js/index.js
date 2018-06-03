@@ -23,12 +23,14 @@ var messageAlert = function (type) {
 }
 
 var logout = function () {
-    $({
+    $.ajax({
         url: '/oa/api/login/out',
         dataType: 'json',
         type: 'get',
         success: function (data) {
-          alert(data.message);
+            if (data.status) {
+                window.location.href = '/oa/loginPage'
+            }
         },
         error:function (data) {
 
@@ -49,10 +51,6 @@ var updateReadInfoNum = function () {
         }
     })
 }
-
-$(".username").click(function () {
-    $(".user-operation").toggleClass()
-});
 
 $.datetimepicker.setLocale('zh');
 
