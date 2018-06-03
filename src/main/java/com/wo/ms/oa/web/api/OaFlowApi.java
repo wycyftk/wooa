@@ -195,7 +195,7 @@ public class OaFlowApi {
             if(isZjlApproval){
 
             } else {
-                // 不是最后一个节点，并且不是同意
+                // 不是最后一个节点
                 oaFlow.setApprovalName(null);
                 oaFlow.setApprovalId(null);
                 oaFlow.setOpinion(null);
