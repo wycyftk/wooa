@@ -4,7 +4,6 @@
 
     var loginPrompt = function (info) {
         $(".login-prompt").text(info);
-        $(".login-prompt").show();
     }
 
     $("#username").on("input propertychange", function () {

@@ -36,8 +36,13 @@ public class LoginApi {
             request.getSession().setAttribute("loginId", userId);
             request.getSession().setAttribute("roleCodes", roleCodes);
             request.getSession().setAttribute("orgIds", orgIds);
-            result.put("status", true);
-            result.put("message", "登录成功");
+            if (userId == -1) {
+                result.put("status", false);
+                result.put("message", "帐号或密码错误");
+            } else {
+                result.put("status", true);
+                result.put("message", "登录成功");
+            }
         }catch (Exception e){
             e.printStackTrace();
             result.put("status", false);

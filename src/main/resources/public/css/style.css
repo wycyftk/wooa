@@ -11,6 +11,10 @@ ul li{
     list-style: none;
 }
 
+body {
+    background-color: #eee;
+}
+
 /*  login */
 .login-page{
     width: 100%;
@@ -46,7 +50,6 @@ ul li{
     float: left;
     color: #fc4343;
     font-size: 14px;
-    display: none;
 }
 
 .forget-password{
@@ -443,7 +446,31 @@ ul li{
     height: 400px;
 }
 
+.chats-tool {
+    width: 100px;
+    height: 100px;
+}
 
+.chats-tool span {
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.meeting-tool, .car-tool {
+    width: 100px;
+    height: 40px;
+    margin: 10px 0;
+}
+
+.meeting-tool div{
+    float: left;
+    background-color: rgb(194,53,49);
+}
+
+.car-tool div{
+    float: left;
+    background-color: rgb(47,69,84);
+}
 /* charts */
 
 .username{
